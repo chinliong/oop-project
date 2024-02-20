@@ -4,19 +4,19 @@ import com.badlogic.gdx.Input.Keys;
 
 public class InputKeyboard extends Input {
 
-    //Function to check if a keyboard button was pressed. Since this is using a keyboard, always return true
+    // check if a keyboard button was pressed, since this is using a keyboard, always return true
     @Override
     public boolean keyPressed() {
         return true;
     }
 
-    //Function to check if a mouse button was pressed. Since this is using a keyboard, always return false
+    // check if a mouse button was pressed, since this is using a keyboard, always return false
     @Override
     public boolean mousePressed() {
         return false;
     }
 
-    //is<keyboardButton>Pressed functions return true, if the input that is parsed is the appropriate key else return false
+    
     public boolean isWPressed(int input){
         if (keyPressed() && input == Keys.W) return true;
         else return false;
@@ -37,7 +37,8 @@ public class InputKeyboard extends Input {
         else return false;
     }
 
-    //if<keyboardButton>Pressed() function will return true if specific keyboard buttons are pressed, current way of getting which key was pressed since inputProcessor is not implemented
+    //if<keyboardButton>Pressed() function will return true if specific keyboard buttons are pressed, 
+    // current way of getting which key was pressed since inputProcessor is not implemented
     public boolean ifLeftPressed(){
         return Gdx.input.isKeyPressed(Keys.LEFT);
     }
@@ -53,8 +54,6 @@ public class InputKeyboard extends Input {
     public boolean ifEscPressed(){
         return Gdx.input.isKeyPressed(Keys.ESCAPE);
     }
-
-    //Unused if<keyboardButton>Pressed() functions. Will shift up if needed
 
     public boolean ifUpPressed(){
         return Gdx.input.isKeyPressed(Keys.UP);

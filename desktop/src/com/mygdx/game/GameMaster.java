@@ -18,7 +18,7 @@ public class GameMaster extends Game {
     //creates the instances of my managers
     private SceneManager sceneManager; //declaring a object that is a SceneManager type
     private EntityManager entityManager; //declaring a object that is a EntityManager type
-    private InputOutputManager inputOutputManager;
+    private IOManager ioManager;
     private AIControlManager AIControlManager;
     private PlayerControlManager playerControlManager;
 
@@ -34,7 +34,7 @@ public class GameMaster extends Game {
         font = new BitmapFont(); //this is to create a new instance of the BitmapFont object
         entityManager = new EntityManager(); //actually creating an instance of the EntityManager object
         sceneManager = new SceneManager(this); //actually creating an instance of the SceneManager object
-        inputOutputManager = new InputOutputManager();
+        ioManager = new IOManager();
         playerControlManager = new PlayerControlManager(); //actually creating an instance of the PlayerControlManager object
         soundManager = new SoundManager();
         AIControlManager = new AIControlManager();
@@ -72,8 +72,8 @@ public class GameMaster extends Game {
         return font;
     }
 
-    public InputOutputManager getInputOutputManager(){
-        return inputOutputManager;
+    public IOManager getInputOutputManager(){
+        return ioManager;
     }
 
 

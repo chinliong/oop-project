@@ -15,14 +15,14 @@ public class InputMouse extends Input {
         else return false;
     }
 
-    //Function to check if a keyboard button was pressed. Since this is using a mouse, always return false
+    // check if a keyboard button was pressed, since this is using a mouse, always return false
     @Override
     public boolean keyPressed() {
         //Not applicable for mouse
         return false;
     }
 
-    //Function to check if a mouse button was pressed. Since this is using a mouse, always return true
+    // check if a mouse button was pressed, since this is using a mouse, always return true
     @Override
     public boolean mousePressed() {
         return true;
