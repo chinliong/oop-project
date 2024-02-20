@@ -63,18 +63,6 @@ public class InputKeyboard extends Input {
         return Gdx.input.isKeyPressed(Keys.DOWN);
     }
 
-    public boolean ifAPressed(){
-        return Gdx.input.isKeyPressed(Keys.A);
-    }
-
-    public boolean ifSPressed(){
-        return Gdx.input.isKeyPressed(Keys.S);
-    }
-
-    public boolean ifDPressed(){
-        return Gdx.input.isKeyPressed(Keys.D);
-    }
-
     public boolean ifSpacePressed(){
         return Gdx.input.isKeyPressed(Keys.SPACE);
     }
