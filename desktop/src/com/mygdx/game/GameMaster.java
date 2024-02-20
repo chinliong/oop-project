@@ -35,7 +35,7 @@ public class GameMaster extends Game {
         entityManager = new EntityManager(); //actually creating an instance of the EntityManager object
         sceneManager = new SceneManager(this); //actually creating an instance of the SceneManager object
         ioManager = new IOManager();
-        playerControlManager = new PlayerControlManager(); //actually creating an instance of the PlayerControlManager object
+        playerControlManager = new PlayerControlManager(); 
         soundManager = new SoundManager();
         AIControlManager = new AIControlManager();
         simulationLifeCycleManager = new SimulationLifeCycleManager(this);

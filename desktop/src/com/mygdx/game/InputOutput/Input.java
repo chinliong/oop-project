@@ -1,6 +1,6 @@
 package com.mygdx.game.InputOutput;
 
-public abstract class Input { // abstract to allow easier implementation of input devices in the future (i.e joystick)
+public abstract class Input { // abstract to allow easier implementation of input devices in the future (eg. joystick)
 
     private boolean inputReceived;
     private int input;
@@ -29,7 +29,6 @@ public abstract class Input { // abstract to allow easier implementation of inpu
         this.inputReceived = new_inputReceived;
     }
 
-    //abstract functions
     public abstract boolean keyPressed();
     public abstract boolean mousePressed();
     
