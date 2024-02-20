@@ -13,7 +13,6 @@ import java.util.List;
 public class SimulationLifeCycleManager {
     private GameMaster game;
 
-    private int currentLevel;
 
     //screen with boolean to check true or false
     private boolean showMenuScreen;
@@ -24,7 +23,6 @@ public class SimulationLifeCycleManager {
 
     public SimulationLifeCycleManager(GameMaster game){
         this.game = game;
-        this.currentLevel = 1;
         this.showMenuScreen = false;
         this.showPlayScreen = false;
         this.showEndScreen = false;
@@ -87,43 +85,6 @@ public class SimulationLifeCycleManager {
     public void resetEntities(List<Entity> entities){
         entities.clear(); //clear the entities list
         }
-
-
-    public void setupLevel(){
-        //instantiating objects based on the level
-        if (this.currentLevel > 3){
-            this.currentLevel = 3;
-        }
-        System.out.println("Setting up level " + this.currentLevel);
-        resetEntities(this.game.getEntityManager().getEntities()); //a mechanism to reset the entities
-        switch (this.currentLevel) {
-
-            case 1:
-                //create the entities
-                this.game.getEntityManager().createEntity(Player.class);
-                this.game.getEntityManager().createEntity(AI.class, "fish", 100);
-                this.game.getEntityManager().createEntity(AI.class, "whale", 100);
-                break;
-            case 2:
-                //create the entities
-                this.game.getEntityManager().createEntity(Player.class);
-                this.game.getEntityManager().createEntity(AI.class, "guard", 100);
-                this.game.getEntityManager().createEntity(AI.class, "wizard2", 100);
-                this.game.getEntityManager().createEntity(AI.class, "fireguard", 100);
-                break;
-        }
-    }
-
-    public void incrementLevel(){
-        this.currentLevel++;
-//        if (this.currentLevel > 3){
-//            this.currentLevel = 3;
-//        }
-    }
-
-    public int getLevel(){
-        return this.currentLevel;
-    }
 
 
 

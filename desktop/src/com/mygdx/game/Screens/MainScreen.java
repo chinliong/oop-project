@@ -57,12 +57,6 @@ public class MainScreen extends BaseScreen { //basescreen already implemented Sc
             }
         });
 
-        addButton("Close", x, y - 100, new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
 
 
 

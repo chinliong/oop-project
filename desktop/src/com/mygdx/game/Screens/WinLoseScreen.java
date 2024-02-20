@@ -21,20 +21,7 @@ public class WinLoseScreen extends BaseScreen{
     public void initUI() {
         if (win) {
             addText("You Win");
-            addButton("Next Level", 100, 50, new ClickListener() {
-                @Override
-                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                    //increase level
-                    game.getSimulationLifeCycleManager().incrementLevel();
-                    if (game.getSimulationLifeCycleManager().getLevel() > 3) {
-                        game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
-                    } else {
-                        game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-
-
-                    }
-                }
-            });
+            
         } else {
             addText("You Lose");
         }
