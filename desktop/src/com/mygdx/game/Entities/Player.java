@@ -16,7 +16,7 @@ public class Player extends  Entity {
 
     private Sprite playerSprite;
     public Player() {
-        super(new Texture("wizard.png"), 0, 10);
+        super(new Texture("bucket.png"), 0, 10);
         playerName = "Player 1";
         playerScore = 0;
         numberofLives = 3;
@@ -56,11 +56,11 @@ public class Player extends  Entity {
         this.numberofLives = numberofLives;
     }
 
-    public void testmove(){
-        //left right arrow to move player left and right
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) setPosX(getPosX() - (int) (200 * Gdx.graphics.getDeltaTime()));
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) setPosX(getPosX() + (int) (200 * Gdx.graphics.getDeltaTime()));
-    }
+//    public void testmove(){
+//        //left right arrow to move player left and right
+//        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) setPosX(getPosX() - (int) (200 * Gdx.graphics.getDeltaTime()));
+//        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) setPosX(getPosX() + (int) (200 * Gdx.graphics.getDeltaTime()));
+//    }
 
 
 }

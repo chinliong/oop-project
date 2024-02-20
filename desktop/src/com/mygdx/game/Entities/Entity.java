@@ -23,7 +23,7 @@ public abstract class Entity{
 
         this.entitySprite = new Sprite(entityImage);
         this.entitySprite.setPosition(posX, posY);
-        this.entitySprite.setSize(100, 100);
+        this.entitySprite.setSize(70, 70);
 
         this.id = entityID++;
 
