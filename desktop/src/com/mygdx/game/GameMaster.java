@@ -21,8 +21,8 @@ public class GameMaster extends Game {
     private IOManager ioManager;
     private AIControlManager AIControlManager;
     private PlayerControlManager playerControlManager;
+    private AudioManager audioManager;
 
-    private SoundManager soundManager;
 
     private SimulationLifeCycleManager simulationLifeCycleManager;
 
@@ -36,7 +36,7 @@ public class GameMaster extends Game {
         sceneManager = new SceneManager(this); //actually creating an instance of the SceneManager object
         ioManager = new IOManager();
         playerControlManager = new PlayerControlManager(); 
-        soundManager = new SoundManager();
+        audioManager = new AudioManager();
         AIControlManager = new AIControlManager();
         simulationLifeCycleManager = new SimulationLifeCycleManager(this);
         sceneManager.setScreen();
@@ -84,11 +84,10 @@ public class GameMaster extends Game {
     public AIControlManager getAIControlManager(){
         return AIControlManager;
     }
-
-    public SoundManager getSoundManager(){
-        return soundManager;
+    
+    public AudioManager getAudioManager(){
+        return audioManager;
     }
-
 
     public SimulationLifeCycleManager getSimulationLifeCycleManager(){
         return simulationLifeCycleManager;

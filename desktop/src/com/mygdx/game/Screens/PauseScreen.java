@@ -25,6 +25,7 @@ public class PauseScreen extends BaseScreen {
         addButton("Resume", 100, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+            	game.getAudioManager().getMusic().play();
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
                 //dispose();
             }
@@ -48,27 +49,6 @@ public class PauseScreen extends BaseScreen {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Gdx.app.exit();
-            }
-        });
-
-        addButton("Volume +", 500, 100, new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.getSoundManager().increaseVolume();
-            }
-        });
-
-        addButton("Volume -", 500, 200, new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.getSoundManager().decreaseVolume();
-            }
-        });
-
-        addButton("Mute/Unmute", 500, 300, new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.getSoundManager().toggleMute();
             }
         });
 

@@ -7,13 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 //entity abstract class
 public abstract class Entity{
     private Texture entityImage;
-    private int posX;
-    private int posY;
-
-    private int healthBar;
-
     private Sprite entitySprite;
-    private static int entityID = 0 ;
+    private int posX; //Y position of entity
+    private int posY; //Y position of entity
+
+    private static int idCounter = 0 ;
     private int id;
 
     public Entity(Texture entityImage, int posX, int posY) {
@@ -25,7 +23,7 @@ public abstract class Entity{
         this.entitySprite.setPosition(posX, posY);
         this.entitySprite.setSize(70, 70);
 
-        this.id = entityID++;
+        this.id = idCounter++; // assign an id to this entity, idCounter++ = count created IDs
 
     }
     public Rectangle getBounds() {
@@ -61,15 +59,6 @@ public abstract class Entity{
     public void setPosY(int posY) {
         this.posY = posY;
     }
-
-    public int getHealthBar() {
-        return healthBar;
-    }
-
-    public void setHealthBar(int healthBar) {
-        this.healthBar = healthBar;
-    }
-
 
     public void dispose() {
         entityImage.dispose();

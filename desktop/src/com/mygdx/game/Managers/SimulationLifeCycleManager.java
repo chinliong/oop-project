@@ -97,13 +97,13 @@ public class SimulationLifeCycleManager {
                 boolean win = (boolean) args[0];
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, win));
                 resetEntities(this.game.getEntityManager().getEntities());
-                game.getSoundManager().getMusic().stop();
+                game.getAudioManager().getMusic().stop();
             }
             else {
                 //something is wrong so i will auto pass lost
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, false));
                 resetEntities(this.game.getEntityManager().getEntities());
-                game.getSoundManager().getMusic().stop();
+                game.getAudioManager().getMusic().stop();
             }
         }
     }

@@ -26,8 +26,10 @@ public class MainScreen extends BaseScreen { //basescreen already implemented Sc
     public void show() {
 
         super.show(); //this is to set the stage as the input processor
-        game.getSoundManager().setVolume(0.5f); //set mainscreen volume to 50%
-        game.getSoundManager().getMusic("menu").play(); //play the music
+        game.getAudioManager().getMusic("MainMenu").setVolume(0.5f); // volume
+        game.getAudioManager().getMusic("MainMenu").play(); //play the music
+        game.getAudioManager().getMusic("MainMenu").isLooping(); //Loop music
+
 
     }
 
@@ -51,7 +53,7 @@ public class MainScreen extends BaseScreen { //basescreen already implemented Sc
 
                 //game.getSceneManager().setScreen(game.getSceneManager().getPlayScreen(true));
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-                game.getSoundManager().getMusic("menu").stop(); //stop the music
+                game.getAudioManager().getMusic("MainMenu").stop(); //stop the music
                 System.out.println("play button clicked while extending base screen");
                 //dispose();
             }

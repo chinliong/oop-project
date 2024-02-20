@@ -23,8 +23,9 @@ public class PlayScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        game.getSoundManager().setVolume(1.0f);
-        game.getSoundManager().getMusic().play();
+        game.getAudioManager().getMusic().setVolume(1.0f);
+        game.getAudioManager().getMusic().play();
+        game.getAudioManager().getMusic().isLooping();
         game.getCollisionManager().setProximityRange(20);
     }
 
@@ -90,7 +91,7 @@ public class PlayScreen extends BaseScreen {
     private void pauseScreenIfRequested() {
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
             game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
-            game.getSoundManager().getMusic().stop();
+            game.getAudioManager().getMusic().stop();
         }
     }
 
@@ -102,7 +103,8 @@ public class PlayScreen extends BaseScreen {
                 int id = game.getEntityManager().getEntities().get(i).getID();
                 //abs value of the difference between the player and the AI should be less than 20 to be considered a collision
                 if (Math.abs(game.getEntityManager().getEntity(Player.class).getPosX() - game.getEntityManager().getEntity(id).getPosX()) < distance && Math.abs(game.getEntityManager().getEntity(Player.class).getPosY() - game.getEntityManager().getEntity(id).getPosY()) < distance) {
-                    game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, false);
+                    game.getAudioManager().playSound();
+                	game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, false);
                 }
             }
 

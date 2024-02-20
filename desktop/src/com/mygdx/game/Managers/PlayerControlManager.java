@@ -21,8 +21,15 @@ public class PlayerControlManager {
 
 	public void jump(Player player, boolean jump) {
 		if (jump)
+		{
 			player.setPosY(player.getPosY() + (int) (200 * Gdx.graphics.getDeltaTime()));
+		}
+		else {
+			player.setPosY(player.getPosY() - (int) (200 * Gdx.graphics.getDeltaTime()));
+
+		}
 	}
+
 
 	public void interact() {
 
