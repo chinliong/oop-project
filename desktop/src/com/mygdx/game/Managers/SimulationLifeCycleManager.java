@@ -125,8 +125,8 @@ public class SimulationLifeCycleManager {
             case 1:
                 //create the entities
                 this.game.getEntityManager().createEntity(Player.class);
-                this.game.getEntityManager().createEntity(AI.class, "guard", 100);
-                this.game.getEntityManager().createEntity(AI.class, "wizard2", 100);
+                this.game.getEntityManager().createEntity(AI.class, "fish", 100);
+                this.game.getEntityManager().createEntity(AI.class, "whale", 100);
                 this.game.getEntityManager().createEntity(Item.class);
                 break;
             case 2:
