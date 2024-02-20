@@ -1,37 +1,42 @@
 package com.mygdx.game.Managers;
+
 import com.badlogic.gdx.Gdx;
-import com.mygdx.game.AIControl.Movement;
-import com.mygdx.game.AIControl.MovementHorizontal;
-import com.mygdx.game.AIControl.MovementVertical;
+
+import com.mygdx.game.AIControl.Move;
+import com.mygdx.game.AIControl.MoveHorizontal;
+import com.mygdx.game.AIControl.MoveVertical;
 import com.mygdx.game.Entities.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 public class AIControlManager {
+	
     private List<AI> AIList;
     private AI entityAI;
-    private MovementVertical movementVertical;
-    private MovementHorizontal movementHorizontal;
+    private MoveVertical moveVertical;
+    private MoveHorizontal moveHorizontal;
+    
     public AIControlManager(List<AI> AIList){
         this.AIList = AIList;
     }
 
     public AIControlManager(AI entityAI){
-        this.movementVertical = new MovementVertical();
-        this.movementHorizontal = new MovementHorizontal();
+        this.moveVertical = new MoveVertical();
+        this.moveHorizontal = new MoveHorizontal();
     }
 
     public AIControlManager(){
         this.AIList = null;
-        this.movementVertical = new MovementVertical();
-        this.movementHorizontal = new MovementHorizontal();
+        this.moveVertical = new MoveVertical();
+        this.moveHorizontal = new MoveHorizontal();
     }
 
-    public MovementVertical getMovementVertical(){
-        return this.movementVertical;
+    public MoveVertical getMoveVertical(){
+        return this.moveVertical;
     }
 
-    public MovementHorizontal getMovementHorizontal(){
-        return this.movementHorizontal;
+    public MoveHorizontal getMoveHorizontal(){
+        return this.moveHorizontal;
     }
 }

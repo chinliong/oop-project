@@ -91,7 +91,7 @@ public class PlayScreen extends BaseScreen {
             //game.getAIControlManager().movementRandom((AI)game.getEntityManager().getEntity(AI.class), 3, endLocationX,endLocationY);
             //game.getAIControlManager().getMovementVertical().movementFall((AI)game.getEntityManager().getEntity(AI.class), 3, 600);
             //game.getAIControlManager().getMovementVertical().movementFly((AI)game.getEntityManager().getEntity(AI.class), 1, 0);
-            game.getAIControlManager().getMovementHorizontal().movementLeft((AI)game.getEntityManager().getEntity(AI.class), 1, 800);
+            game.getAIControlManager().getMoveHorizontal().moveLeft((AI)game.getEntityManager().getEntity(AI.class), 1, 800);
             //game.getAIControlManager().getMovementHorizontal().movementRight((AI)game.getEntityManager().getEntity(AI.class), 1, -20);
             game.getEntityManager().getEntities().get(i).draw(game.batch);
 
