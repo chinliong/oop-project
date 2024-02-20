@@ -58,30 +58,6 @@ public class SimulationLifeCycleManager {
     public void setShowEndScreen(boolean showEndScreen) {
         this.showEndScreen = showEndScreen;
     }
-
-    // the dispose method i can thinkas of now,will recode 
-    // public void dispose() {
-    //     // Dispose of the SceneManager resources
-    //     if (sceneManager != null) {
-    //         sceneManager.dispose();
-    //     }
-
-    //     // Dispose of the EntityManager resources
-    //     if (entityManager != null) {
-    //         entityManager.dispose();
-    //     }
-
-    //     // Dispose of the PlayerControlManager resources
-    //     if (playerControlManager != null) {
-    //         playerControlManager.dispose();
-    //     }
-
-    //     // Dispose of the CollisionManager resources
-    //     if (collisionManager != null) {
-    //         collisionManager.dispose();
-    //     }
-
-    // }
     
     //for my understanding it loops and remove all the entities, but what if only need remove one entity?
     public void disposeEntities(List<Entity> entities){
@@ -127,7 +103,6 @@ public class SimulationLifeCycleManager {
                 this.game.getEntityManager().createEntity(Player.class);
                 this.game.getEntityManager().createEntity(AI.class, "fish", 100);
                 this.game.getEntityManager().createEntity(AI.class, "whale", 100);
-                this.game.getEntityManager().createEntity(Item.class);
                 break;
             case 2:
                 //create the entities
@@ -135,18 +110,6 @@ public class SimulationLifeCycleManager {
                 this.game.getEntityManager().createEntity(AI.class, "guard", 100);
                 this.game.getEntityManager().createEntity(AI.class, "wizard2", 100);
                 this.game.getEntityManager().createEntity(AI.class, "fireguard", 100);
-                this.game.getEntityManager().createEntity(Item.class);
-                break;
-            case 3:
-                //create the entities
-                this.game.getEntityManager().createEntity(Player.class);
-                this.game.getEntityManager().createEntity(AI.class, "guard", 100);
-                this.game.getEntityManager().createEntity(AI.class, "wizard2", 100);
-                this.game.getEntityManager().createEntity(AI.class, "wizard2", 100);
-                this.game.getEntityManager().createEntity(AI.class, "fireguard", 100);
-                this.game.getEntityManager().createEntity(AI.class, "droplet", 100);
-                this.game.getEntityManager().createEntity(Item.class); //default item
-                this.game.getEntityManager().createEntity(Item.class,"bow");  //bow item
                 break;
         }
     }

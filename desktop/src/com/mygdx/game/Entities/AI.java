@@ -52,18 +52,4 @@ public class AI extends Entity implements NonPlayable{
         this.enemyType = subType;
     }
 
-
-
-
-//    private static Texture loadTexture(String enemyType){
-//        if (enemyTextures.containsKey(enemyType)){
-//            //enemyTextures.get(enemyType).dispose();
-//            return enemyTextures.get(enemyType);
-//        }
-//        Texture texture = new Texture(enemyType + ".png");
-//        enemyTextures.put(enemyType, texture);
-//        return texture;
-//    }
-
-
 }
