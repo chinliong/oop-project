@@ -7,17 +7,17 @@ import java.util.HashMap;
 
 public class AudioManager {
 	 private Sound soundEffect;
-	    private HashMap<String, Music> musicMap; // using a hashmap to map the sounds to a string
+	    private HashMap<String, Music> mapMusic; // using a hashmap to map the sounds to a string
 
 	    public AudioManager(){
-	        musicMap = new HashMap<>();
-	        musicMap.put("Gameplay", Gdx.audio.newMusic(Gdx.files.internal("maple.mp3")));
-	        musicMap.put("MainMenu", Gdx.audio.newMusic(Gdx.files.internal("supermario.mp3")));
+	    	mapMusic = new HashMap<>();
+	    	mapMusic.put("Gameplay", Gdx.audio.newMusic(Gdx.files.internal("maple.mp3")));
+	    	mapMusic.put("MainMenu", Gdx.audio.newMusic(Gdx.files.internal("supermario.mp3")));
 	        soundEffect = Gdx.audio.newSound(Gdx.files.internal("boing.wav"));
 	    }
 
 	    public Music getMusic(String mapKey){
-	        return musicMap.get(mapKey); // get the music based on the key ("Gameplay" / "MainMenu")
+	        return mapMusic.get(mapKey); // get the music based on the key ("Gameplay" / "MainMenu")
 	    }
 
 	    public void playSound()
