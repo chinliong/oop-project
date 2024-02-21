@@ -10,7 +10,7 @@ public class PauseScreen extends BaseScreen {
 
     public PauseScreen(GameMaster game) {
         super(game);
-        initualiseUI();
+        initialiseUI();
     }
 
     @Override
@@ -20,7 +20,7 @@ public class PauseScreen extends BaseScreen {
     }
 
     @Override
-    protected void initualiseUI() {
+    protected void initialiseUI() {
     	createButton("Resume", 100, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
