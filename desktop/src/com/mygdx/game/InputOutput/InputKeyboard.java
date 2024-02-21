@@ -2,21 +2,20 @@ package com.mygdx.game.InputOutput;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
-public class InputKeyboard extends Input {
+public class InputKeyboard extends Input { // extends abstract Input class
+	// handle keyboard inputs
 
-    // check if a keyboard button was pressed, since this is using a keyboard, always return true
     @Override
     public boolean keyPressed() {
-        return true;
+        return true; // always true as key press events is handled by this class
     }
 
-    // check if a mouse button was pressed, since this is using a keyboard, always return false
     @Override
     public boolean mousePressed() {
-        return false;
+        return false; // mouse pressed events are not handled by this class
     }
 
-    
+    // check if specific keys are pressed
     public boolean isWPressed(int input){
         if (keyPressed() && input == Keys.W) return true;
         else return false;
@@ -36,9 +35,8 @@ public class InputKeyboard extends Input {
         if (keyPressed() && input == Keys.ESCAPE) return true;
         else return false;
     }
-
-    //if<keyboardButton>Pressed() function will return true if specific keyboard buttons are pressed, 
-    // current way of getting which key was pressed since inputProcessor is not implemented
+    
+    // use gdx.input.iskeypressed to check 
     public boolean ifLeftPressed(){
         return Gdx.input.isKeyPressed(Keys.LEFT);
     }
