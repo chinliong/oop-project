@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.mygdx.game.Entities.AI;
+import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
 import com.mygdx.game.GameMaster;
 
@@ -23,10 +24,12 @@ public class PlayScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        game.getAudioManager().getMusic().setVolume(1.0f);
-        game.getAudioManager().getMusic().play();
-        game.getAudioManager().getMusic().isLooping();
+        game.getAudioManager().getMusic("Gameplay").setVolume(1.0f);
+        game.getAudioManager().getMusic("Gameplay").play();
+        game.getAudioManager().getMusic("Gameplay").isLooping();
         game.getCollisionManager().setProximityRange(20);
+        game.getEntityManager().addEntity(new Player());
+        game.getEntityManager().addEntity(new AI());
     }
 
     @Override
@@ -67,7 +70,8 @@ public class PlayScreen extends BaseScreen {
     private void drawEntities() {
     	//loop through the entities and draw them
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
-            game.getAIControlManager().getMoveHorizontal().moveLeft((AI)game.getEntityManager().getEntity(AI.class), 1, 800);
+            game.getAIControlManager().getMoveHorizontal().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
+          // .get will loop through ArrayList's index to draw each entity in entitylist
             game.getEntityManager().getEntities().get(i).draw(game.batch);
 
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { //if ... and a keyboard input is detected using keyPressed() from InputKeyboard
@@ -93,28 +97,49 @@ public class PlayScreen extends BaseScreen {
     private void pauseScreenIfRequested() {
         if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
             game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
-            game.getAudioManager().getMusic().stop();
+            game.getAudioManager().getMusic("Gameplay").stop();
         }
     }
 
     private void checkForCollision() {
-    	//for each AI entity in the list of entities, if its within 20 pixels of the player, the player loses and goes to the lose screen
-        int distance = 45;
-        for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) { //loop the entity list
-            if (game.getEntityManager().getEntities().get(i) instanceof AI) { // if its AI, check for collision
-                int id = game.getEntityManager().getEntities().get(i).getID();
-                //abs value of the difference between the player and the AI should be less than 20 to be considered a collision
-                if (Math.abs(game.getEntityManager().getEntity(Player.class).getPosX() - game.getEntityManager().getEntity(id).getPosX()) < distance && Math.abs(game.getEntityManager().getEntity(Player.class).getPosY() - game.getEntityManager().getEntity(id).getPosY()) < distance) {
+        Player playerEntity = null;
+        for (Entity entity : game.getEntityManager().getEntities()) {
+            if (entity instanceof Player) {
+                playerEntity = (Player) entity; // if is type player = typecast it
+                break; 
+            }
+        }
+
+        if (playerEntity == null) return; // No player found, so exit the method
+
+        for (Entity entity : game.getEntityManager().getEntities()) {
+            if (entity instanceof AI) {
+                AI aiEntity = (AI) entity;
+  
+                int distance = 45; 
+                // if player and AI  < distance = collide
+                if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
+                    Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) {
                     game.getAudioManager().playSound();
-                	game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, false);
+                    game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, false);
+                    return;
                 }
             }
-
         }
     }
-
+    
     private void checkWinCondition() {
-    	if (game.getEntityManager().getEntity(Player.class).getPosX() > Gdx.graphics.getWidth() || game.getEntityManager().getEntity(Player.class).getPosY() > Gdx.graphics.getHeight()) {
+        Player playerEntity = null;
+        for (Entity entity : game.getEntityManager().getEntities()) {
+            if (entity instanceof Player) {
+                playerEntity = (Player) entity;
+                break; 
+            }
+        }
+
+        if (playerEntity == null) return; // No player found, so exit the method
+        // if playerEntity exits the screen = win screen
+    	if (playerEntity.getPosX() > Gdx.graphics.getWidth() || playerEntity.getPosY() > Gdx.graphics.getHeight()) {
             game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, true);
         }
     }

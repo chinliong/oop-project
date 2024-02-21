@@ -35,7 +35,7 @@ public class CollisionManager {
         }
 
         // Check if the player has moved outside the screen bounds
-        Player player = (Player) game.getEntityManager().getEntity(Player.class);
+        Player player = (Player) game.getEntityManager().checkClass(Player.class);
         if (player.getPosX() > Gdx.graphics.getWidth() || player.getPosY() > Gdx.graphics.getHeight()) {
             handlePlayerFlee(game); // Handle player fleeing the screen
             return true; // Indicate that a collision was handled

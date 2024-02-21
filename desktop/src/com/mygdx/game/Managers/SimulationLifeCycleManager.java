@@ -99,13 +99,13 @@ public class SimulationLifeCycleManager {
                 // Transition to the screen with the win/loss state
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, win));
                 resetEntities(this.game.getEntityManager().getEntities()); // Reset entities for new game state
-                game.getAudioManager().getMusic().stop(); // Stop current game music
+                game.getAudioManager().getMusic("Gameplay").stop(); // Stop current game music
             }
             else {
                 // Default to loss if no arguments provided, indicating an error or oversight
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, false));
                 resetEntities(this.game.getEntityManager().getEntities());
-                game.getAudioManager().getMusic().stop();
+                game.getAudioManager().getMusic("Gameplay").stop();
             }
         }
     }

@@ -7,33 +7,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 //entity abstract class
 public abstract class Entity{
     private Texture entityImage;
-    private Sprite entitySprite;
+    
     private int posX; //Y position of entity
     private int posY; //Y position of entity
+    private int width = 50; // width of entity
+    private int height = 50; // height of entity
 
     private static int idCounter = 0 ;
     private int id;
+
 
     public Entity(Texture entityImage, int posX, int posY) {
         this.entityImage = entityImage;
         this.posX = posX;
         this.posY = posY;
 
-        this.entitySprite = new Sprite(entityImage);
-        this.entitySprite.setPosition(posX, posY);
-        this.entitySprite.setSize(70, 70);
-
-        this.id = idCounter++; // assign an id to this entity, idCounter++ = count created IDs
-
+        this.id = idCounter++; // Assign an id to this entity, idCounter++ = track IDs count
     }
+    
+    
     public Rectangle getBounds() {
-        return entitySprite.getBoundingRectangle();
+        // Rectangle to represent the collision space
+        return new Rectangle(posX, posY, width, height);
     }
 
-    //might be overriden by the subclasses
     public void draw(SpriteBatch batch) {
-        this.entitySprite.setPosition(posX, posY); // this needs to happen to update the position of the sprite as when i am drawing using rhe sprite , the default set position is used
-        this.entitySprite.draw(batch);
+        // Draw the texture at its position with width and height
+        batch.draw(entityImage, posX, posY, width, height);
     }
 
     public Texture getEntityImage() {
@@ -58,6 +58,25 @@ public abstract class Entity{
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+    
+    public int getWidth()
+    {
+    	return width;
+    }
+    public void setWidth(int width)
+    {
+    	this.width = width;
+    }
+    
+    public int getHeight()
+    {
+    	return height;
+    }
+    
+    public void setHeight(int height)
+    {
+    	this.height = height;
     }
 
     public void dispose() {
