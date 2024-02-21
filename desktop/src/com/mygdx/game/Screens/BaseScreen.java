@@ -16,7 +16,7 @@ public abstract class BaseScreen implements Screen {
 
     public BaseScreen(GameMaster game) {
         this.game = game;
-        stage = new Stage(new ScreenViewport()); // actually idk if i should new screenviewport or mygame viewport
+        stage = new Stage(new ScreenViewport()); 
     }
 
     protected abstract void initialiseUI();
@@ -28,9 +28,8 @@ public abstract class BaseScreen implements Screen {
     }
 
     protected void createButton(String text, float x, float y, ClickListener listener){
-        // this is like a template to add a button to the stage
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = game.getFont(); // Assuming you have a method to get the font
+        textButtonStyle.font = game.getFont(); 
         TextButton button = new TextButton(text, textButtonStyle);
         button.setPosition(x, y);
         button.addListener(listener);

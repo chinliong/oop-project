@@ -28,7 +28,7 @@ public class MainScreen extends BaseScreen {
         game.getAudioManager().getMusic("MainMenu").isLooping();
     }
 
-    //This will override the initialiseUI from base
+    //Setup UI
     @Override
     protected void initialiseUI(){
     	//Create Button to get dimension
