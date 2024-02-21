@@ -30,14 +30,6 @@ public class Output {
 		}
 	}
 
-	public boolean onPressW(int key, boolean properKey) {
-		if (key == Keys.W && properKey) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public boolean onPressDown(int key, boolean properKey) {
 		if (key == Keys.DOWN && properKey) {
 			return true;
