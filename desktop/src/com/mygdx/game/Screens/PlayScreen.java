@@ -97,7 +97,7 @@ public class PlayScreen extends BaseScreen {
 
     private void checkForCollision() {
     	//for each AI entity in the list of entities, if its within 20 pixels of the player, the player loses and goes to the lose screen
-        int distance = 40;
+        int distance = 45;
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) { //loop the entity list
             if (game.getEntityManager().getEntities().get(i) instanceof AI) { // if its AI, check for collision
                 int id = game.getEntityManager().getEntities().get(i).getID();

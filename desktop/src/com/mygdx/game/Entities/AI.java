@@ -16,7 +16,7 @@ public class AI extends Entity implements NonPlayable{
 
     public AI() {
         //coordinates are randomly generated within the game screen
-        super(TextureLoader.loadTexture("guard"), (int)(Math.random() * 800), (int)(Math.random() * 600));
+        super(TextureLoader.loadTexture("guard"), (int)(Math.random() * 800), (int)(Math.random() * 500));
         this.awarenessRange = 100;
         this.enemyType = "guard"; //default enemy type
 
@@ -24,7 +24,7 @@ public class AI extends Entity implements NonPlayable{
     }
 
     public AI(String enemyType, int awarenessRange) {
-        super(TextureLoader.loadTexture(enemyType), (int)(Math.random() * 800), (int)(Math.random() * 600));
+        super(TextureLoader.loadTexture(enemyType), (int)(Math.random() * 800), (int)(Math.random() * 500));
         this.awarenessRange = awarenessRange;
         this.enemyType = enemyType;
 
