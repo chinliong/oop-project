@@ -1,5 +1,7 @@
 package com.mygdx.game.Entities;
+
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,8 +19,8 @@ public abstract class Entity{
     private int id;
 
 
-    public Entity(Texture entityImage, int posX, int posY) {
-        this.entityImage = entityImage;
+    public Entity(String entityImagePath, int posX, int posY) {
+        this.entityImage = new Texture(Gdx.files.internal(entityImagePath));
         this.posX = posX;
         this.posY = posY;
 
