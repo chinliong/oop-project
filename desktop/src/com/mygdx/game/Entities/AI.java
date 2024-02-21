@@ -9,7 +9,6 @@ import java.util.Map;
 
 public class AI extends Entity implements NonPlayable{
 
-    private int situationalRadius;
     private String AIObject;
 
     //private static final Map<String, Texture> enemyTextures = new HashMap<>();
@@ -17,7 +16,6 @@ public class AI extends Entity implements NonPlayable{
     public AI() {
         //coordinates are randomly generated within the game screen
         super(TextureLoader.loadTexture("whale"), (int)(Math.random() * 800), (int)(Math.random() * 500));
-        this.situationalRadius = 100;
         this.AIObject = "whale"; //default enemy type
 
 
@@ -25,21 +23,12 @@ public class AI extends Entity implements NonPlayable{
 
     public AI(String AIObject, int situationalRadius) {
         super(TextureLoader.loadTexture(AIObject), (int)(Math.random() * 800), (int)(Math.random() * 500));
-        this.situationalRadius = situationalRadius;
         this.AIObject = AIObject;
 
 
         //System.out.println("Created AI object: " + AIObject);
         //System.out.print("Situational Radius: " + situationalRadius);
         //System.out.println(" X: " + this.getPosX() + " Y: " + this.getPosY());
-    }
-
-    public int getSituationalRadius() {
-        return situationalRadius;
-    }
-
-    public void setSituationalRadius(int situationalRadius) {
-        this.situationalRadius = situationalRadius;
     }
 
     @Override
