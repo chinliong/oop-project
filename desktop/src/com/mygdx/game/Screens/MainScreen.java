@@ -10,32 +10,27 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameMaster;
 import com.badlogic.gdx.Gdx;
 
-public class MainScreen extends BaseScreen { //basescreen already implemented Screen
-    //Texture texture;
+public class MainScreen extends BaseScreen { 
 
     public MainScreen(GameMaster game) {
         super(game);
-       // texture = new Texture("badlogic.jpg");
-        initUI();
-
+        initialiseUI();
 
         }
 
 
     @Override
     public void show() {
-
-        super.show(); //this is to set the stage as the input processor
-        game.getAudioManager().getMusic("MainMenu").setVolume(0.5f); // volume
-        game.getAudioManager().getMusic("MainMenu").play(); //play the music
-        game.getAudioManager().getMusic("MainMenu").isLooping(); //Loop music
-
-
+        //set stage as input processor, set volume, play volume and loop it
+        super.show();
+        game.getAudioManager().getMusic("MainMenu").setVolume(0.5f); 
+        game.getAudioManager().getMusic("MainMenu").play(); 
+        game.getAudioManager().getMusic("MainMenu").isLooping();
     }
 
     //Overriding the initUI from base
     @Override
-    protected void initUI(){
+    protected void initialiseUI(){
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = game.getFont();
         TextButton button = new TextButton("Play", textButtonStyle);
@@ -47,7 +42,7 @@ public class MainScreen extends BaseScreen { //basescreen already implemented Sc
         float x = (Gdx.graphics.getWidth() - buttonWidth) / 2;
         float y = (Gdx.graphics.getHeight() - buttonHeight) / 2;
 
-        addButton("Play", x,y,new ClickListener() {
+        createButton("Play", x,y,new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
 

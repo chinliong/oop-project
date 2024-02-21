@@ -12,12 +12,12 @@ public class PlayScreen extends BaseScreen {
 
     public PlayScreen(GameMaster game) {
         super(game);
-        initUI();
+        initialiseUI();
     }
 
     @Override
-    public void initUI() {
-        addText("Play Screen");
+    public void initialiseUI() {
+    	createText("Play Screen");
     }
 
     @Override

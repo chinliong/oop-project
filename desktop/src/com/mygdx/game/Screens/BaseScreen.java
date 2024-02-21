@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameMaster;
 
 public abstract class BaseScreen implements Screen {
-    // i will use protected cos i only want my child classes to access this
     protected GameMaster game;
     protected Stage stage;
 
@@ -20,19 +19,15 @@ public abstract class BaseScreen implements Screen {
         stage = new Stage(new ScreenViewport()); // actually idk if i should new screenviewport or mygame viewport
     }
 
-    protected abstract void initUI();
+    protected abstract void initialiseUI();
 
+    //set stage as input processor to send input to stage
     @Override
     public void show() {
-        //this is to set the stage as the input processor, so it will
-        //send the input to the stage
         Gdx.input.setInputProcessor(stage);
     }
 
-
-
-
-    protected void addButton(String text, float x, float y, ClickListener listener){
+    protected void createButton(String text, float x, float y, ClickListener listener){
         // this is like a template to adda button to the stage
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = game.getFont(); // Assuming you have a method to get the font
@@ -41,11 +36,10 @@ public abstract class BaseScreen implements Screen {
         button.addListener(listener);
         stage.addActor(button);
 
-
     }
 
-    //add a text in the middle top of the screen
-    protected void addText(String text){
+    //Function to add text at the top middle of the screen
+    protected void createText(String text){
        // game.getFont().draw(game.batch, text, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = game.getFont();

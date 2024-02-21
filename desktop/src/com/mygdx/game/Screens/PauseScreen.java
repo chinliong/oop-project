@@ -3,15 +3,14 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.GameMaster;
+//The pausescreen will have 3 buttons, calling the createButton() function, to go to play screen, main 
+//screen of exit.
 
 public class PauseScreen extends BaseScreen {
-    // i will have 3 buttons here, go back to play screen, go to main screen, exit,
-    // dispose will call the enttiy manager's dispose to dispose the entities
-
 
     public PauseScreen(GameMaster game) {
         super(game);
-        initUI();
+        initualiseUI();
     }
 
     @Override
@@ -21,8 +20,8 @@ public class PauseScreen extends BaseScreen {
     }
 
     @Override
-    protected void initUI() {
-        addButton("Resume", 100, 100, new ClickListener() {
+    protected void initualiseUI() {
+    	createButton("Resume", 100, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
             	game.getAudioManager().getMusic().play();
@@ -31,7 +30,7 @@ public class PauseScreen extends BaseScreen {
             }
         });
 
-        addButton("Main Menu", 100, 200, new ClickListener() {
+        createButton("Main Menu", 100, 200, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 //game.getEntityManager().disposeEntities();
@@ -45,7 +44,7 @@ public class PauseScreen extends BaseScreen {
         });
 
 
-        addButton("Exit", 100, 300, new ClickListener() {
+        createButton("Exit", 100, 300, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Gdx.app.exit();

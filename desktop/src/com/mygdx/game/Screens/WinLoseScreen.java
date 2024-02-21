@@ -10,7 +10,7 @@ public class WinLoseScreen extends BaseScreen{
     public WinLoseScreen(GameMaster game, boolean win) {
         super(game);
         this.win = win;
-        initUI();
+        initialiseUI();
     }
 
     @Override
@@ -18,16 +18,16 @@ public class WinLoseScreen extends BaseScreen{
         super.show();
 
     }
-    public void initUI() {
+    public void initialiseUI() {
         if (win) {
-            addText("You Win");
+        	createText("You Win");
             
         } else {
-            addText("You Lose");
+        	createText("You Lose");
         }
 
 
-        addButton("Main Menu", 100, 100, new ClickListener() {
+        createButton("Main Menu", 100, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
@@ -35,7 +35,7 @@ public class WinLoseScreen extends BaseScreen{
             }
         });
 
-        addButton("Exit", 100, 200, new ClickListener() {
+        createButton("Exit", 100, 200, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Gdx.app.exit();

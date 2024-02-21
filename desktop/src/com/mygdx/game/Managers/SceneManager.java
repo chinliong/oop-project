@@ -1,4 +1,4 @@
-package com.mygdx.game.Managers;
+ package com.mygdx.game.Managers;
 
 import com.badlogic.gdx.utils.reflect.ArrayReflection;
 import com.mygdx.game.GameMaster;
@@ -10,12 +10,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-//manages what screens to load,
 // instances of screens should not be created instantly but instead be created when needed
 // so i need to have a method that creates a new instance of a screen when needed
 public class SceneManager {
     private List<Screen> screens;
-    private GameMaster game; //game object
+    private GameMaster game; 
 
 
     public SceneManager(GameMaster game){

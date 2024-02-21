@@ -44,7 +44,7 @@ public class GameMaster extends Game {
     }
     @Override
     public void render() {
-
+    	
         ScreenUtils.clear(0, 0, 0.2f, 1);
         super.render(); //this is to delegate the render method to the current screen by calling the render method of the current screen
     }
