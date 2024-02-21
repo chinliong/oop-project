@@ -89,7 +89,7 @@ public class PlayScreen extends BaseScreen {
 
     private void checkGameConditions() {
         pauseScreenIfRequested();
-        checkForCollision();
+        game.getCollisionManager().checkForCollision(game);
         checkWinCondition();
     }
 
@@ -97,33 +97,6 @@ public class PlayScreen extends BaseScreen {
         if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
             game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
             game.getAudioManager().getMusic("Gameplay").stop();
-        }
-    }
-
-    private void checkForCollision() {
-        Player playerEntity = null;
-        for (Entity entity : game.getEntityManager().getEntities()) {
-            if (entity instanceof Player) {
-                playerEntity = (Player) entity; // if is type player = typecast it
-                break; 
-            }
-        }
-
-        if (playerEntity == null) return; // No player found, so exit the method
-
-        for (Entity entity : game.getEntityManager().getEntities()) {
-            if (entity instanceof AI) {
-                AI aiEntity = (AI) entity;
-  
-                int distance = 30; 
-                // if player and AI  < distance = collide
-                if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
-                    Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) {
-                    game.getAudioManager().playSound();
-                    game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, false);
-                    return;
-                }
-            }
         }
     }
     
