@@ -49,7 +49,8 @@ public class PlayScreen extends BaseScreen {
     }
 
     private void handleInput() {
-    	if(game.getInputOutputManager().getInputMouse().mousePressed()){ 
+    	if(game.getInputOutputManager().getInputMouse().mousePressed()){  // check if mouse pressed
+    		
             if(game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
                 game.getInputOutputManager().getInputMouse().setInputReceived(true);
                 game.getInputOutputManager().getOutput().onPressLMB(Buttons.LEFT, game.getInputOutputManager().getInputMouse().getInputReceived());
@@ -59,6 +60,7 @@ public class PlayScreen extends BaseScreen {
                 game.getInputOutputManager().getInputMouse().setInputReceived(true);
                 game.getInputOutputManager().getOutput().onPressRMB(Buttons.RIGHT, game.getInputOutputManager().getInputMouse().getInputReceived());
             }
+            
         }
     }
 
@@ -89,7 +91,7 @@ public class PlayScreen extends BaseScreen {
     }
 
     private void pauseScreenIfRequested() {
-        if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+        if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
             game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
             game.getAudioManager().getMusic().stop();
         }
