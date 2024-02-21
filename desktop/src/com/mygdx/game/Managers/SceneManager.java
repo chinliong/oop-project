@@ -9,9 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
-// instances of screens should not be created instantly but instead be created when needed
-// so i need to have a method that creates a new instance of a screen when needed
+//Screen instances are created when needed, not all are created at the start
 public class SceneManager {
     private List<Screen> screens;
     private GameMaster game; 
@@ -22,22 +20,22 @@ public class SceneManager {
         this.screens = new ArrayList<>();
     }
 
+    //Check if screens list is empty, if so create with MainScreen. If not empty, set screen as last screen in list
     public void setScreen(){
-        //check if screenlist is empty
         if (screens.isEmpty()) {
             screens.add(createScreen(MainScreen.class));
         }
-        game.setScreen(screens.get(screens.size() - 1)); //set the last screen in the list
+        game.setScreen(screens.get(screens.size() - 1)); 
     }
 
 
     public void setScreen(Screen screen) {
-     //   System.out.println("screen setting is now getting called by my sceneManager class instead");
         game.setScreen(screen);
     }
 
-
-
+    //Loops through 'screens' list and checks if class object of current screen mathches the class object passed in parameter
+    //If it matches, return screen with object type 'T',
+    //If no match, create new screen
     public <T extends Screen> T getScreen(Class<T> type) {
         for (Screen screen : screens) {
             if (screen.getClass().equals(type)) {
@@ -46,16 +44,13 @@ public class SceneManager {
         }
         try {
             T screen = type.cast(createScreen(type));
-
-            //T screen = type.getConstructor(GameMaster.class).newInstance(game);
-           // screens.add(screen); // Add the newly created screen to the list
-            return screen; // Return the newly created screen
+            return screen; 
         } catch (Exception e) {
             throw new RuntimeException("Failed to create screen: " + type.getName(), e);
         }
     }
 
-    //removeScreen method
+ 
     public void removeScreen(Class<? extends Screen> type) {
         for (Screen screen : screens) {
             if (screen.getClass().equals(type)) {
