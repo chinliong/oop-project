@@ -6,15 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TextureLoader {
-    public static final Map< String, Texture> nonPlayableTextures = new HashMap<>();
+    public static final Map< String, Texture> characterTextures = new HashMap<>();
 
 
     public static Texture loadTexture(String textureName) {
-        if (nonPlayableTextures.containsKey(textureName)) {
-            return nonPlayableTextures.get(textureName);
-        }
         Texture texture = new Texture(textureName + ".png");
-        nonPlayableTextures.put(textureName, texture);
+        characterTextures.put(textureName, texture);
         return texture;
     }
 }
