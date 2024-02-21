@@ -74,13 +74,13 @@ public class PlayScreen extends BaseScreen {
           // .get will loop through ArrayList's index to draw each entity in entitylist
             game.getEntityManager().getEntities().get(i).draw(game.batch);
 
-            if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { //if ... and a keyboard input is detected using keyPressed() from InputKeyboard
-                if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { //if the right arrow key button was pressed using a keyboard, ifRightPressed() from InputKeyboard will return true
+            if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
+                if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
                     game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.RIGHT);
-                } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()==true) { //else if the left arrow key button was pressed using a keyboard, ifLeftPressed() from InputKeyboard will return true
+                } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()==true) { 
                     game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.LEFT);                    
                 } 
-                else if (game.getInputOutputManager().getInputKeyboard().ifWPressed()==true) { //else if the W key button was pressed using a keyboard, ifWPressed() from InputKeyboard will return true
+                else if (game.getInputOutputManager().getInputKeyboard().ifWPressed()==true) { 
                     game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
                 }
                 
