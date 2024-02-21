@@ -73,10 +73,12 @@ public class PlayScreen extends BaseScreen {
     }
 
     private void drawEntities() {
-    	//loop through the entities and draw them
+    	//loop through all entities
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
+        	
+        	//Move AI entities to the left up to distance of 800 and speed of 1
             game.getAIControlManager().getMoveHorizontal().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
-          // .get will loop through ArrayList's index to draw each entity in entitylist
+            //Loop through ArrayList's index to draw each entity in entitylist
             game.getEntityManager().getEntities().get(i).draw(game.batch);
 
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 

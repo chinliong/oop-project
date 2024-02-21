@@ -8,7 +8,7 @@ public class AI extends Entity{
 
     public AI() {
         //coordinates are randomly generated within the game screen
-        super("whale.png", (int)(Math.random() * 800), (int)(Math.random() * 500));
+        super("whale.png", (800), (int)(Math.random() * 500));
         this.AIObject = "whale.png"; //default AIObject
     }
 
