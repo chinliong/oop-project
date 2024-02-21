@@ -10,21 +10,21 @@ import com.mygdx.game.Screens.WinLoseScreen;
 import java.util.List;
 
 public class CollisionManager {
-    private int proximityRange; // The range within which entities are considered to be in proximity
+    private int collisionRange; // The range within which entities are considered to be in collision range
 
-    // Constructor initializes the collision manager with default proximity range
+    // Constructor initializes the collision manager with default collision range
     public CollisionManager() {
-        this.proximityRange = 0; // Default value, implying no range. Should be set explicitly.
+        this.collisionRange = 0; // Default value, implying no range. Should be set explicitly.
     }
 
     // Checks for and handles collisions between entities and with the screen bounds
     public boolean checkandHandleCollisions(GameMaster game, List<Entity> entities) {
-        // Iterate through all entity pairs to check proximity
+        // Iterate through all entity pairs to check collision range
         for (Entity entity1 : entities) {
             for (Entity entity2 : entities) {
-                // Ensure we're not comparing an entity to itself and check proximity
-                if (!entity1.equals(entity2) && checkProximity(entity1, entity2, proximityRange)) {
-                    // Proximity detected, handle specific collision scenarios
+                // Ensure we're not comparing an entity to itself and check range
+                if (!entity1.equals(entity2) && checkRange(entity1, entity2, collisionRange)) {
+                    // Range detected, handle specific collision scenarios
                     if (entity1 instanceof Player && entity2 instanceof AI ||
                             entity1 instanceof AI && entity2 instanceof Player) {
                         handlePlayerAICollision(game); // Handle collision between player and AI
@@ -44,14 +44,14 @@ public class CollisionManager {
     }
 
     // Checks if two entities are within a specified range of each other
-    private boolean checkProximity(Entity entity1, Entity entity2, int range) {
+    private boolean checkRange(Entity entity1, Entity entity2, int range) {
         return Math.abs(entity1.getPosX() - entity2.getPosX()) < range &&
                Math.abs(entity1.getPosY() - entity2.getPosY()) < range;
     }
 
     // Handles collision between the player and an AI
     private void handlePlayerAICollision(GameMaster game) {
-        System.out.println("Player and AI are within the range of " + proximityRange);
+        System.out.println("Player and AI are within the range of " + collisionRange);
         game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen
     }
 
@@ -61,13 +61,13 @@ public class CollisionManager {
         game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, true); // Transition to the win screen
     }
 
-    // Sets the proximity range for collision detection
-    public void setProximityRange(int proximityRange) {
-        this.proximityRange = proximityRange;
+    // Sets the collision range for collision detection
+    public void setCollisionRange(int collisionRange) {
+        this.collisionRange = collisionRange;
     }
 
-    // Returns the current proximity range
-    public int getProximityRange() {
-        return proximityRange;
+    // Returns the current collision range
+    public int getCollisionRange() {
+        return collisionRange;
     }
 }

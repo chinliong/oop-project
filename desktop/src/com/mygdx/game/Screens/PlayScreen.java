@@ -27,7 +27,7 @@ public class PlayScreen extends BaseScreen {
         game.getAudioManager().getMusic("Gameplay").setVolume(1.0f);
         game.getAudioManager().getMusic("Gameplay").play();
         game.getAudioManager().getMusic("Gameplay").isLooping();
-        game.getCollisionManager().setProximityRange(20);
+        game.getCollisionManager().setCollisionRange(30);
         game.getEntityManager().addEntity(new Player());
         game.getEntityManager().addEntity(new AI());
     }
