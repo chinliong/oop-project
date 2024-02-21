@@ -33,7 +33,7 @@ public class MainScreen extends BaseScreen {
     protected void initialiseUI(){
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = game.getFont();
-        TextButton button = new TextButton("Play", textButtonStyle);
+        TextButton button = new TextButton("Start", textButtonStyle);
 
         float buttonWidth = button.getWidth();
         float buttonHeight = button.getHeight();
@@ -42,7 +42,7 @@ public class MainScreen extends BaseScreen {
         float x = (Gdx.graphics.getWidth() - buttonWidth) / 2;
         float y = (Gdx.graphics.getHeight() - buttonHeight) / 2;
 
-        createButton("Play", x,y,new ClickListener() {
+        createButton("Start", x,y,new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
 
