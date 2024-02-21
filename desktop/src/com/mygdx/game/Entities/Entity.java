@@ -8,15 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 //entity abstract class
 public abstract class Entity{
-    private Texture entityImage;
+    protected Texture entityImage;
     
-    private int posX; //Y position of entity
-    private int posY; //Y position of entity
-    private int width = 90; // width of entity
-    private int height = 80; // height of entity
+    protected int posX; //Y position of entity
+    protected int posY; //Y position of entity
+    protected int width = 90; // width of entity
+    protected int height = 80; // height of entity
 
     private static int idCounter = 0 ;
-    private int id;
+    protected int id;
 
 
     public Entity(String entityImagePath, int posX, int posY) {

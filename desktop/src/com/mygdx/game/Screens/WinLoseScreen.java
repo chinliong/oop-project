@@ -37,7 +37,7 @@ public class WinLoseScreen extends BaseScreen{
             }
         });
 
-        createButton("Exit", 100, 200, new ClickListener() {
+        createButton("Exit", 200, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Gdx.app.exit();

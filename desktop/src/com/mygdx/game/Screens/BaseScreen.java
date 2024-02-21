@@ -4,12 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameMaster;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public abstract class BaseScreen implements Screen {
     protected GameMaster game;
@@ -42,7 +46,25 @@ public abstract class BaseScreen implements Screen {
         stage.addActor(button);
 
     }
+    protected void createImageButton(String imagePath, ClickListener listener) {
+        // Load the texture for the button image
+        Texture buttonTexture = new Texture(Gdx.files.internal(imagePath));
+        Drawable drawable = new TextureRegionDrawable(buttonTexture);
 
+        // Create the ImageButtonStyle
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = drawable; // Set the image to be used for the button's default state
+
+        // Create the ImageButton
+        ImageButton imageButton = new ImageButton(imageButtonStyle);
+        float x = (Gdx.graphics.getWidth() - imageButton.getWidth()) / 2;
+        float y = (Gdx.graphics.getHeight() - imageButton.getHeight()) / 2;
+        imageButton.setPosition(x, y); // Position the button on the screen
+        imageButton.addListener(listener); //
+        // Add the button to the stage
+        stage.addActor(imageButton);
+    }
+    
     //Function to add text at the top middle of the screen
     protected void createText(String text){
         Label.LabelStyle labelStyle = new Label.LabelStyle();

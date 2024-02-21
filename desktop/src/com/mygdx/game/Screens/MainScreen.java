@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameMaster;
-import com.badlogic.gdx.Gdx;
 
 public class MainScreen extends BaseScreen { 
 
@@ -29,37 +28,50 @@ public class MainScreen extends BaseScreen {
         game.getAudioManager().getMusic("MainMenu").isLooping();
     }
 
-    //Setup UI
-    @Override
-    protected void initialiseUI(){
-    	//Create Button to get dimension
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = game.getFont();
-        TextButton button = new TextButton("Start", textButtonStyle);
-        float buttonHeight = button.getHeight();
-        float buttonWidth = button.getWidth();
-        //Remove button after getting width and height
-        button.remove(); 
+//    //Setup UI
+//    @Override
+//    protected void initialiseUI(){
+//    	//Create Button to get dimension
+//        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+//        textButtonStyle.font = game.getFont();
+//        TextButton button = new TextButton("Start", textButtonStyle);
+//        float buttonHeight = button.getHeight();
+//        float buttonWidth = button.getWidth();
+//        //Remove button after getting width and height
+//        button.remove(); 
+//
+//        float x = (Gdx.graphics.getWidth() - buttonWidth) / 2;
+//        float y = (Gdx.graphics.getHeight() - buttonHeight) / 2;
+//
+//        //Create button for user to start game and go into playscreen
+//        createButton("Start", x,y,new ClickListener() {
+//            @Override
+//            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {         
+//                game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
+//                game.getAudioManager().getMusic("MainMenu").stop();
+//                System.out.println("Play button clicked");
+//          
+//            }
+//        });
 
-        float x = (Gdx.graphics.getWidth() - buttonWidth) / 2;
-        float y = (Gdx.graphics.getHeight() - buttonHeight) / 2;
+    	//Setup UI
+        @Override
+        protected void initialiseUI() {
+ 
 
-        //Create button for user to start game and go into playscreen
-        createButton("Start", x,y,new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {         
-                game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-                game.getAudioManager().getMusic("MainMenu").stop();
-                System.out.println("Play button clicked");
-          
-            }
-        });
-
-
-
-
-    }
-
-
-
+            // Add a ClickListener to the button
+        	createImageButton("playBut.png", new ClickListener() {
+        	    @Override
+        	    public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+        	        // Handle the click event
+        	    	game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
+                  game.getAudioManager().getMusic("MainMenu").stop();
+        	        System.out.println("ImageButton clicked");
+        	    }
+        	});
+        }
 }
+
+
+
+
