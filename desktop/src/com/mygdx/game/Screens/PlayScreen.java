@@ -3,6 +3,7 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
@@ -13,6 +14,7 @@ public class PlayScreen extends BaseScreen {
 
     public PlayScreen(GameMaster game) {
         super(game);
+        setBgColour(Color.SKY);
         initialiseUI();
     }
 
@@ -34,7 +36,6 @@ public class PlayScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        clearScreen();
         super.stage.act(delta);
         super.stage.draw();
         
@@ -46,10 +47,6 @@ public class PlayScreen extends BaseScreen {
         checkGameConditions();
     }
 
-    private void clearScreen() {
-        Gdx.gl.glClearColor(0, 0, 1, 1);
-        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
-    }
 
     private void handleInput() {
     	if(game.getInputOutputManager().getInputMouse().mousePressed()){  // check if mouse pressed

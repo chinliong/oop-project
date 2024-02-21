@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,8 +15,8 @@ public class MainScreen extends BaseScreen {
 
     public MainScreen(GameMaster game) {
         super(game);
+        setBgColour(Color.TEAL);
         initialiseUI();
-
         }
 
 

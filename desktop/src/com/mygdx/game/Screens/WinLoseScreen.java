@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.GameMaster;
 
@@ -9,6 +10,7 @@ public class WinLoseScreen extends BaseScreen{
 
     public WinLoseScreen(GameMaster game, boolean win) {
         super(game);
+        setBgColour(Color.TEAL);
         this.win = win;
         initialiseUI();
     }
