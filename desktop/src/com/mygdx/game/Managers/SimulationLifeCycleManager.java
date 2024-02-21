@@ -62,15 +62,15 @@ public class SimulationLifeCycleManager {
     public void disposeEntities(List<Entity> entities){
         for(Entity entity: entities){
             entity.dispose();
-            System.out.println("Entity has been disposed");
+            System.out.println("Entities are disposed");
         }
 
         entities.clear(); //clear the entities list
         //check if the entities list is empty
         if(entities.isEmpty()){
-            System.out.println("Entities list is empty");
+            System.out.println("Empty");
         } else {
-            System.out.println("Entities list is not empty");
+            System.out.println("Not Empty");
         }
     }
     
@@ -79,7 +79,7 @@ public class SimulationLifeCycleManager {
         if (entities.contains(entityToDispose)) {
             entityToDispose.dispose(); // Dispose the specified entity
             entities.remove(entityToDispose); // Remove it from the list
-            System.out.println("Entity has been disposed");
+            System.out.println("Entity is disposed");
         }
     }
 
