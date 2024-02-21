@@ -27,7 +27,7 @@ public abstract class BaseScreen implements Screen {
     	this.bgColour = colour;
     }
 
-    //set stage as input processor to send input to stage
+    //Route all user input to stage
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
