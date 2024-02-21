@@ -11,22 +11,22 @@ import java.util.List;
 
 //Manages the creation and lifecycle of game screens to ensure they are instantiated when needed
 public class SceneManager {
-    private List<Screen> screens; // List to keep track of instantiated screens
+    private List<Screen> screenList; // List to keep track of instantiated screens
     private GameMaster game; 
 
     // Constructor initializes the scene manager with a reference to the GameMaster
     public SceneManager(GameMaster game){
         this.game = game;
-        this.screens = new ArrayList<>();
+        this.screenList = new ArrayList<>();
     }
     
     // Sets the last screen in the list as the current screen, creating the MainScreen if no screens exist
     public void setScreen(){
     	 // If no screens have been created yet, create and add the MainScreen
-        if (screens.isEmpty()) {
-            screens.add(createScreen(MainScreen.class));
+        if (screenList.isEmpty()) {
+        	screenList.add(createScreen(MainScreen.class));
         }
-        game.setScreen(screens.get(screens.size() - 1)); // Set the game's current screen to the last one in the list
+        game.setScreen(screenList.get(screenList.size() - 1)); // Set the game's current screen to the last one in the list
     }
 
     // Overloaded method to directly set a specific screen as the current one
@@ -38,7 +38,7 @@ public class SceneManager {
 
     // Retrieves an existing screen of the specified type, or creates a new one if it does not exist
     public <T extends Screen> T getScreen(Class<T> type) {
-        for (Screen screen : screens) {
+        for (Screen screen : screenList) {
             if (screen.getClass().equals(type)) {
                 return (T) screen;
             }
@@ -54,9 +54,9 @@ public class SceneManager {
 
     // Removes a screen of the specified type from the list
     public void removeScreen(Class<? extends Screen> type) {
-        for (Screen screen : screens) {
+        for (Screen screen : screenList) {
             if (screen.getClass().equals(type)) {
-                screens.remove(screen);
+            	screenList.remove(screen);
                 return;
             }
         }
@@ -81,7 +81,7 @@ public class SceneManager {
             constructorArgs[0] = game;
             System.arraycopy(args, 0, constructorArgs, 1, args.length);
             Screen screen = constructor.newInstance(constructorArgs);
-            screens.add(screen); // Add the new screen to the list
+            screenList.add(screen); // Add the new screen to the list
             return screen; // Return the newly created screen for immediate use
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
