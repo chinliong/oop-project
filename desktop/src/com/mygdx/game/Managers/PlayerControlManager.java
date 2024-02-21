@@ -31,11 +31,4 @@ public class PlayerControlManager {
 	}
 
 
-	public void interact() {
-
-	}
-
-	public void run() {
-
-	}
 }
