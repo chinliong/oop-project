@@ -3,7 +3,8 @@ package com.mygdx.game.InputOutput;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 
-public class Output {
+public class Output { 
+	// handles output based on specific input events
 
 	public boolean onPressEsc(int key, boolean properKey) {
 		if (key == Keys.ESCAPE && properKey) {
