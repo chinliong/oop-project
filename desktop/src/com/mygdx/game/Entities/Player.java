@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Player extends  Entity {
 
     public Player() {
-        super(new Texture("fish.png"), 0, 10);
+        super(TextureLoader.loadTexture("fish"), 0, 10);
     }
 
     @Override

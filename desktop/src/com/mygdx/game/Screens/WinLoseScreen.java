@@ -22,10 +22,10 @@ public class WinLoseScreen extends BaseScreen{
     }
     public void initialiseUI() {
         if (win) {
-        	createText("You Win");
+        	createText("YOU WIN");
             
         } else {
-        	createText("You Lose");
+        	createText("YOU LOSE");
         }
 
 
@@ -50,6 +50,5 @@ public class WinLoseScreen extends BaseScreen{
     public void hide() {
         //remove this screen from the list of screens
         game.getSceneManager().removeScreen(WinLoseScreen.class);
-        System.out.println("Lose Screen is being removed through the hide function!");
     }
 }

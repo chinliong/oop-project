@@ -22,10 +22,7 @@ public class GameMaster extends Game {
     private AIControlManager AIControlManager;
     private PlayerControlManager playerControlManager;
     private AudioManager audioManager;
-
-
     private SimulationLifeCycleManager simulationLifeCycleManager;
-
     private CollisionManager collisionManager;
 
     @Override
@@ -50,7 +47,7 @@ public class GameMaster extends Game {
     }
     @Override
     public void dispose() {
-        System.out.println("GameMaster disposing of resources");
+        System.out.println("GameMaster disposing resources");
         font.dispose();
         batch.dispose();
         simulationLifeCycleManager.disposeEntities(entityManager.getEntities());
