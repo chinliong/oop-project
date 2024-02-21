@@ -28,7 +28,7 @@ public abstract class BaseScreen implements Screen {
     }
 
     protected void createButton(String text, float x, float y, ClickListener listener){
-        // this is like a template to adda button to the stage
+        // this is like a template to add a button to the stage
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = game.getFont(); // Assuming you have a method to get the font
         TextButton button = new TextButton(text, textButtonStyle);

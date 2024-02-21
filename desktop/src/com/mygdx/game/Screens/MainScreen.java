@@ -28,29 +28,29 @@ public class MainScreen extends BaseScreen {
         game.getAudioManager().getMusic("MainMenu").isLooping();
     }
 
-    //Overriding the initUI from base
+    //This will override the initialiseUI from base
     @Override
     protected void initialiseUI(){
+    	//Create Button to get dimension
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = game.getFont();
         TextButton button = new TextButton("Start", textButtonStyle);
-
-        float buttonWidth = button.getWidth();
         float buttonHeight = button.getHeight();
-        button.remove(); // Remove the button as we only needed it to get the dimensions
+        float buttonWidth = button.getWidth();
+        //Remove button after getting width and height
+        button.remove(); 
 
         float x = (Gdx.graphics.getWidth() - buttonWidth) / 2;
         float y = (Gdx.graphics.getHeight() - buttonHeight) / 2;
 
+        //Create button for user to start game and go into playscreen
         createButton("Start", x,y,new ClickListener() {
             @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-
-                //game.getSceneManager().setScreen(game.getSceneManager().getPlayScreen(true));
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {         
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-                game.getAudioManager().getMusic("MainMenu").stop(); //stop the music
-                System.out.println("play button clicked while extending base screen");
-                //dispose();
+                game.getAudioManager().getMusic("MainMenu").stop();
+                System.out.println("Play button clicked");
+          
             }
         });
 
