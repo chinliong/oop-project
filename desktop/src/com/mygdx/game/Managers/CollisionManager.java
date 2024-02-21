@@ -37,7 +37,7 @@ public class CollisionManager {
         // Check if the player has moved outside the screen bounds
         Player player = (Player) game.getEntityManager().checkClass(Player.class);
         if (player.getPosX() > Gdx.graphics.getWidth() || player.getPosY() > Gdx.graphics.getHeight()) {
-            handlePlayerFlee(game); // Handle player fleeing the screen
+            handlePlayerFled(game); // Handle player fleeing the screen
             return true; // Indicate that a collision was handled
         }
         return false; // No collisions were handled
@@ -56,8 +56,8 @@ public class CollisionManager {
     }
 
     // Handles scenario when the player moves out of the screen bounds
-    private void handlePlayerFlee(GameMaster game) {
-        System.out.println("Player has flee");
+    private void handlePlayerFled(GameMaster game) {
+        System.out.println("Player has fled");
         game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, true); // Transition to the win screen
     }
 
