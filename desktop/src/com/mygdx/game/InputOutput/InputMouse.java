@@ -3,7 +3,8 @@ package com.mygdx.game.InputOutput;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 
-public class InputMouse extends Input {
+public class InputMouse extends Input { // extends abstract Input class
+	// handle mouse inputs
 
 	public boolean isLMBPressed(int input) {
 		if (mousePressed() && input == Buttons.LEFT)
@@ -19,21 +20,18 @@ public class InputMouse extends Input {
 			return false;
 	}
 
-	// check if a keyboard button was pressed, since this is using a mouse, always
-	// return false
 	@Override
 	public boolean keyPressed() {
-		// Not applicable for mouse
-		return false;
+		return false; // key press events are not handled by this class
 	}
 
-	// check if a mouse button was pressed, since this is using a mouse, always
-	// return true
+
 	@Override
 	public boolean mousePressed() {
-		return true;
+		return true; // always true as mouse press events is handled by this class
 	}
 
+	// check if pressed
 	public boolean ifLMBPressed() {
 		return Gdx.input.isButtonJustPressed(Buttons.LEFT);
 	}
@@ -44,15 +42,15 @@ public class InputMouse extends Input {
 
 	public int getLMBPressed(boolean correctButton) {
 		if (correctButton == true) {
-			return Buttons.LEFT;
+			return Buttons.LEFT; // return code for left mouse button 
 		} else
-			return -1;
+			return -1; // no valid button press
 	}
 
 	public int getRMBPressed(boolean correctButton) {
 		if (correctButton == true) {
-			return Buttons.RIGHT;
+			return Buttons.RIGHT; // return code for left mouse button 
 		} else
-			return -1;
+			return -1; // no valid button press
 	}
 }
