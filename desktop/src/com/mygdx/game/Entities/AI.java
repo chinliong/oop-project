@@ -9,47 +9,47 @@ import java.util.Map;
 
 public class AI extends Entity implements NonPlayable{
 
-    private int awarenessRange;
-    private String enemyType;
+    private int situationalRadius;
+    private String AIObject;
 
     //private static final Map<String, Texture> enemyTextures = new HashMap<>();
 
     public AI() {
         //coordinates are randomly generated within the game screen
-        super(TextureLoader.loadTexture("guard"), (int)(Math.random() * 800), (int)(Math.random() * 500));
-        this.awarenessRange = 100;
-        this.enemyType = "guard"; //default enemy type
+        super(TextureLoader.loadTexture("whale"), (int)(Math.random() * 800), (int)(Math.random() * 500));
+        this.situationalRadius = 100;
+        this.AIObject = "whale"; //default enemy type
 
 
     }
 
-    public AI(String enemyType, int awarenessRange) {
-        super(TextureLoader.loadTexture(enemyType), (int)(Math.random() * 800), (int)(Math.random() * 500));
-        this.awarenessRange = awarenessRange;
-        this.enemyType = enemyType;
+    public AI(String AIObject, int situationalRadius) {
+        super(TextureLoader.loadTexture(AIObject), (int)(Math.random() * 800), (int)(Math.random() * 500));
+        this.situationalRadius = situationalRadius;
+        this.AIObject = AIObject;
 
 
-        System.out.println("Created Enemy type: " + enemyType);
-        System.out.print("Awareness range: " + awarenessRange);
-        System.out.println(" X: " + this.getPosX() + " Y: " + this.getPosY());
+        //System.out.println("Created AI object: " + AIObject);
+        //System.out.print("Situational Radius: " + situationalRadius);
+        //System.out.println(" X: " + this.getPosX() + " Y: " + this.getPosY());
     }
 
-    public int getAwarenessRange() {
-        return awarenessRange;
+    public int getSituationalRadius() {
+        return situationalRadius;
     }
 
-    public void setAwarenessRange(int awarenessRange) {
-        this.awarenessRange = awarenessRange;
+    public void setSituationalRadius(int situationalRadius) {
+        this.situationalRadius = situationalRadius;
     }
 
     @Override
     public String getSubType() {
-        return enemyType;
+        return AIObject;
     }
 
     @Override
     public void setSubType(String subType) {
-        this.enemyType = subType;
+        this.AIObject = subType;
     }
 
 }
