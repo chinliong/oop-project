@@ -5,24 +5,25 @@ import com.mygdx.game.GameMaster;
 import com.mygdx.game.Screens.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-//import com.sun.java.swing.plaf.windows.resources.windows;
 
 import java.util.List;
 
 
 public class SimulationLifeCycleManager {
-    private GameMaster game;
+    private GameMaster game; // Reference to the main game controller
 
 
-    //screen with boolean to check true or false
+
+    // Flags to manage visibility of different game screens
     private boolean showMenuScreen;
     private boolean showPlayScreen;
     private boolean showEndScreen;
     
 
-
+    // Constructor to initialize the lifecycle manager with a reference to the GameMaster
     public SimulationLifeCycleManager(GameMaster game){
         this.game = game;
+        // Initialize all screen visibility flags to false
         this.showMenuScreen = false;
         this.showPlayScreen = false;
         this.showEndScreen = false;
@@ -30,7 +31,7 @@ public class SimulationLifeCycleManager {
 
 
 
-    // Getter and Setter for showMenuScreen
+    // Getter and Setter for menu screen visibility
     public boolean isShowMenuScreen() {
         return showMenuScreen;
     }
@@ -39,7 +40,7 @@ public class SimulationLifeCycleManager {
         this.showMenuScreen = showMenuScreen;
     }
 
-     // Getter and Setter for showPlayScreen
+    // Getter and Setter for play screen visibility
      public boolean isShowPlayScreen() {
         return showPlayScreen;
     }
@@ -48,7 +49,7 @@ public class SimulationLifeCycleManager {
         this.showPlayScreen = showPlayScreen;
     }
 
-    // Getter and Setter for showEndScreen
+    // Getter and Setter for end screen visibility
     public boolean isShowEndScreen() {
         return showEndScreen;
     }
@@ -57,7 +58,7 @@ public class SimulationLifeCycleManager {
         this.showEndScreen = showEndScreen;
     }
     
-    //for my understanding it loops and remove all the entities, but what if only need remove one entity?
+    // Dispose all entities from a list
     public void disposeEntities(List<Entity> entities){
         for(Entity entity: entities){
             entity.dispose();
@@ -72,35 +73,36 @@ public class SimulationLifeCycleManager {
             System.out.println("Entities list is not empty");
         }
     }
-
+    
+    // Dispose a single specified entity from the list
     public void disposeEntities(List<Entity> entities, Entity entityToDispose) {
         if (entities.contains(entityToDispose)) {
-            entityToDispose.dispose();
-            entities.remove(entityToDispose);
+            entityToDispose.dispose(); // Dispose the specified entity
+            entities.remove(entityToDispose); // Remove it from the list
             System.out.println("Entity has been disposed");
         }
     }
 
-    // resetting entities instead of disposing them
+    // Reset entities by clearing the list, possibly for reuse or reinitialization
     public void resetEntities(List<Entity> entities){
         entities.clear(); //clear the entities list
         }
 
 
 
-    //Screen transition logic
-
+ // Screen transition logic with the ability to pass additional arguments for specific screens
     public void transitionToScreen(Class<? extends BaseScreen> screenClass, Object... args) {
-        //if its the winlosescreen, i will definitely have additional arguments to see if the player won or lost
+        // Special handling for transitioning to WinLoseScreen with arguments to indicate win/loss
         if (screenClass.equals(WinLoseScreen.class)) {
             if (args.length > 0) {
-                boolean win = (boolean) args[0];
+                boolean win = (boolean) args[0]; // Determine win or loss based on argument
+                // Transition to the screen with the win/loss state
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, win));
-                resetEntities(this.game.getEntityManager().getEntities());
-                game.getAudioManager().getMusic().stop();
+                resetEntities(this.game.getEntityManager().getEntities()); // Reset entities for new game state
+                game.getAudioManager().getMusic().stop(); // Stop current game music
             }
             else {
-                //something is wrong so i will auto pass lost
+                // Default to loss if no arguments provided, indicating an error or oversight
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, false));
                 resetEntities(this.game.getEntityManager().getEntities());
                 game.getAudioManager().getMusic().stop();
