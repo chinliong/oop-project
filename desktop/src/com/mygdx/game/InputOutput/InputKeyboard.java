@@ -16,11 +16,6 @@ public class InputKeyboard extends Input { // extends abstract Input class
     }
 
     // check if specific keys are pressed
-    public boolean isWPressed(int input){
-        if (keyPressed() && input == Keys.W) return true;
-        else return false;
-    }
-
     public boolean isLeftPressed(int input){
         if (keyPressed() && input == Keys.LEFT) return true;
         else return false;
@@ -43,10 +38,6 @@ public class InputKeyboard extends Input { // extends abstract Input class
 
     public boolean ifRightPressed(){
         return Gdx.input.isKeyPressed(Keys.RIGHT);
-    }
-
-    public boolean ifWPressed(){
-        return Gdx.input.isKeyPressed(Keys.W);
     }
 
     public boolean ifEscPressed(){

@@ -77,10 +77,12 @@ public class PlayScreen extends BaseScreen {
                 } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()==true) { 
                     game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.LEFT);                    
                 } 
-                else if (game.getInputOutputManager().getInputKeyboard().ifWPressed()==true) { 
+                else if (game.getInputOutputManager().getInputKeyboard().ifUpPressed()==true) { 
                     game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
                 }
-                
+                else if (game.getInputOutputManager().getInputKeyboard().ifDownPressed()==true) { 
+                    game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
+                }
             }
         }
     }
