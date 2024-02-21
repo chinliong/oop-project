@@ -10,8 +10,8 @@ public abstract class Entity{
     
     private int posX; //Y position of entity
     private int posY; //Y position of entity
-    private int width = 50; // width of entity
-    private int height = 50; // height of entity
+    private int width = 90; // width of entity
+    private int height = 80; // height of entity
 
     private static int idCounter = 0 ;
     private int id;

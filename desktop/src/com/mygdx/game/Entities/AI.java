@@ -16,7 +16,7 @@ public class AI extends Entity implements NonPlayable{
 
     public AI() {
         //coordinates are randomly generated within the game screen
-        super(TextureLoader.loadTexture("guard"), (int)(Math.random() * 800), (int)(Math.random() * 500));
+        super(TextureLoader.loadTexture("whale"), (int)(Math.random() * 800), (int)(Math.random() * 500));
         this.awarenessRange = 100;
         this.enemyType = "guard"; //default enemy type
 

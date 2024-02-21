@@ -116,7 +116,7 @@ public class PlayScreen extends BaseScreen {
             if (entity instanceof AI) {
                 AI aiEntity = (AI) entity;
   
-                int distance = 45; 
+                int distance = 30; 
                 // if player and AI  < distance = collide
                 if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
                     Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) {
