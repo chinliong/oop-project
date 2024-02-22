@@ -13,7 +13,7 @@ public abstract class Entity{
     protected int posX; //Y position of entity
     protected int posY; //Y position of entity
     protected int width = 90; // width of entity
-    protected int height = 80; // height of entity
+    protected int height = 60; // height of entity
 
     private static int idCounter = 0 ;
     protected int id;

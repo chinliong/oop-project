@@ -30,7 +30,7 @@ public class PlayScreen extends BaseScreen {
         game.getAudioManager().getMusic("Gameplay").setVolume(1.0f);
         game.getAudioManager().getMusic("Gameplay").play();
         game.getAudioManager().getMusic("Gameplay").isLooping();
-        game.getCollisionManager().setCollisionRange(30);
+        game.getCollisionManager().setCollisionRange(24);
         
         //Check for existing entity before adding
         if (game.getEntityManager().checkClass(Player.class) == null) {
