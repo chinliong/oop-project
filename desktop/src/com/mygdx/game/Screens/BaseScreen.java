@@ -53,22 +53,30 @@ public abstract class BaseScreen implements Screen {
         stage.addActor(button);
 
     }
-    protected void createImageButton(String imagePath, ClickListener listener) {
-        // Load the texture for the button image
+    
+    //set imgbutton position
+    protected void createImageButton(String imagePath, ClickListener listener, float posX, float posY) {
+
         Texture buttonTexture = new Texture(Gdx.files.internal(imagePath));
         Drawable drawable = new TextureRegionDrawable(buttonTexture);
-
-        // Create the ImageButtonStyle
         ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
-        imageButtonStyle.up = drawable; // Set the image to be used for the button's default state
-
-        // Create the ImageButton
+        imageButtonStyle.up = drawable;
         ImageButton imageButton = new ImageButton(imageButtonStyle);
-        float x = (Gdx.graphics.getWidth() - imageButton.getWidth()) / 2;
-        float y = (Gdx.graphics.getHeight() - imageButton.getHeight()) / 2;
-        imageButton.setPosition(x, y); // Position the button on the screen
-        imageButton.addListener(listener); //
-        // Add the button to the stage
+        imageButton.setPosition(posX, posY);
+        imageButton.addListener(listener);
+        stage.addActor(imageButton);
+    }
+    
+    //set imgbutton size
+    protected void createImageButton(String imagePath, ClickListener listener, float width, float height, float posX, float posY) {
+        Texture buttonTexture = new Texture(Gdx.files.internal(imagePath));
+        Drawable drawable = new TextureRegionDrawable(buttonTexture);
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = drawable;
+        ImageButton imageButton = new ImageButton(imageButtonStyle);
+        imageButton.setSize(width, height);
+        imageButton.setPosition(posX, posY);
+        imageButton.addListener(listener);
         stage.addActor(imageButton);
     }
     

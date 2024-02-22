@@ -60,18 +60,15 @@ public class MainScreen extends BaseScreen {
     	//Setup UI
         @Override
         protected void initialiseUI() {
- 
-
-            // Add a ClickListener to the button
         	createImageButton("playBut.png", new ClickListener() {
-        	    @Override
-        	    public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-        	        // Handle the click event
-        	    	game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-                  game.getAudioManager().getMusic("MainMenu").stop();
-        	        System.out.println("ImageButton clicked");
-        	    }
-        	});
+                @Override
+                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                    // Handle the click event
+                    game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
+                    game.getAudioManager().getMusic("MainMenu").stop();
+                    System.out.println("ImageButton clicked");
+                }
+            }, 300, 200, 250, 200); //first 2 is size then position
         }
 }
 
