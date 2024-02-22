@@ -15,6 +15,13 @@ public class Directions extends Move{
     }
     public void setPosX(int new_posX){
         this.posX = new_posX;
+    }   
+
+    public int getPosY(){
+        return this.posY;
+    }
+    public void setPosY(int new_posY){
+        this.posY = new_posY;
     }
     
     public void moveLeft(AI entityAI, int speed, int posX){
@@ -26,14 +33,7 @@ public class Directions extends Move{
         entityAI.setPosX((int) (entityAI.getPosX() + speed)); 
         if(entityAI.getPosX()>=800) entityAI.setPosX(posX);
     }
-
-    public int getPosY(){
-        return this.posY;
-    }
-    public void setPosY(int new_posY){
-        this.posY = new_posY;
-    }
-    
+   
     public void moveDown(AI entityAI, int speed, int posY){
         entityAI.setPosY((int) (entityAI.getPosY() - speed * Gdx.graphics.getDeltaTime())); 
         if(entityAI.getPosY()== 0) entityAI.setPosY(posY);
