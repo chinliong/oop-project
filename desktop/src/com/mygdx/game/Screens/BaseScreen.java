@@ -75,6 +75,12 @@ public abstract class BaseScreen implements Screen {
 
         stage.addActor(label);
     }
+    
+    protected void startAudio(String audioName, float volume) {
+    	 game.getAudioManager().getMusic(audioName).setVolume(volume); 
+         game.getAudioManager().getMusic(audioName).play(); 
+         game.getAudioManager().getMusic(audioName).isLooping();
+    }
 
 
     @Override

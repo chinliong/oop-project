@@ -26,10 +26,8 @@ public class PlayScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-         
-        game.getAudioManager().getMusic("Gameplay").setVolume(1.0f);
-        game.getAudioManager().getMusic("Gameplay").play();
-        game.getAudioManager().getMusic("Gameplay").isLooping();
+        startAudio("Gameplay", 1.0f);
+       
         game.getCollisionManager().setCollisionRange(24);
         
         //Check for existing entity before adding

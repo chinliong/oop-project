@@ -23,9 +23,7 @@ public class MainScreen extends BaseScreen {
     public void show() {
         //set stage as input processor, set volume, play volume and loop it
         super.show();
-        game.getAudioManager().getMusic("MainMenu").setVolume(0.5f); 
-        game.getAudioManager().getMusic("MainMenu").play(); 
-        game.getAudioManager().getMusic("MainMenu").isLooping();
+       startAudio("MainMenu", 0.5f);
     }
 
 //    //Setup UI
