@@ -15,32 +15,6 @@ public class CollisionManager {
         this.collisionRange = 0; // Default value, implying no range. Should be set explicitly.
     }
     
-//    public void checkForCollision(GameMaster game) {
-//        Player playerEntity = null;
-//        for (Entity entity : game.getEntityManager().getEntities()) {
-//            if (entity instanceof Player) {
-//                playerEntity = (Player) entity; // if is type player = typecast it
-//                break; 
-//            }
-//        }
-//
-//        if (playerEntity == null) return; // No player found, so exit the method
-//
-//        for (Entity entity : game.getEntityManager().getEntities()) {
-//            if (entity instanceof AI) {
-//                AI aiEntity = (AI) entity;
-//                	//collisionRange value set at PlayScreen
-//                int distance = game.getCollisionManager().getCollisionRange(); 
-//                // if player and AI  < distance = collide
-//                if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
-//                    Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) {
-//                    game.getAudioManager().playSound();
-//                    handlePlayerAICollision(game);
-//                    return;
-//                }       
-//            }
-//        }
-//    }
     
     public void checkForCollision(SimulationLifeCycleManager game) {
         Player playerEntity = null;
@@ -69,11 +43,6 @@ public class CollisionManager {
         }
     }
 
-    // Handles collision between the player and an AI
-//    private void handlePlayerAICollision(GameMaster game) {
-//        System.out.println("Player and AI are within the range of " + collisionRange);
-//        game.getSceneManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen
-//    }
     private void handlePlayerAICollision(SimulationLifeCycleManager game) {
         System.out.println("Player and AI are within the range of " + collisionRange);
         game.getSceneManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen
