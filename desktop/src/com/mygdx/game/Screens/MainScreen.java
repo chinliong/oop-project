@@ -8,16 +8,21 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.GameMaster;
+//import com.mygdx.game.GameMaster;
+import com.mygdx.game.SimulationLifeCycleManager;
 
 public class MainScreen extends BaseScreen { 
 
-    public MainScreen(GameMaster game) {
+//    public MainScreen(GameMaster game) {
+//        super(game);
+//        setBgColour(Color.TEAL);
+//        initialiseUI();
+//        }
+    public MainScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.TEAL);
         initialiseUI();
         }
-
 
     @Override
     public void show() {

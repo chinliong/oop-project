@@ -3,13 +3,17 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.mygdx.game.GameMaster;
-//The pausescreen will have 3 buttons, calling the createButton() function, to go to play screen, main 
-//screen of exit.
+//import com.mygdx.game.GameMaster;
+import com.mygdx.game.SimulationLifeCycleManager;
 
 public class PauseScreen extends BaseScreen {
 
-    public PauseScreen(GameMaster game) {
+//    public PauseScreen(GameMaster game) {
+//        super(game);
+//        setBgColour(Color.TEAL);
+//        initialiseUI();
+//    }
+    public PauseScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.TEAL);
         initialiseUI();
@@ -37,7 +41,7 @@ public class PauseScreen extends BaseScreen {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 //game.getEntityManager().disposeEntities();
                 //game.getSimulationLifeCycleManager().disposeEntities(game.getEntityManager().getEntities());
-                game.getSimulationLifeCycleManager().resetEntities(game.getEntityManager().getEntities());
+//                game.getSimulationLifeCycleManager().resetEntities(game.getEntityManager().getEntities());
                 //remove the play screen from the list of screens
                 game.getSceneManager().removeScreen(PlayScreen.class);
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));

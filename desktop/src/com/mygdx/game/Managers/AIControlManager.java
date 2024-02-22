@@ -23,8 +23,8 @@ public class AIControlManager {
         this.directions = new Directions();
     }
     
-    // Returns the horizontal movement strategy
-    public Directions getMoveHorizontal(){
+    // Returns the movements
+    public Directions getDirections(){
         return this.directions;
     }
 }

@@ -10,17 +10,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.GameMaster;
+//import com.mygdx.game.GameMaster;
+import com.mygdx.game.SimulationLifeCycleManager;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public abstract class BaseScreen implements Screen {
-    protected GameMaster game;
+//    protected GameMaster game;
+    protected SimulationLifeCycleManager game;
     protected Stage stage;
     private Color bgColour = Color.BLACK;
 
-    public BaseScreen(GameMaster game) {
+//    public BaseScreen(GameMaster game) {
+//        this.game = game;
+//        stage = new Stage(new ScreenViewport()); 
+//    }    
+    
+    public BaseScreen(SimulationLifeCycleManager game) {
         this.game = game;
         stage = new Stage(new ScreenViewport()); 
     }

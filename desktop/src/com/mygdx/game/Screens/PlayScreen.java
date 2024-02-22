@@ -7,12 +7,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
-import com.mygdx.game.GameMaster;
+//import com.mygdx.game.GameMaster;
+import com.mygdx.game.SimulationLifeCycleManager;
 
 
 public class PlayScreen extends BaseScreen {
 
-    public PlayScreen(GameMaster game) {
+//    public PlayScreen(GameMaster game) {
+//        super(game);
+//        setBgColour(Color.SKY);
+//        initialiseUI();
+//    }
+    public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
         initialiseUI();
@@ -75,7 +81,7 @@ public class PlayScreen extends BaseScreen {
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
         	
         	//Move AI entities to the left up to distance of 800 and speed of 1
-            game.getAIControlManager().getMoveHorizontal().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
+            game.getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
             //Loop through ArrayList's index to draw each entity in entitylist
             game.getEntityManager().getEntities().get(i).draw(game.batch);
 
@@ -120,7 +126,7 @@ public class PlayScreen extends BaseScreen {
         if (playerEntity == null) return; // No player found, so exit the method
         // if playerEntity exits the screen = win screen
     	if (playerEntity.getPosX() > Gdx.graphics.getWidth() || playerEntity.getPosY() > Gdx.graphics.getHeight()) {
-            game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, true);
+            game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
         }
     }
 

@@ -1,6 +1,6 @@
  package com.mygdx.game.Managers;
 
-import com.mygdx.game.GameMaster;
+import com.mygdx.game.SimulationLifeCycleManager;
 import com.mygdx.game.Screens.*;
 import com.badlogic.gdx.Screen;
 
@@ -12,10 +12,15 @@ import java.util.List;
 //Manages the creation and lifecycle of game screens to ensure they are instantiated when needed
 public class SceneManager {
     private List<Screen> screenList; // List to keep track of instantiated screens
-    private GameMaster game; 
+//    private GameMaster game; 
+    private SimulationLifeCycleManager game; 
 
     // Constructor initializes the scene manager with a reference to the GameMaster
-    public SceneManager(GameMaster game){
+//    public SceneManager(GameMaster game){
+//        this.game = game;
+//        this.screenList = new ArrayList<>();
+//    }
+    public SceneManager(SimulationLifeCycleManager game){
         this.game = game;
         this.screenList = new ArrayList<>();
     }
@@ -67,7 +72,7 @@ public class SceneManager {
         try {
         	// Prepare constructor argument types, including GameMaster and any additional arguments
             Class<?>[] argTypes = new Class[args.length + 1];
-            argTypes[0] = GameMaster.class;
+            argTypes[0] = SimulationLifeCycleManager.class;
             for (int i = 0; i < args.length; i++) {
                 if (args[i] instanceof Boolean) {
                     argTypes[i + 1] = boolean.class;
@@ -88,7 +93,26 @@ public class SceneManager {
             return null; // Return null if screen creation fails
         }
     }
-
+    
+    // Screen transition logic with the ability to pass additional arguments for specific screens
+    public void transitionToScreen(Class<? extends BaseScreen> screenClass, Object... args) {
+        // Special handling for transitioning to WinLoseScreen with arguments to indicate win/loss
+        if (screenClass.equals(WinLoseScreen.class)) {
+            if (args.length > 0) {
+                boolean win = (boolean) args[0]; // Determine win or loss based on argument
+                // Transition to the screen with the win/loss state
+                this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, win));
+//                resetEntities(this.game.getEntityManager().getEntities()); // Reset entities for new game state
+                game.getAudioManager().getMusic("Gameplay").stop(); // Stop current game music
+            }
+            else {
+                // Default to loss if no arguments provided, indicating an error or oversight
+                this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, false));
+//                resetEntities(this.game.getEntityManager().getEntities());
+                game.getAudioManager().getMusic("Gameplay").stop();
+            }
+        }
+    }
 
 
 }
