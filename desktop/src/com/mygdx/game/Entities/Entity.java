@@ -3,8 +3,8 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 
 //entity abstract class
 public abstract class Entity{
@@ -18,15 +18,22 @@ public abstract class Entity{
     private static int idCounter = 0 ;
     protected int id;
 
-
+    // Constructor 1: set position X and Y based on argument
     public Entity(String entityImagePath, int posX, int posY) {
         this.entityImage = new Texture(Gdx.files.internal(entityImagePath));
         this.posX = posX;
         this.posY = posY;
 
         this.id = idCounter++; // Assign an id to this entity, idCounter++ = track IDs count
-    }
-    
+    }    
+    // Constructor 2: pre-set position X and Y
+    public Entity(String entityImagePath) {
+        this.entityImage = new Texture(Gdx.files.internal(entityImagePath));
+        this.posX = 50;
+        this.posY = 5;
+
+        this.id = idCounter++; // Assign an id to this entity, idCounter++ = track IDs count
+    }    
     
     public Rectangle getBounds() {
         // Rectangle to represent the collision space
@@ -88,6 +95,27 @@ public abstract class Entity{
     public int getID(){
         return this.id;
     }
+    
+
+    
+    
+//    collide checks
+//    @Override
+//   public boolean hasCollided(Entity cEntity, int range)
+//    {
+//		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
+//    	
+//    }
+//    
+//    @Override
+//   public boolean hasCollidedRect(Entity cEntity) {
+//	    // Get the bounding rectangles for this entity and the other entity
+//	    Rectangle thisBounds = this.getBounds();
+//	    Rectangle otherBounds = cEntity.getBounds();
+//
+//	    // Check if the two rectangles overlap, indicating a collision
+//	    return thisBounds.overlaps(otherBounds);
+//	}
 
 }
 

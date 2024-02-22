@@ -13,7 +13,7 @@ public class EntityManager {
     public EntityManager() {
         this.entityList = new ArrayList<>();
     }
-
+    // creates new entity
     public void addEntity(Entity entity) {
         entityList.add(entity);
     }
@@ -42,7 +42,7 @@ public class EntityManager {
     }
 
 
-
+// show all entities
     public List<Entity> getEntities() {
         return entityList;
     }

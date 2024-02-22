@@ -41,7 +41,6 @@ public class Directions extends Move{
     
     public void moveUp(AI entityAI, int speed, int posY){
         entityAI.setPosY((entityAI.getPosY()+speed));
-        //System.out.println(entityAI.getPosY()); 
         if(entityAI.getPosY()>= 800){
             entityAI.setPosY(posY);
         }

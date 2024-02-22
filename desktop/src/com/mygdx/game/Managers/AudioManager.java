@@ -11,15 +11,17 @@ public class AudioManager {
 
 	    public AudioManager(){
 	    	mapMusic = new HashMap<>();
+	    	// assigning music files to hashmap , soundeffect to a Sound attribute
 	    	mapMusic.put("Gameplay", Gdx.audio.newMusic(Gdx.files.internal("maple.mp3")));
 	    	mapMusic.put("MainMenu", Gdx.audio.newMusic(Gdx.files.internal("supermario.mp3")));
 	        soundEffect = Gdx.audio.newSound(Gdx.files.internal("boing.wav"));
 	    }
-
+	    
 	    public Music getMusic(String mapKey){
 	        return mapMusic.get(mapKey); // get the music based on the key ("Gameplay" / "MainMenu")
 	    }
-
+	    
+	    // play sound effect
 	    public void playSound()
 	    {
 	    	if(soundEffect != null)
@@ -27,4 +29,16 @@ public class AudioManager {
 	        	soundEffect.play(0.5f);
 	    	}
 	    }
+	    
+	    public void dispose() {
+	        // Dispose of all Music objects in the map
+	        for (Music music : mapMusic.values()) {
+	            if (music != null) music.dispose();
+	        }
+	        mapMusic.clear(); // Clear the map after dispose
+
+	        // Dispose of the Sound effect
+	        if (soundEffect != null) soundEffect.dispose();
+	    }
 }
+

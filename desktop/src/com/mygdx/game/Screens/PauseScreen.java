@@ -8,11 +8,6 @@ import com.mygdx.game.SimulationLifeCycleManager;
 
 public class PauseScreen extends BaseScreen {
 
-//    public PauseScreen(GameMaster game) {
-//        super(game);
-//        setBgColour(Color.TEAL);
-//        initialiseUI();
-//    }
     public PauseScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.TEAL);
@@ -32,7 +27,6 @@ public class PauseScreen extends BaseScreen {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
             	game.getAudioManager().getMusic("Gameplay").play();
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-                //dispose();
             }
         });
 
@@ -40,10 +34,7 @@ public class PauseScreen extends BaseScreen {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 game.getEntityManager().disposeEntities();
-                //game.getSimulationLifeCycleManager().disposeEntities(game.getEntityManager().getEntities());
-//                game.getSimulationLifeCycleManager().resetEntities(game.getEntityManager().getEntities());
                 //remove the play screen from the list of screens
-         
                 game.getSceneManager().removeScreen(PlayScreen.class);
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
 

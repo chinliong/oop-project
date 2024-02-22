@@ -13,11 +13,6 @@ import com.mygdx.game.SimulationLifeCycleManager;
 
 public class PlayScreen extends BaseScreen {
 
-//    public PlayScreen(GameMaster game) {
-//        super(game);
-//        setBgColour(Color.SKY);
-//        initialiseUI();
-//    }
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
@@ -33,17 +28,18 @@ public class PlayScreen extends BaseScreen {
     public void show() {
         super.show();
         startAudio("Gameplay", 1.0f);
-       
+        
+        Player pEntity = new Player();
+        AI aEntity = new AI();
         game.getCollisionManager().setCollisionRange(24);
         
         //Check for existing entity before adding
         if (game.getEntityManager().checkClass(Player.class) == null) {
-        game.getEntityManager().addEntity(new Player());
+        game.getEntityManager().addEntity(pEntity);
         }
         if (game.getEntityManager().checkClass(AI.class) == null) {
-        game.getEntityManager().addEntity(new AI());
+        game.getEntityManager().addEntity(aEntity);
         }
-        
     }
 
     @Override
@@ -54,6 +50,7 @@ public class PlayScreen extends BaseScreen {
         game.getBatch().begin();
         handleInput();
         drawEntities();
+        moveEntities();
         game.getBatch().end();
         
         checkGameConditions();
@@ -76,14 +73,23 @@ public class PlayScreen extends BaseScreen {
         }
     }
 
-    private void drawEntities() {
+    private void drawEntities()
+    {
+    	for(int i = 0 ; i < game.getEntityManager().getEntities().size(); i++)
+    	{
+    		for(Entity entity: game.getEntityManager().getEntities())
+    		{
+    			entity.draw(game.getBatch());
+    		}
+    	}
+    }
+    
+    private void moveEntities() {
     	//loop through all entities
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
         	
         	//Move AI entities to the left up to distance of 800 and speed of 1
             game.getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
-            //Loop through ArrayList's index to draw each entity in entitylist
-            game.getEntityManager().getEntities().get(i).draw(game.getBatch());
 
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
                 if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
@@ -106,6 +112,7 @@ public class PlayScreen extends BaseScreen {
         game.getCollisionManager().checkForCollision(game);
         checkWinCondition();
     }
+    
 
     private void pauseScreenIfRequested() {
         if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {

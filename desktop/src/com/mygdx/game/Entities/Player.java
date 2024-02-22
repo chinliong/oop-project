@@ -1,13 +1,13 @@
 package com.mygdx.game.Entities;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Player extends  Entity {
 
     public Player() {
+    	// Entity constructor 1
         super("fish.png", 0, 10);
     }
 

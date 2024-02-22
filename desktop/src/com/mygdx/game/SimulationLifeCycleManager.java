@@ -1,25 +1,18 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Managers.*;
-import com.mygdx.game.Screens.MainScreen;
-
-//so what i need to here is extends game instead of application adapter
-//so i am allowed to use the screen class
-//i will also define my managers here so i can use them in the screen class
 
 public class SimulationLifeCycleManager extends Game {
 
-	
-    protected SpriteBatch batch; //* should not be public
+	// attributes 
+    protected SpriteBatch batch;
     private BitmapFont font;
-    //creates the instances of my managers
-    private SceneManager sceneManager; //declaring a object that is a SceneManager type
-    private EntityManager entityManager; //declaring a object that is a EntityManager type
+    private SceneManager sceneManager; 
+    private EntityManager entityManager; 
     private IOManager ioManager;
     private AIControlManager AIControlManager;
     private PlayerControlManager playerControlManager;
@@ -30,46 +23,57 @@ public class SimulationLifeCycleManager extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        font = new BitmapFont(); //this is to create a new instance of the BitmapFont object
-        entityManager = new EntityManager(); //actually creating an instance of the EntityManager object
-        sceneManager = new SceneManager(this); //actually creating an instance of the SceneManager object
+        font = new BitmapFont(); 
+        // Initialize all managers
+        entityManager = new EntityManager(); 
+        sceneManager = new SceneManager(this); 
         ioManager = new IOManager();
         playerControlManager = new PlayerControlManager(); 
         audioManager = new AudioManager();
         AIControlManager = new AIControlManager();
-//        simulationLifeCycleManager = new SimulationLifeCycleManager(this);
-        sceneManager.setScreen();
         collisionManager = new CollisionManager();
+        sceneManager.setScreen();
+        System.out.println("Managers intialized");
     }
     @Override
     public void render() {
     	
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        super.render(); //this is to delegate the render method to the current screen by calling the render method of the current screen
+        super.render();
     }
     @Override
     public void dispose() {
         System.out.println("GameMaster disposing resources");
         font.dispose();
         batch.dispose();
-//        simulationLifeCycleManager.disposeEntities(entityManager.getEntities());
+        if(entityManager != null)
+        {
+        	entityManager.disposeEntities();
+        }
+        if(audioManager != null)
+        {
+        	audioManager.dispose();
+        }
+        if(sceneManager != null)
+        {
+        	sceneManager.dispose();
+        }
+        
     }
 
+    // getters to access attributes of this class
     public SpriteBatch getBatch()
     {
     	return batch;
     }
-    //getSceneManager method
     public SceneManager getSceneManager() {
         return sceneManager;
     }
 
-    //getEntityManager method
     public EntityManager getEntityManager() {
         return entityManager;
     }
 
-    //getFont method
     public BitmapFont getFont() {
         return font;
     }

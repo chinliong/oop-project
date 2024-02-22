@@ -3,19 +3,11 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-//import com.mygdx.game.GameMaster;
 import com.mygdx.game.SimulationLifeCycleManager;
 
 public class WinLoseScreen extends BaseScreen{
     private boolean win;
 
-//    public WinLoseScreen(GameMaster game, boolean win) {
-//        super(game);
-//        setBgColour(Color.TEAL);
-//        this.win = win;
-//        initialiseUI();
-//    }
-//    
     public WinLoseScreen(SimulationLifeCycleManager game, boolean win) {
         super(game);
         setBgColour(Color.TEAL);

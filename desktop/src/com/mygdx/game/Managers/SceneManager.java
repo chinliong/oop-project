@@ -12,14 +12,9 @@ import java.util.List;
 //Manages the creation and lifecycle of game screens to ensure they are instantiated when needed
 public class SceneManager {
     private List<Screen> screenList; // List to keep track of instantiated screens
-//    private GameMaster game; 
     private SimulationLifeCycleManager game; 
 
-    // Constructor initializes the scene manager with a reference to the GameMaster
-//    public SceneManager(GameMaster game){
-//        this.game = game;
-//        this.screenList = new ArrayList<>();
-//    }
+    // Constructor initializes the scene manager with a reference to the SimulationLifeCycleManager
     public SceneManager(SimulationLifeCycleManager game){
         this.game = game;
         this.screenList = new ArrayList<>();
@@ -103,17 +98,26 @@ public class SceneManager {
                 // Transition to the screen with the win/loss state
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, win));
                 this.game.getEntityManager().disposeEntities();
-//                resetEntities(this.game.getEntityManager().getEntities()); // Reset entities for new game state
                 game.getAudioManager().getMusic("Gameplay").stop(); // Stop current game music
             }
             else {
                 // Default to loss if no arguments provided, indicating an error or oversight
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, false));
-//                resetEntities(this.game.getEntityManager().getEntities());
                 this.game.getEntityManager().disposeEntities();
                 game.getAudioManager().getMusic("Gameplay").stop();
             }
         }
+    }
+    
+    public void dispose() {
+        // Iterate through all screens and dispose of them
+        for (Screen screen : screenList) {
+            if (screen != null) {
+                screen.dispose();
+            }
+        }
+        // Clear the list after all screens have been disposed
+        screenList.clear();
     }
 
 
