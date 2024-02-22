@@ -77,7 +77,7 @@ public class PlayScreen extends BaseScreen {
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
         	
         	//Move AI entities to the left up to distance of 800 and speed of 1
-            game.getAIControlManager().getMoveHorizontal().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
+            game.getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
             //Loop through ArrayList's index to draw each entity in entitylist
             game.getEntityManager().getEntities().get(i).draw(game.batch);
 
