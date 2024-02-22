@@ -1,6 +1,6 @@
  package com.mygdx.game.Managers;
 
-import com.mygdx.game.GameMaster;
+import com.mygdx.game.SimulationLifeCycleManager;
 import com.mygdx.game.Screens.*;
 import com.badlogic.gdx.Screen;
 
@@ -12,10 +12,15 @@ import java.util.List;
 //Manages the creation and lifecycle of game screens to ensure they are instantiated when needed
 public class SceneManager {
     private List<Screen> screenList; // List to keep track of instantiated screens
-    private GameMaster game; 
+//    private GameMaster game; 
+    private SimulationLifeCycleManager game; 
 
     // Constructor initializes the scene manager with a reference to the GameMaster
-    public SceneManager(GameMaster game){
+//    public SceneManager(GameMaster game){
+//        this.game = game;
+//        this.screenList = new ArrayList<>();
+//    }
+    public SceneManager(SimulationLifeCycleManager game){
         this.game = game;
         this.screenList = new ArrayList<>();
     }
@@ -67,7 +72,7 @@ public class SceneManager {
         try {
         	// Prepare constructor argument types, including GameMaster and any additional arguments
             Class<?>[] argTypes = new Class[args.length + 1];
-            argTypes[0] = GameMaster.class;
+            argTypes[0] = SimulationLifeCycleManager.class;
             for (int i = 0; i < args.length; i++) {
                 if (args[i] instanceof Boolean) {
                     argTypes[i + 1] = boolean.class;

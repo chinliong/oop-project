@@ -10,6 +10,6 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("ProjectGame");
 		config.setWindowedMode(800, 600); // 800x600 windowed mode
-		new Lwjgl3Application(new GameMaster(), config);
+		new Lwjgl3Application(new SimulationLifeCycleManager(), config);
 	}
 }

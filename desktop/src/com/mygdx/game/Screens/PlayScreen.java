@@ -7,12 +7,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
-import com.mygdx.game.GameMaster;
+//import com.mygdx.game.GameMaster;
+import com.mygdx.game.SimulationLifeCycleManager;
 
 
 public class PlayScreen extends BaseScreen {
 
-    public PlayScreen(GameMaster game) {
+//    public PlayScreen(GameMaster game) {
+//        super(game);
+//        setBgColour(Color.SKY);
+//        initialiseUI();
+//    }
+    public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
         initialiseUI();
