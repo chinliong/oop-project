@@ -51,10 +51,10 @@ public class PlayScreen extends BaseScreen {
         super.stage.act(delta);
         super.stage.draw();
         
-        game.batch.begin();
+        game.getBatch().begin();
         handleInput();
         drawEntities();
-        game.batch.end();
+        game.getBatch().end();
         
         checkGameConditions();
     }
@@ -83,7 +83,7 @@ public class PlayScreen extends BaseScreen {
         	//Move AI entities to the left up to distance of 800 and speed of 1
             game.getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
             //Loop through ArrayList's index to draw each entity in entitylist
-            game.getEntityManager().getEntities().get(i).draw(game.batch);
+            game.getEntityManager().getEntities().get(i).draw(game.getBatch());
 
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
                 if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 

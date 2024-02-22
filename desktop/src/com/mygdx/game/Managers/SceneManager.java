@@ -102,6 +102,7 @@ public class SceneManager {
                 boolean win = (boolean) args[0]; // Determine win or loss based on argument
                 // Transition to the screen with the win/loss state
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, win));
+                this.game.getEntityManager().disposeEntities();
 //                resetEntities(this.game.getEntityManager().getEntities()); // Reset entities for new game state
                 game.getAudioManager().getMusic("Gameplay").stop(); // Stop current game music
             }
@@ -109,6 +110,7 @@ public class SceneManager {
                 // Default to loss if no arguments provided, indicating an error or oversight
                 this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, false));
 //                resetEntities(this.game.getEntityManager().getEntities());
+                this.game.getEntityManager().disposeEntities();
                 game.getAudioManager().getMusic("Gameplay").stop();
             }
         }

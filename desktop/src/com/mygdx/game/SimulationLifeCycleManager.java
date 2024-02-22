@@ -15,7 +15,7 @@ import com.mygdx.game.Screens.MainScreen;
 public class SimulationLifeCycleManager extends Game {
 
 	
-    public SpriteBatch batch; //* should not be public
+    protected SpriteBatch batch; //* should not be public
     private BitmapFont font;
     //creates the instances of my managers
     private SceneManager sceneManager; //declaring a object that is a SceneManager type
@@ -55,7 +55,10 @@ public class SimulationLifeCycleManager extends Game {
 //        simulationLifeCycleManager.disposeEntities(entityManager.getEntities());
     }
 
-
+    public SpriteBatch getBatch()
+    {
+    	return batch;
+    }
     //getSceneManager method
     public SceneManager getSceneManager() {
         return sceneManager;
