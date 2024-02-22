@@ -79,7 +79,7 @@ public class CollisionManager {
     // Handles collision between the player and an AI
     private void handlePlayerAICollision(GameMaster game) {
         System.out.println("Player and AI are within the range of " + collisionRange);
-        game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen
+        game.getSceneManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen
     }
 
 //    // Handles scenario when the player moves out of the screen bounds

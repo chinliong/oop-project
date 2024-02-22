@@ -50,7 +50,7 @@ public class GameMaster extends Game {
         System.out.println("GameMaster disposing resources");
         font.dispose();
         batch.dispose();
-        simulationLifeCycleManager.disposeEntities(entityManager.getEntities());
+//        simulationLifeCycleManager.disposeEntities(entityManager.getEntities());
     }
 
 

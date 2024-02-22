@@ -37,7 +37,7 @@ public class PauseScreen extends BaseScreen {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 //game.getEntityManager().disposeEntities();
                 //game.getSimulationLifeCycleManager().disposeEntities(game.getEntityManager().getEntities());
-                game.getSimulationLifeCycleManager().resetEntities(game.getEntityManager().getEntities());
+//                game.getSimulationLifeCycleManager().resetEntities(game.getEntityManager().getEntities());
                 //remove the play screen from the list of screens
                 game.getSceneManager().removeScreen(PlayScreen.class);
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));

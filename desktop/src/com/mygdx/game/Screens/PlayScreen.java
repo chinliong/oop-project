@@ -122,7 +122,7 @@ public class PlayScreen extends BaseScreen {
         if (playerEntity == null) return; // No player found, so exit the method
         // if playerEntity exits the screen = win screen
     	if (playerEntity.getPosX() > Gdx.graphics.getWidth() || playerEntity.getPosY() > Gdx.graphics.getHeight()) {
-            game.getSimulationLifeCycleManager().transitionToScreen(WinLoseScreen.class, true);
+            game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
         }
     }
 

@@ -88,7 +88,26 @@ public class SceneManager {
             return null; // Return null if screen creation fails
         }
     }
-
+    
+    // Screen transition logic with the ability to pass additional arguments for specific screens
+    public void transitionToScreen(Class<? extends BaseScreen> screenClass, Object... args) {
+        // Special handling for transitioning to WinLoseScreen with arguments to indicate win/loss
+        if (screenClass.equals(WinLoseScreen.class)) {
+            if (args.length > 0) {
+                boolean win = (boolean) args[0]; // Determine win or loss based on argument
+                // Transition to the screen with the win/loss state
+                this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, win));
+//                resetEntities(this.game.getEntityManager().getEntities()); // Reset entities for new game state
+                game.getAudioManager().getMusic("Gameplay").stop(); // Stop current game music
+            }
+            else {
+                // Default to loss if no arguments provided, indicating an error or oversight
+                this.game.getSceneManager().setScreen(this.game.getSceneManager().createScreen(screenClass, false));
+//                resetEntities(this.game.getEntityManager().getEntities());
+                game.getAudioManager().getMusic("Gameplay").stop();
+            }
+        }
+    }
 
 
 }
