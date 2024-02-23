@@ -21,11 +21,6 @@ public abstract class BaseScreen implements Screen {
     protected SimulationLifeCycleManager game;
     protected Stage stage;
     private Color bgColour = Color.BLACK;
-
-//    public BaseScreen(GameMaster game) {
-//        this.game = game;
-//        stage = new Stage(new ScreenViewport()); 
-//    }    
     
     public BaseScreen(SimulationLifeCycleManager game) {
         this.game = game;
