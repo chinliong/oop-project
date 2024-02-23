@@ -10,7 +10,6 @@ public class WinLoseScreen extends BaseScreen{
 
     public WinLoseScreen(SimulationLifeCycleManager game, boolean win) {
         super(game);
-        setBgColour(Color.TEAL);
         this.win = win;
         initialiseUI();
     }
@@ -23,9 +22,12 @@ public class WinLoseScreen extends BaseScreen{
     public void initialiseUI() {
         if (win) {
         	createText("WinLoseScreen - YOU WIN");
+            setBgColour(Color.TEAL);
             
         } else {
         	createText("WinLoseScreen - YOU LOSE");
+            setBgColour(Color.RED);
+
         }
 
 
