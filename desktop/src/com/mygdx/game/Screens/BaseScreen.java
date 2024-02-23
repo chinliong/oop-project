@@ -86,7 +86,7 @@ public abstract class BaseScreen implements Screen {
         labelStyle.font = game.getFont();
         Label label = new Label(text, labelStyle);
         label.setColor(Color.WHITE);
-        label.setPosition((float) Gdx.graphics.getWidth()/2, (float) Gdx.graphics.getHeight() - 20);
+        label.setPosition((float) Gdx.graphics.getWidth()/2 - 50, (float) Gdx.graphics.getHeight()/2);
 
         stage.addActor(label);
     }

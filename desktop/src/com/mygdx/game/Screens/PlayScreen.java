@@ -21,7 +21,7 @@ public class PlayScreen extends BaseScreen {
 
     @Override
     public void initialiseUI() {
-    	createText("Play Screen");
+    	createText("This is the PlayScreen screen");
     }
 
     @Override

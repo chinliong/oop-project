@@ -22,10 +22,10 @@ public class WinLoseScreen extends BaseScreen{
     }
     public void initialiseUI() {
         if (win) {
-        	createText("YOU WIN");
+        	createText("WinLoseScreen - YOU WIN");
             
         } else {
-        	createText("YOU LOSE");
+        	createText("WinLoseScreen - YOU LOSE");
         }
 
 
