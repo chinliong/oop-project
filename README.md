@@ -11,7 +11,7 @@
         - Move.java
         - MovementInterface.java
     
-    -[Entities](./desktop/src/com/mygdx/game/Entities)
+    - [Entities](./desktop/src/com/mygdx/game/Entities)
         - AI.java
         - Entity.java
         - Player.java
