@@ -3,7 +3,7 @@ package com.mygdx.game.AIControl;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Entities.AI;
 
-public class Directions extends Move{
+public class Directions implements IMoveable{
     private int posX;
     private int posY;
     

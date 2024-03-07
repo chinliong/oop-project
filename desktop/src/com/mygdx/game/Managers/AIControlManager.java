@@ -1,7 +1,6 @@
 package com.mygdx.game.Managers;
 
 import com.badlogic.gdx.Gdx;
-import com.mygdx.game.AIControl.Move;
 import com.mygdx.game.AIControl.Directions;
 import com.mygdx.game.Entities.*;
 import java.util.ArrayList;
