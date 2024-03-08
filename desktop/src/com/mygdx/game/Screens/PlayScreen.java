@@ -1,9 +1,12 @@
 package com.mygdx.game.Screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
@@ -29,14 +32,27 @@ public class PlayScreen extends BaseScreen {
         super.show();
         startAudio("Gameplay", 1.0f);
         
-        Player pEntity = new Player();
         AI aEntity = new AI();
-//<<<<<<< HEAD
-        game.getEntityManager().getCollisionManager().setCollisionRange(24);
-//=======
-        AI thrashbinEntity = new AI(100, 300); // trashbin
-        AI thrashbin2Entity = new AI(600, 300); // trashbin2
-        game.getEntityManager().getCollisionManager().setCollisionRange(24);
+        Player pEntity = new Player();
+       
+        AI canbinEntity = new AI("canbin.png",200, 10); // trashbin
+        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
+        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
+        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
+        AI wastebinEntity = new AI("thrashbin.png",600, 10); // trashbin2
+        
+        //Generate coordinates for thrash entities
+        ArrayList<int[]> generatedCoordinates = generateCoordinates();
+        // Array of thrash entity images, assuming you have different images for each
+        String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
+        
+        // Create thrash entities with generated coordinates and add them to the entity manager
+        for (int i = 0; i < generatedCoordinates.size(); i++) {
+            int[] coord = generatedCoordinates.get(i);
+            AI thrashEntity = new AI(thrashImages[i], coord[0], coord[1]);
+            game.getEntityManager().addEntity(thrashEntity);
+        }
+     
         
         //Check for existing entity before adding
         if (game.getEntityManager().checkClass(Player.class) == null) {
@@ -46,8 +62,15 @@ public class PlayScreen extends BaseScreen {
         game.getEntityManager().addEntity(aEntity);
         }
         
-        game.getEntityManager().addEntity(thrashbinEntity);
-        game.getEntityManager().addEntity(thrashbin2Entity);
+        //Add bin entities
+        game.getEntityManager().addEntity(canbinEntity);
+        game.getEntityManager().addEntity(glassbinEntity);
+        game.getEntityManager().addEntity(plasticbinEntity);
+        game.getEntityManager().addEntity(paperbinEntity);
+        game.getEntityManager().addEntity(wastebinEntity);
+               
+        //Set collision range
+        game.getEntityManager().getCollisionManager().setCollisionRange(24);
     }
 
     @Override
@@ -96,9 +119,10 @@ public class PlayScreen extends BaseScreen {
     	//loop through all entities
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
         	
+        	/* PREVIOUS CODE TO MOVE WHALE LEFT
         	//Move AI entities to the left up to distance of 800 and speed of 1
             game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
-
+            */
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
                 if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
                     game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.RIGHT);
@@ -149,4 +173,33 @@ public class PlayScreen extends BaseScreen {
     public void hide() {
         game.getSceneManager().removeScreen(PlayScreen.class);
     }
-}
+    
+
+    private ArrayList<int[]> generateCoordinates() {
+    	
+        ArrayList<int[]> coordinates = new ArrayList<>();
+        
+        while (coordinates.size() < 4) { // Generate until 4 unique coordinates are found
+            // Generate coordinates within screen bounds, ensuring y is at least 200
+            int[] newCoordinate = {
+                MathUtils.random(700), //screen width
+                200 + MathUtils.random(500 - 200) //min height + random(screenheight - minheight)
+            };
+            
+            boolean isValid = true;
+            // Check new coordinate against all existing coordinates for minimum distance
+            for (int[] coord : coordinates) {
+                if (Math.sqrt(Math.pow(newCoordinate[0] - coord[0], 2) + Math.pow(newCoordinate[1] - coord[1], 2)) < 50) {
+                    isValid = false; // New coordinate is too close to an existing one
+                    break;
+                }
+            }
+            
+            if (isValid) {
+                coordinates.add(newCoordinate); // Add valid coordinate to the list
+            }
+        }
+        
+        return coordinates;
+    }
+    }
