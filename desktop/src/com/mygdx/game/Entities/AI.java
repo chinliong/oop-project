@@ -11,5 +11,11 @@ public class AI extends Entity{
         super("whale.png", (800), (int)(Math.random() * 500));
         this.AIObject = "whale.png"; //default AIObject
     }
+    
+    //constructor for thrashbin with coordinates as parameters
+    public AI(int posX, int posY) {
+        super("thrashbin.png", posX, posY);
+        this.AIObject = "thrashbin.png"; 
+    }
 
 }
