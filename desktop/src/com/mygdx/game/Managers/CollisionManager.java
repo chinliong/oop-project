@@ -31,7 +31,7 @@ public class CollisionManager {
             if (entity instanceof AI) {
                 AI aiEntity = (AI) entity;
                 	//collisionRange value set at PlayScreen
-                int distance = game.getCollisionManager().getCollisionRange(); 
+                int distance = game.getEntityManager().getCollisionManager().getCollisionRange(); 
                 // if player and AI  < distance = collide
                 if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
                     Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) {

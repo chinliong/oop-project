@@ -31,7 +31,7 @@ public class PlayScreen extends BaseScreen {
         
         Player pEntity = new Player();
         AI aEntity = new AI();
-        game.getCollisionManager().setCollisionRange(24);
+        game.getEntityManager().getCollisionManager().setCollisionRange(24);
         
         //Check for existing entity before adding
         if (game.getEntityManager().checkClass(Player.class) == null) {
@@ -89,7 +89,7 @@ public class PlayScreen extends BaseScreen {
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
         	
         	//Move AI entities to the left up to distance of 800 and speed of 1
-            game.getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
+            game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
 
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
                 if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
@@ -109,7 +109,7 @@ public class PlayScreen extends BaseScreen {
 
     private void checkGameConditions() {
         pauseScreenIfRequested();
-        game.getCollisionManager().checkForCollision(game);
+        game.getEntityManager().getCollisionManager().checkForCollision(game);
         checkWinCondition();
     }
     

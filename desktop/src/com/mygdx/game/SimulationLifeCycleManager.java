@@ -30,8 +30,8 @@ public class SimulationLifeCycleManager extends Game {
         ioManager = new IOManager();
         playerControlManager = new PlayerControlManager(); 
         audioManager = new AudioManager();
-        AIControlManager = new AIControlManager();
-        collisionManager = new CollisionManager();
+//        AIControlManager = new AIControlManager();
+//        collisionManager = new CollisionManager();
         sceneManager.setScreen();
         System.out.println("Managers intialized");
     }
@@ -87,10 +87,10 @@ public class SimulationLifeCycleManager extends Game {
         return playerControlManager;
     }
 
-    public AIControlManager getAIControlManager(){
-        return AIControlManager;
-    }
-    
+//    public AIControlManager getAIControlManager(){
+//        return AIControlManager;
+//    }
+//    
     public AudioManager getAudioManager(){
         return audioManager;
     }
@@ -99,7 +99,7 @@ public class SimulationLifeCycleManager extends Game {
         return simulationLifeCycleManager;
     }
 
-    public CollisionManager getCollisionManager(){
-        return collisionManager;
-    }
+//    public CollisionManager getCollisionManager(){
+//        return collisionManager;
+//    }
 }

@@ -9,9 +9,13 @@ import java.util.List;
 public class EntityManager {
 
     private ArrayList<Entity> entityList;
+    private AIControlManager AIControlManager;
+    private CollisionManager collisionManager;
 
     public EntityManager() {
         this.entityList = new ArrayList<>();
+        AIControlManager = new AIControlManager();
+        collisionManager = new CollisionManager();
     }
     // creates new entity
     public void addEntity(Entity entity) {
@@ -55,6 +59,14 @@ public class EntityManager {
         }
         entityList.clear(); // clear ArrayList
     }
-
-
+    
+    public CollisionManager getCollisionManager(){
+        return collisionManager;
+    }
+    
+    public AIControlManager getAIControlManager(){
+    	return AIControlManager;
+    }
+    
+    
 }
