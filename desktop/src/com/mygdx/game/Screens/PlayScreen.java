@@ -15,7 +15,8 @@ import com.mygdx.game.SimulationLifeCycleManager;
 
 
 public class PlayScreen extends BaseScreen {
-
+	private AI draggedEntity = null;
+	
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
@@ -47,12 +48,13 @@ public class PlayScreen extends BaseScreen {
         String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
         
         // Create thrash entities with generated coordinates and add them to the entity manager
+        if (game.getEntityManager().checkClass(AI.class) == null) {
         for (int i = 0; i < generatedCoordinates.size(); i++) {
             int[] coord = generatedCoordinates.get(i);
             AI thrashEntity = new AI(thrashImages[i], coord[0], coord[1]);
             game.getEntityManager().addEntity(thrashEntity);
         }
-     
+        }
         
         //Check for existing entity before adding
         if (game.getEntityManager().checkClass(Player.class) == null) {
@@ -82,6 +84,17 @@ public class PlayScreen extends BaseScreen {
         handleInput();
         drawEntities();
         moveEntities();
+        
+        if (draggedEntity != null) {
+            // Update the entity's position to follow the mouse cursor
+            int mouseX = Gdx.input.getX();
+            int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
+            //Calculate center position
+            int centerX = mouseX - draggedEntity.getWidth() / 2;
+            int centerY = mouseY - draggedEntity.getHeight() / 2;
+            
+            game.getEntityManager().getAIControlManager().getDirections().setPosition(draggedEntity, centerX, centerY);
+        }
         game.getBatch().end();
         
         checkGameConditions();
@@ -102,6 +115,27 @@ public class PlayScreen extends BaseScreen {
             }
             
         }
+    	
+    	
+    	
+    	 if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+    	        if (draggedEntity == null) {
+    	            // Get mouse position
+    	            float mouseX = Gdx.input.getX();
+    	            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
+
+    	            // Check if any thrash entity is clicked
+    	            for (AI entity : game.getEntityManager().getEntitiesByClass(AI.class)) {
+    	                if (mouseX >= entity.getPosX() && mouseX <= entity.getPosX() + entity.getWidth()
+    	                    && mouseY >= entity.getPosY() && mouseY <= entity.getPosY() + entity.getHeight()) {
+    	                    draggedEntity = entity; // Mark this entity as being dragged
+    	                    break;
+    	                }
+    	            }
+    	        }
+    	    } else {
+    	        draggedEntity = null; // Release the entity when the mouse button is released
+    	    }
     }
 
     private void drawEntities()
@@ -174,7 +208,7 @@ public class PlayScreen extends BaseScreen {
         game.getSceneManager().removeScreen(PlayScreen.class);
     }
     
-
+   //Function to generate random coordinates higher than 200units, and at least 50units apart from each other
     private ArrayList<int[]> generateCoordinates() {
     	
         ArrayList<int[]> coordinates = new ArrayList<>();

@@ -45,4 +45,9 @@ public class Directions implements IMoveable{
             entityAI.setPosY(posY);
         }
     }
+    
+    public void setPosition(AI entity, int x, int y) {
+        entity.setPosX(x); 
+        entity.setPosY(y); 
+    } 
 }

@@ -26,4 +26,5 @@ public class AIControlManager {
     public Directions getDirections(){
         return this.directions;
     }
+    
 }

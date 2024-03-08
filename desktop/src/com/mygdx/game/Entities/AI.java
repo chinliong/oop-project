@@ -25,4 +25,6 @@ public class AI extends Entity{
         this.AIObject = image; //default AIObject
     }
 
+	
+
 }

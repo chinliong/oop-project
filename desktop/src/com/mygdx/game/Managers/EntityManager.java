@@ -50,6 +50,17 @@ public class EntityManager {
     public List<Entity> getEntities() {
         return entityList;
     }
+    
+    //get entity by class
+    public <T extends Entity> List<T> getEntitiesByClass(Class<T> entityClass) {
+        List<T> filteredEntities = new ArrayList<>();
+        for (Entity entity : entityList) {
+            if (entityClass.isInstance(entity)) {
+                filteredEntities.add(entityClass.cast(entity));
+            }
+        }
+        return filteredEntities;
+    }
 
 
     public void disposeEntities() {
