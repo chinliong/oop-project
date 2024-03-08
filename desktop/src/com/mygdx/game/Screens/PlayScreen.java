@@ -31,6 +31,8 @@ public class PlayScreen extends BaseScreen {
         
         Player pEntity = new Player();
         AI aEntity = new AI();
+        AI thrashbinEntity = new AI(100, 300); // trashbin
+        AI thrashbin2Entity = new AI(600, 300); // trashbin2
         game.getCollisionManager().setCollisionRange(24);
         
         //Check for existing entity before adding
@@ -40,6 +42,9 @@ public class PlayScreen extends BaseScreen {
         if (game.getEntityManager().checkClass(AI.class) == null) {
         game.getEntityManager().addEntity(aEntity);
         }
+        
+        game.getEntityManager().addEntity(thrashbinEntity);
+        game.getEntityManager().addEntity(thrashbin2Entity);
     }
 
     @Override
