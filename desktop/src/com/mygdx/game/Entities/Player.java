@@ -4,7 +4,7 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Player extends  Entity {
+public class Player extends CollidableEntity {
 
     public Player() {
     	// Entity constructor 1
@@ -20,5 +20,12 @@ public class Player extends  Entity {
     public void draw(SpriteBatch batch) {
         super.draw(batch);
     }
+    
+    @Override
+    public boolean hasCollided(CollidableEntity cEntity, int range)
+    {
+  		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
+    }
+    
 
 }

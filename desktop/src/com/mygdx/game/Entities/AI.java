@@ -2,7 +2,7 @@ package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class AI extends Entity{
+public class AI extends CollidableEntity{
 
     private String AIObject;
 
