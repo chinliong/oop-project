@@ -1,21 +1,35 @@
 package com.mygdx.game.Managers;
 
 import com.mygdx.game.Entities.AI;
+import com.mygdx.game.Entities.CollidableEntity;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
+
+import java.util.ArrayList;
+
 import com.mygdx.game.SimulationLifeCycleManager;
 import com.mygdx.game.Screens.WinLoseScreen;
 
 
 public class CollisionManager {
     private int collisionRange; // The range within which entities are considered to be in collision range
+    private ArrayList<CollidableEntity> collidableList;
 
     // Constructor initializes the collision manager with default collision range
     public CollisionManager() {
+    	collidableList = new ArrayList<>();
         this.collisionRange = 0; // Default value, implying no range. Should be set explicitly.
     }
     
+    public void addCollidableList(CollidableEntity cEntity)
+    {
+    	collidableList.add(cEntity);
+    }
     
+    public ArrayList<CollidableEntity> getCollidableList()
+    {
+    	return collidableList;
+    }
     public void checkForCollision(SimulationLifeCycleManager game) {
         Player playerEntity = null;
         for (Entity entity : game.getEntityManager().getEntities()) {
@@ -33,8 +47,10 @@ public class CollisionManager {
                 	//collisionRange value set at PlayScreen
                 int distance = game.getEntityManager().getCollisionManager().getCollisionRange(); 
                 // if player and AI  < distance = collide
-                if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
-                    Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) {
+//                if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
+//                    Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) 
+                if(playerEntity.hasCollided(aiEntity, distance)) // use icollision
+                {
                     game.getAudioManager().playSound();
                     handlePlayerAICollision(game);
                     return;

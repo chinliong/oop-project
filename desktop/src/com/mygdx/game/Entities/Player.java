@@ -26,6 +26,8 @@ public class Player extends CollidableEntity {
     {
   		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
     }
+
+
     
 
 }

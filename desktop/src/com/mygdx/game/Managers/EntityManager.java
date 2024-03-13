@@ -20,6 +20,10 @@ public class EntityManager {
     // creates new entity
     public void addEntity(Entity entity) {
         entityList.add(entity);
+        if (entity instanceof CollidableEntity)
+        {
+        	collisionManager.addCollidableList((CollidableEntity)entity);
+        }
     }
     
     public Entity checkClass(Class<? extends Entity> entityClass) 

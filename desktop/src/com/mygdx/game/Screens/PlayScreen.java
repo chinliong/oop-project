@@ -6,21 +6,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
+import com.mygdx.game.Camera;
 //import com.mygdx.game.GameMaster;
 import com.mygdx.game.SimulationLifeCycleManager;
-
+import com.badlogic.gdx.math.Vector3;
 
 public class PlayScreen extends BaseScreen {
 	private AI draggedEntity = null;
 	
+	private Vector3 position = new Vector3();
+	private Camera camera1;
+	private Player pEntity;
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
         initialiseUI();
+        
+        camera1 = new Camera(); 
     }
 
     @Override
@@ -34,7 +41,7 @@ public class PlayScreen extends BaseScreen {
         startAudio("Gameplay", 1.0f);
         
         AI aEntity = new AI();
-        Player pEntity = new Player();
+        pEntity = new Player();
        
         AI canbinEntity = new AI("canbin.png",200, 10); // trashbin
         AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
@@ -98,6 +105,14 @@ public class PlayScreen extends BaseScreen {
         game.getBatch().end();
         
         checkGameConditions();
+//         Update the camera to follow the player
+//        if (pEntity != null) {
+//            camera1.camera.position.set(pEntity.getPosX(), pEntity.getPosY(), 0);
+//            camera1.camera.update();
+//        }
+
+        // Set the batch's projection matrix
+//        game.getBatch().setProjectionMatrix(camera1.camera.combined);
     }
 
 
@@ -179,6 +194,9 @@ public class PlayScreen extends BaseScreen {
         checkWinCondition();
     }
     
+
+
+
 
     private void pauseScreenIfRequested() {
         if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {

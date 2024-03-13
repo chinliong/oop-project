@@ -14,11 +14,11 @@ public class SimulationLifeCycleManager extends Game {
     private SceneManager sceneManager; 
     private EntityManager entityManager; 
     private IOManager ioManager;
-    private AIControlManager AIControlManager;
+//    private AIControlManager AIControlManager;
     private PlayerControlManager playerControlManager;
     private AudioManager audioManager;
     private SimulationLifeCycleManager simulationLifeCycleManager;
-    private CollisionManager collisionManager;
+//    private CollisionManager collisionManager;
 
     @Override
     public void create() {
