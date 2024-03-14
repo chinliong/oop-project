@@ -4,7 +4,7 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Player extends CollidableEntity {
+public abstract class Player extends CollidableEntity {
 
     public Player() {
     	// Entity constructor 1

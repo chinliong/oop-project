@@ -17,13 +17,14 @@ import com.mygdx.game.Camera;
 import com.mygdx.game.SimulationLifeCycleManager;
 import com.badlogic.gdx.math.Vector3;
 
-public class PlayScreen extends BaseScreen {
+public class TestScreen extends BaseScreen {
 	private AI draggedEntity = null;
-	//camera stuff
+	
 	private Vector3 position = new Vector3();
 	private Camera camera1;
 	private PlayerGame pEntity;
-    public PlayScreen(SimulationLifeCycleManager game) {
+	
+    public TestScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
         initialiseUI();
@@ -33,7 +34,7 @@ public class PlayScreen extends BaseScreen {
 
     @Override
     public void initialiseUI() {
-    	createText("This is the PlayScreen screen");
+//    	createText("This is the TESTSCREEENS screen");
     }
 
     @Override
@@ -42,6 +43,7 @@ public class PlayScreen extends BaseScreen {
         startAudio("Gameplay", 1.0f);
         
         AI aEntity = new AI();
+//        pEntity = new Player();
         pEntity = new PlayerGame();
        
         AI canbinEntity = new AI("canbin.png",200, 10); // trashbin
@@ -93,6 +95,7 @@ public class PlayScreen extends BaseScreen {
         drawEntities();
         moveEntities();
         
+        createText("this is ur score counter " + String.valueOf(pEntity.getPlayerHealth()));
         if (draggedEntity != null) {
             // Update the entity's position to follow the mouse cursor
             int mouseX = Gdx.input.getX();
@@ -191,7 +194,7 @@ public class PlayScreen extends BaseScreen {
 
     private void checkGameConditions() {
         pauseScreenIfRequested();
-        game.getEntityManager().getCollisionManager().checkForCollision(game);
+        game.getEntityManager().getCollisionManager().checkForCollisionTest(game);
         checkWinCondition();
     }
     
