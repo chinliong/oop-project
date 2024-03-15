@@ -76,7 +76,8 @@ public abstract class BaseScreen implements Screen {
     }
     
     //Function to add text at the top middle of the screen
-    protected void createText(String text){
+//    protected void createText(String text){
+    protected Label createText(String text){
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = game.getFont();
         Label label = new Label(text, labelStyle);
@@ -84,6 +85,8 @@ public abstract class BaseScreen implements Screen {
         label.setPosition((float) Gdx.graphics.getWidth()/2 - 50, (float) Gdx.graphics.getHeight()/2);
 
         stage.addActor(label);
+        
+        return label;
     }
     
     protected void startAudio(String audioName, float volume) {

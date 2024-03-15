@@ -125,12 +125,13 @@ public class CollisionManager {
 	        if (entity instanceof AI) {
 	            AI aiEntity = (AI) entity;
 	            int distance = getCollisionRange(); // Directly access the collision range from this class
-
+	            
 	            // Check for collision between the playerShip and the AI entity
-	            if(playerShip.hasCollided(aiEntity, distance)) {
+	            if(playerShip.hasCollidedRect(aiEntity)) {
 	                game.getAudioManager().playSound();
 	                playerShip.setPlayerHealth(playerShip.getPlayerHealth() - 1);
 	                playerShip.setPosX(50);
+	                playerShip.setPosY(20);
 	                System.out.println("player health is now " + playerShip.getPlayerHealth());
 	                // Correct method call
 	                if(playerShip.getPlayerHealth() == 0)

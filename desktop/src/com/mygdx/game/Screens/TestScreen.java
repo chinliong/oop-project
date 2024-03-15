@@ -16,6 +16,7 @@ import com.mygdx.game.Camera;
 //import com.mygdx.game.GameMaster;
 import com.mygdx.game.SimulationLifeCycleManager;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class TestScreen extends BaseScreen {
 	private AI draggedEntity = null;
@@ -23,6 +24,7 @@ public class TestScreen extends BaseScreen {
 	private Vector3 position = new Vector3();
 	private Camera camera1;
 	private PlayerGame pEntity;
+	private Label scoreLabel;
 	
     public TestScreen(SimulationLifeCycleManager game) {
         super(game);
@@ -35,6 +37,10 @@ public class TestScreen extends BaseScreen {
     @Override
     public void initialiseUI() {
 //    	createText("This is the TESTSCREEENS screen");
+//    	createText("This is the score counter + St")
+    	scoreLabel = createText("This is score counter");
+//      createText("this is ur score counter " + String.valueOf(pEntity.getPlayerHealth()));
+
     }
 
     @Override
@@ -94,8 +100,10 @@ public class TestScreen extends BaseScreen {
         handleInput();
         drawEntities();
         moveEntities();
-        
-        createText("this is ur score counter " + String.valueOf(pEntity.getPlayerHealth()));
+        updatePlayerScore();
+//        createText("this is ur score counter");
+
+//        createText("this is ur score counter " + String.valueOf(pEntity.getPlayerHealth()));
         if (draggedEntity != null) {
             // Update the entity's position to follow the mouse cursor
             int mouseX = Gdx.input.getX();
@@ -120,6 +128,12 @@ public class TestScreen extends BaseScreen {
     }
 
 
+    private void updatePlayerScore()
+    {
+    	int currentScore = pEntity.getPlayerHealth();
+    	scoreLabel.setText("Your score counter is " + currentScore);
+    	
+    }
     private void handleInput() {
     	if(game.getInputOutputManager().getInputMouse().mousePressed()){  // check if mouse pressed
     		
