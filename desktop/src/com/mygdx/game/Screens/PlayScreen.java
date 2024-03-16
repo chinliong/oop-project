@@ -107,8 +107,8 @@ public class PlayScreen extends BaseScreen {
         //To drag entity with mouse cursor
         if (draggedEntity != null) {
             // Update the entity's position to follow the mouse cursor
-            int mouseX = Gdx.input.getX();
-            int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
+            float mouseX = Gdx.input.getX();
+            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
             //Calculate center position
             float centerX = mouseX - draggedEntity.getWidth() / 2;
             float centerY = mouseY - draggedEntity.getHeight() / 2;
