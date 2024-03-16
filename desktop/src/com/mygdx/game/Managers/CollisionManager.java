@@ -91,20 +91,38 @@ public class CollisionManager {
           }
       }
       if (playerEntity == null) return; // No player found, so exit the method
+      
       for (Entity entity : game.getEntityManager().getEntities()) {
-          if (entity instanceof AI) {
+    	   if (entity instanceof AI) {
               AI aiEntity = (AI) entity;
-              	//collisionRange value set at PlayScreen
               int distance = game.getEntityManager().getCollisionManager().getCollisionRange(); 
+              
+              // Check if this AI entity has the specific image you're interested in
+             
+              	
               // if player and AI  < distance = collide
 //              if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
 //                  Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) 
+              //If there is a collision with player and ai entity	  
               if(playerEntity.hasCollided(aiEntity, distance)) // use icollision
               {
+            	  //If monster catches player
+            	  if (aiEntity.getAIObjectName().equals("canbin.png")) 
+            	  {
                   game.getAudioManager().playSound();
                   handlePlayerAICollision(game);
                   return;
+            	  }
+            	  //If player touches thrash entity
+            	  else if (aiEntity.getAIObjectName().equals("bottle.png") || aiEntity.getAIObjectName().equals("glass.png")|| 
+            			  aiEntity.getAIObjectName().equals("paper.png") || aiEntity.getAIObjectName().equals("can.png"))
+            	  {
+            		  //Attach entity to player
+            		  playerEntity.attachEntity(aiEntity);
+                  return;
+            	  }
               }       
+          
           }
       }
   }
@@ -151,6 +169,10 @@ public class CollisionManager {
         System.out.println("Player and AI are within the range of " + collisionRange);
         game.getSceneManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen
     }
+    
+    //private void handlePickupCollision(SimulationLifeCycleManager game, AI thrashEntity) {
+    //}
+       
 
 
     // Sets the collision range for collision detection

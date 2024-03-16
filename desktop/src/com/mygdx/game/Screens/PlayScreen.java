@@ -118,7 +118,7 @@ public class PlayScreen extends BaseScreen {
         game.getBatch().end();
         
         
-     //To generate entities randomly at intervals
+     //To generate thrash entities randomly at intervals
         timeSinceLastGeneration += delta;
         if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
             timeSinceLastGeneration = 0; // Reset the timer
@@ -252,6 +252,11 @@ public class PlayScreen extends BaseScreen {
                 }
             }
         }
+        
+        if (pEntity != null) {
+            pEntity.updateAttachedEntities();
+        }
+        
 
  
     }
