@@ -23,6 +23,15 @@ public class PlayScreen extends BaseScreen {
 	private Vector3 position = new Vector3();
 	private Camera camera1;
 	private PlayerGame pEntity;
+	
+	
+	private int nextTrashIndex = 0; // Index of the next trash entity to generate
+	private final float generationInterval = 3; // Interval between generations, in seconds
+	private float timeSinceLastGeneration = generationInterval; // Timer to track time since last generation
+	
+	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
+	private String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
+	
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
@@ -44,25 +53,26 @@ public class PlayScreen extends BaseScreen {
         AI aEntity = new AI();
         pEntity = new PlayerGame();
        
-        AI canbinEntity = new AI("canbin.png",200, 10); // trashbin
+        generatedCoordinates = generateCoordinates();
+        AI monsterEntity = new AI("canbin.png",200, 10); // Monster entity that follows player
         AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
         AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
         AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
         AI wastebinEntity = new AI("thrashbin.png",600, 10); // trashbin2
         
         //Generate coordinates for thrash entities
-        ArrayList<int[]> generatedCoordinates = generateCoordinates();
+      //  ArrayList<int[]> generatedCoordinates = generateCoordinates();
         // Array of thrash entity images, assuming you have different images for each
-        String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
+       // String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
         
         // Create thrash entities with generated coordinates and add them to the entity manager
-        if (game.getEntityManager().checkClass(AI.class) == null) {
-        for (int i = 0; i < generatedCoordinates.size(); i++) {
-            int[] coord = generatedCoordinates.get(i);
-            AI thrashEntity = new AI(thrashImages[i], coord[0], coord[1]);
-            game.getEntityManager().addEntity(thrashEntity);
-        }
-        }
+        //if (game.getEntityManager().checkClass(AI.class) == null) {
+       // for (int i = 0; i < generatedCoordinates.size(); i++) {
+        //    int[] coord = generatedCoordinates.get(i);
+      //      AI thrashEntity = new AI(thrashImages[i], coord[0], coord[1]);
+      //      game.getEntityManager().addEntity(thrashEntity);
+       // }
+      //  }
         
         //Check for existing entity before adding
         if (game.getEntityManager().checkClass(Player.class) == null) {
@@ -73,7 +83,7 @@ public class PlayScreen extends BaseScreen {
         }
         
         //Add bin entities
-        game.getEntityManager().addEntity(canbinEntity);
+        game.getEntityManager().addEntity(monsterEntity);
         game.getEntityManager().addEntity(glassbinEntity);
         game.getEntityManager().addEntity(plasticbinEntity);
         game.getEntityManager().addEntity(paperbinEntity);
@@ -88,22 +98,40 @@ public class PlayScreen extends BaseScreen {
         super.stage.act(delta);
         super.stage.draw();
         
+        
         game.getBatch().begin();
         handleInput();
         drawEntities();
         moveEntities();
         
+        //To drag entity with mouse cursor
         if (draggedEntity != null) {
             // Update the entity's position to follow the mouse cursor
             int mouseX = Gdx.input.getX();
             int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
             //Calculate center position
-            int centerX = mouseX - draggedEntity.getWidth() / 2;
-            int centerY = mouseY - draggedEntity.getHeight() / 2;
+            float centerX = mouseX - draggedEntity.getWidth() / 2;
+            float centerY = mouseY - draggedEntity.getHeight() / 2;
             
             game.getEntityManager().getAIControlManager().getDirections().setPosition(draggedEntity, centerX, centerY);
         }
         game.getBatch().end();
+        
+        
+     //To generate entities randomly at intervals
+        timeSinceLastGeneration += delta;
+        if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
+            timeSinceLastGeneration = 0; // Reset the timer
+
+            int[] coord = generatedCoordinates.get(nextTrashIndex);
+            String image = thrashImages[nextTrashIndex % thrashImages.length]; // Ensure cycling through images
+            AI thrashEntity = new AI(image, coord[0], coord[1]);
+            game.getEntityManager().addEntity(thrashEntity);
+
+            nextTrashIndex++; // Prepare for the next entity
+        }
+        
+        
         
         checkGameConditions();
 //         Update the camera to follow the player
@@ -173,6 +201,7 @@ public class PlayScreen extends BaseScreen {
         	//Move AI entities to the left up to distance of 800 and speed of 1
             game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
             */
+        	
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
                 if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
                     game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.RIGHT);
@@ -185,8 +214,46 @@ public class PlayScreen extends BaseScreen {
                 else if (game.getInputOutputManager().getInputKeyboard().ifDownPressed()==true) { 
                     game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
                 }
+            } 
+        }
+        
+        //Make monster entity follow player
+        if (pEntity != null) {
+            AI monsterEntity = null;
+            // Find the monsterEntity in the list of entities
+            for (Entity entity : game.getEntityManager().getEntities()) {
+                if (entity instanceof AI) {
+                    AI ai = (AI) entity;
+                    
+                    // Check if this AI entity is the monsterEntity
+                    if (ai.getAIObjectName().equals("canbin.png")) {
+                    	monsterEntity = ai;
+                        break;
+                    }
+                }
+            }
+
+            // If monsterEntity is found, move it towards pEntity
+            if (monsterEntity != null) {
+                // Calculate direction vector from monsterEntity to pEntity
+                float dx = pEntity.getPosX() - monsterEntity.getPosX();
+                float dy = pEntity.getPosY() - monsterEntity.getPosY();
+                float distance = (float) Math.sqrt(dx * dx + dy * dy);
+                if (distance > 0) { // To avoid division by zero
+                    // Normalize direction vector
+                    float nx = dx / distance;
+                    float ny = dy / distance;
+                    // Move monsterEntity towards the player
+                    float speed = 1; // Adjust speed as needed
+                    float canbinposX = monsterEntity.getPosX() + nx * speed;
+                    float canbinposY = monsterEntity.getPosY() + ny * speed;
+
+                    game.getEntityManager().getAIControlManager().getDirections().setPosition(monsterEntity,canbinposX ,canbinposY );
+                }
             }
         }
+
+ 
     }
 
     private void checkGameConditions() {

@@ -19,10 +19,19 @@ public class AI extends CollidableEntity{
         this.AIObject = image;
     }
     
+    //To create AI with random coordinate
     public AI(String image) {
         //coordinates are randomly generated within the game screen
     	 super(image, (int)(Math.random() * 700), 200 + (int)(Math.random() * 300));
         this.AIObject = image; //default AIObject
+    }
+    
+
+    
+    
+    // Method to get the name of the AIObject (the texture name or image file name)
+    public String getAIObjectName() {
+        return this.AIObject;
     }
 
 	

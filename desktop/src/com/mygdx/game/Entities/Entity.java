@@ -10,16 +10,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class Entity{
     protected Texture entityImage;
     
-    protected int posX; //Y position of entity
-    protected int posY; //Y position of entity
-    protected int width = 90; // width of entity
-    protected int height = 60; // height of entity
+    protected float posX; //Y position of entity
+    protected float posY; //Y position of entity
+    protected float width = 90; // width of entity
+    protected float height = 60; // height of entity
 
     private static int idCounter = 0 ;
     protected int id;
 
     // Constructor 1: set position X and Y based on argument
-    public Entity(String entityImagePath, int posX, int posY) {
+    public Entity(String entityImagePath, float posX, float posY) {
         this.entityImage = new Texture(Gdx.files.internal(entityImagePath));
         this.posX = posX;
         this.posY = posY;
@@ -53,37 +53,37 @@ public abstract class Entity{
         this.entityImage = entityImage;
     }
 
-    public int getPosX() {
+    public float getPosX() {
         return posX;
     }
 
-    public void setPosX(int posX) {
+    public void setPosX(float posX) {
         this.posX = posX;
     }
 
-    public int getPosY() {
+    public float getPosY() {
         return posY;
     }
 
-    public void setPosY(int posY) {
+    public void setPosY(float posY) {
         this.posY = posY;
     }
     
-    public int getWidth()
+    public float getWidth()
     {
     	return width;
     }
-    public void setWidth(int width)
+    public void setWidth(float width)
     {
     	this.width = width;
     }
     
-    public int getHeight()
+    public float getHeight()
     {
     	return height;
     }
     
-    public void setHeight(int height)
+    public void setHeight(float height)
     {
     	this.height = height;
     }
