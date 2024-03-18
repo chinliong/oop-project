@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Player extends CollidableEntity {
-	 private List<CollidableEntity> pickedupEntities = new ArrayList<>();
+	private CollidableEntity pickedupEntity = null; 
 
     public Player() {
     	// Entity constructor 1
@@ -32,15 +32,17 @@ public abstract class Player extends CollidableEntity {
     
    // Method to attach a CollidableEntity to the player
     public void attachEntity(CollidableEntity entity) {
-        this.pickedupEntities.add(entity);
+    	if (this.pickedupEntity == null) {
+    	 this.pickedupEntity = entity; // Set the current picked-up entity
+    	}
     }
 
     // Method to update the positions of attached entities
     public void updateAttachedEntities() {
-        for (CollidableEntity entity : pickedupEntities) {
-            entity.setPosX(this.getPosX());
-            entity.setPosY(this.getPosY());
-        }
+    	 if (this.pickedupEntity != null) { // Check if there is an attached entity
+    	        this.pickedupEntity.setPosX(this.getPosX());
+    	        this.pickedupEntity.setPosY(this.getPosY());
+    	    }
     }
 
     
