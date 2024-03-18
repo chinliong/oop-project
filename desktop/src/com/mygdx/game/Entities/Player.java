@@ -4,6 +4,7 @@ package com.mygdx.game.Entities;
 import java.util.ArrayList;
 import java.util.List;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.shaders.DepthShader;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Player extends CollidableEntity {
@@ -32,7 +33,13 @@ public abstract class Player extends CollidableEntity {
     
    // Method to attach a CollidableEntity to the player
     public void attachEntity(CollidableEntity entity) {
-        this.pickedupEntities.add(entity);
+    	final int maxCount = 1;
+    	if(this.pickedupEntities.size() < maxCount)
+    	{
+            this.pickedupEntities.add(entity);
+            System.out.println(" attach entity added "+ entity + "into list");
+    	}
+  
     }
     
     public List<CollidableEntity> getPickedUpEntities() {
@@ -47,6 +54,7 @@ public abstract class Player extends CollidableEntity {
         }
     }
     
+
  // Method to simulate recycling an item into a bin
     public boolean recycleItem(AI bin) {
         // Assuming the last item picked up is the one to be recycled
@@ -84,6 +92,23 @@ public abstract class Player extends CollidableEntity {
             default:
                 return false; // The item does not match the bin
         }
+    }
+//    public void disposePickedupEntity(CollidableEntity entity)
+//    {
+//    	pickedupEntities.remove(entity);
+//    }
+//    
+//    public void detachEntity(CollidableEntity entity)
+//    {
+//    	if (pickedupEntities.contains(entity)){
+//    	
+//    	}
+//    	System.out.println("In the detachenetity func");
+//    }
+
+    public List<CollidableEntity> getPickedupEntityList()
+    {
+    	return this.pickedupEntities;
     }
 
 }

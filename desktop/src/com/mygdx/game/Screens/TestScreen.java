@@ -106,11 +106,11 @@ public class TestScreen extends BaseScreen {
 //        createText("this is ur score counter " + String.valueOf(pEntity.getPlayerHealth()));
         if (draggedEntity != null) {
             // Update the entity's position to follow the mouse cursor
-            int mouseX = Gdx.input.getX();
-            int mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
+            float mouseX = Gdx.input.getX();
+            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
             //Calculate center position
-            int centerX = mouseX - draggedEntity.getWidth() / 2;
-            int centerY = mouseY - draggedEntity.getHeight() / 2;
+            float centerX = mouseX - draggedEntity.getWidth() / 2;
+            float centerY = mouseY - draggedEntity.getHeight() / 2;
             
             game.getEntityManager().getAIControlManager().getDirections().setPosition(draggedEntity, centerX, centerY);
         }

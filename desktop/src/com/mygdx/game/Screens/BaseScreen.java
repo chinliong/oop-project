@@ -88,6 +88,17 @@ public abstract class BaseScreen implements Screen {
         
         return label;
     }
+    protected Label createText(String text, int posX, int posY){
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = game.getFont();
+        Label label = new Label(text, labelStyle);
+        label.setColor(Color.WHITE);
+        label.setPosition((float)posX, (float)posY);
+
+        stage.addActor(label);
+        
+        return label;
+    }
     
     protected void startAudio(String audioName, float volume) {
     	 game.getAudioManager().getMusic(audioName).setVolume(volume); 

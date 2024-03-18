@@ -16,17 +16,14 @@ import com.mygdx.game.Camera;
 //import com.mygdx.game.GameMaster;
 import com.mygdx.game.SimulationLifeCycleManager;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-public class PlayScreen extends BaseScreen {
+public class collidebinTest extends BaseScreen {
 	private AI draggedEntity = null;
 	//camera stuff
 	private Vector3 position = new Vector3();
 	private Camera camera1;
 	private PlayerGame pEntity;
-	//Player Stats
-	private Label scoreLabel;
-	private Label healthLabel;
+	
 	
 	private int nextTrashIndex = 0; // Index of the next trash entity to generate
 	private final float generationInterval = 3; // Interval between generations, in seconds
@@ -34,10 +31,8 @@ public class PlayScreen extends BaseScreen {
 	
 	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
 	private String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
-	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
-
 	
-    public PlayScreen(SimulationLifeCycleManager game) {
+    public collidebinTest(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
         initialiseUI();
@@ -47,11 +42,9 @@ public class PlayScreen extends BaseScreen {
 
     @Override
     public void initialiseUI() {
-    	createText("This is the PlayScreen screen");
-    	scoreLabel = createText("Player Score Counter: ", 50,100);
-    	healthLabel = createText("Player Health: ", 50,80);
+    	createText("This is the collidebiin screen");
     }
-
+    
     @Override
     public void show() {
         super.show();
@@ -61,14 +54,13 @@ public class PlayScreen extends BaseScreen {
         pEntity = new PlayerGame();
        
         generatedCoordinates = generateCoordinates();
-        AI monsterEntity = new AI("thrashbin.png",200, 10); // Monster entity that follows player
-        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
-        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
-        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
-        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
         AI binEntity = new AI("thrashbin.png",200,10);
-
-        
+//        AI monsterEntity = new AI("canbin.png",200, 10); // Monster entity that follows player
+//        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
+//        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
+//        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
+//        AI wastebinEntity = new AI("thrashbin.png",600, 10); // trashbin2
+//        
         //Generate coordinates for thrash entities
       //  ArrayList<int[]> generatedCoordinates = generateCoordinates();
         // Array of thrash entity images, assuming you have different images for each
@@ -91,20 +83,13 @@ public class PlayScreen extends BaseScreen {
         game.getEntityManager().addEntity(aEntity);
         }
         
-        monsterEntity.setType("waste");
-        glassbinEntity.setType("glass");
-        plasticbinEntity.setType("plastic");
-        paperbinEntity.setType("paper");
-        canbinEntity.setType("can");
-        
         //Add bin entities
-        game.getEntityManager().addEntity(monsterEntity);
-        game.getEntityManager().addEntity(glassbinEntity);
-        game.getEntityManager().addEntity(plasticbinEntity);
-        game.getEntityManager().addEntity(paperbinEntity);
-        game.getEntityManager().addEntity(canbinEntity);
-        
         game.getEntityManager().addEntity(binEntity);
+//        game.getEntityManager().addEntity(monsterEntity);
+//        game.getEntityManager().addEntity(glassbinEntity);
+//        game.getEntityManager().addEntity(plasticbinEntity);
+//        game.getEntityManager().addEntity(paperbinEntity);
+//        game.getEntityManager().addEntity(wastebinEntity);
                
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
@@ -135,26 +120,21 @@ public class PlayScreen extends BaseScreen {
         game.getBatch().end();
         
         
-      //To generate trash entities randomly at intervals
+     //To generate thrash entities randomly at intervals
         timeSinceLastGeneration += delta;
         if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
             timeSinceLastGeneration = 0; // Reset the timer
 
             int[] coord = generatedCoordinates.get(nextTrashIndex);
-            int index = nextTrashIndex % thrashImages.length; // Calculate index for type
-            String image = thrashImages[index]; // Select image based on index
-            String type = thrashTypes[index]; // Select type based on same index
-
+            String image = thrashImages[nextTrashIndex % thrashImages.length]; // Ensure cycling through images
             AI thrashEntity = new AI(image, coord[0], coord[1]);
-            thrashEntity.setType(type); // Set the type for the trash entity
-
             game.getEntityManager().addEntity(thrashEntity);
 
             nextTrashIndex++; // Prepare for the next entity
         }
         
         
-        updatePlayerScore();
+        
         checkGameConditions();
 //         Update the camera to follow the player
 //        if (pEntity != null) {
@@ -166,13 +146,7 @@ public class PlayScreen extends BaseScreen {
 //        game.getBatch().setProjectionMatrix(camera1.camera.combined);
     }
 
-    private void updatePlayerScore()
-    {
-    	int scoreCounter = pEntity.getScoreCounter();
-    	int healthCounter = pEntity.getPlayerHealth();
-    	scoreLabel.setText("Player Score: " + scoreCounter);
-    	healthLabel.setText("Player Health: " + healthCounter);
-    }
+
     private void handleInput() {
     	if(game.getInputOutputManager().getInputMouse().mousePressed()){  // check if mouse pressed
     		
@@ -189,7 +163,7 @@ public class PlayScreen extends BaseScreen {
         }
     	
     	
-    	
+    		
     	 if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
     	        if (draggedEntity == null) {
     	            // Get mouse position
@@ -218,6 +192,7 @@ public class PlayScreen extends BaseScreen {
     		{
     			entity.draw(game.getBatch());
     		}
+    		
     	}
     }
     
@@ -254,7 +229,7 @@ public class PlayScreen extends BaseScreen {
                     AI ai = (AI) entity;
                     
                     // Check if this AI entity is the monsterEntity
-                    if (ai.getAIObjectName().equals("thrashbin.png")) {
+                    if (ai.getAIObjectName().equals("canbin.png")) {
                     	monsterEntity = ai;
                         break;
                     }
@@ -307,15 +282,19 @@ public class PlayScreen extends BaseScreen {
     }
     
     private void checkWinCondition() {
-    	if (pEntity.getScoreCounter() == 4)
-    	{
-            game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
-    	}
-    	if (pEntity.getPlayerHealth() == 0)
-    	{
-            game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+        Player playerEntity = null;
+        for (Entity entity : game.getEntityManager().getEntities()) {
+            if (entity instanceof Player) {
+                playerEntity = (Player) entity;
+                break; 
+            }
+        }
 
-    	}
+        if (playerEntity == null) return; // No player found, so exit the method
+        // if playerEntity exits the screen = win screen
+    	if (playerEntity.getPosX() > Gdx.graphics.getWidth() || playerEntity.getPosY() > Gdx.graphics.getHeight()) {
+            game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
+        }
     }
 
     @Override

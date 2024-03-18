@@ -25,6 +25,14 @@ public class EntityManager {
         	collisionManager.addCollidableList((CollidableEntity)entity);
         }
     }
+    public void removeEntity(Entity entity) {
+        entityList.remove(entity);
+        if (entity instanceof CollidableEntity)
+        {
+        	collisionManager.removeCollidable((CollidableEntity)entity);
+        }
+    }
+    
     
     public Entity checkClass(Class<? extends Entity> entityClass) 
     {			// Class<? extends Entity> allows Entity's subclass as an argument

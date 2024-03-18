@@ -4,21 +4,22 @@ import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.CollidableEntity;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mygdx.game.SimulationLifeCycleManager;
 import com.mygdx.game.Screens.WinLoseScreen;
 import com.mygdx.game.Entities.PlayerGame;
 
-public class CollisionManager {
+public class myclass {
 	private int collisionRange; // The range within which entities are considered to be in collision range
 	private ArrayList<CollidableEntity> collidableList;
 	List<Entity> entitiesToRemove = new ArrayList<>();
 
 
 	// Constructor initializes the collision manager with default collision range
-	public CollisionManager() {
+	public myclass() {
 		collidableList = new ArrayList<>();
 		this.collisionRange = 0; // Default value, implying no range. Should be set explicitly.
 	}
@@ -31,10 +32,10 @@ public class CollisionManager {
 		return collidableList;
 	}
 	
-	public void removeCollidable(CollidableEntity cEntity) {
+	public void removeCollidable(CollidableEntity cEntity)
+	{
 		collidableList.remove(cEntity);
 	}
-
 //    public void checkForCollision(SimulationLifeCycleManager game) {
 //        Player playerEntity = null;
 //        for (Entity entity : game.getEntityManager().getEntities()) {
@@ -87,40 +88,9 @@ public class CollisionManager {
 //        }
 //    }
 	public void checkForCollision(SimulationLifeCycleManager game) {
-	    PlayerGame playerEntity = null;
-	    for (Entity entity : game.getEntityManager().getEntities()) {
-	        if (entity instanceof Player) {
-	            playerEntity = (PlayerGame) entity;
-	            break;
-	        }
-	    }
-	    if (playerEntity == null) return; // No player found, exit the method
+		System.out.println("FUNC RUNNING");
 
-	    // JACOB CODES
-	    // Check for collisions with bins 
-//	    for (CollidableEntity entity : collidableList) {
-//	        if (entity instanceof AI && ((AI) entity).getType().contains("bin")) {
-//	            AI bin = (AI) entity;
-//	            if (playerEntity.hasCollided(bin, collisionRange)) {
-//	                List<CollidableEntity> collectedItems = new ArrayList<>(playerEntity.getPickedUpEntities());
-//	                for (CollidableEntity itemEntity : collectedItems) {
-//	                    if (itemEntity instanceof AI) {
-//	                        AI item = (AI) itemEntity;
-//	                        if (isCorrectBin(item, bin)) {
-//	                            // Logic for correctly placed item
-//	                            System.out.println(item.getAIObjectName() + " successfully recycled in " + bin.getAIObjectName());
-//	                            playerEntity.getPickedUpEntities().remove(item);
-//	                            // Optionally: Increment score or play sound here
-//	                        } else {
-//	                            // Logic for incorrectly placed item
-//	                            System.out.println("Not in correct bin: " + item.getAIObjectName() + " cannot go into " + bin.getAIObjectName());
-//	                            // Optionally: Decrement score or play different sound here
-//	                        }
-//	                    }
-//	                }
-//	            }
-//	        }
-//	    }
+		PlayerGame playerEntity = null;
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof PlayerGame) {
 				playerEntity = (PlayerGame) entity; // if is type player = typecast it
@@ -189,14 +159,8 @@ public class CollisionManager {
 			playerEntity.getPickedupEntityList().remove(0);
 			System.out.println("the list now is" + playerEntity.getPickedupEntityList().size());
 		}
-	}
 
-	private boolean isCorrectBin(AI item, AI bin) {
-	    String itemType = item.getAIObjectName().replace(".png", ""); // Removing .png for comparison
-	    String binType = bin.getAIObjectName().replace("bin.png", ""); // Removing bin.png for comparison
-
-	    return itemType.equals(binType);
-	}
+		}
 
 	public void checkForCollisionTest(SimulationLifeCycleManager game) {
 		PlayerGame playerShip = null;
