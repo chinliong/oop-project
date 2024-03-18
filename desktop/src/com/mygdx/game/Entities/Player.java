@@ -42,7 +42,6 @@ public abstract class Player extends CollidableEntity {
             entity.setPosY(this.getPosY());
         }
     }
-
-    
+       
 
 }

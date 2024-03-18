@@ -56,11 +56,11 @@ public class PlayScreen extends BaseScreen {
         pEntity = new PlayerGame();
        
         generatedCoordinates = generateCoordinates();
-        AI monsterEntity = new AI("canbin.png",200, 10); // Monster entity that follows player
+        AI monsterEntity = new AI("thrashbin.png",200, 10); // Monster entity that follows player
         AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
         AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
         AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
-        AI wastebinEntity = new AI("thrashbin.png",600, 10); // trashbin2
+        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
         
         //Generate coordinates for thrash entities
       //  ArrayList<int[]> generatedCoordinates = generateCoordinates();
@@ -84,17 +84,18 @@ public class PlayScreen extends BaseScreen {
         game.getEntityManager().addEntity(aEntity);
         }
         
+        monsterEntity.setType("waste");
         glassbinEntity.setType("glass");
         plasticbinEntity.setType("plastic");
         paperbinEntity.setType("paper");
-        wastebinEntity.setType("waste");
+        canbinEntity.setType("can");
         
         //Add bin entities
         game.getEntityManager().addEntity(monsterEntity);
         game.getEntityManager().addEntity(glassbinEntity);
         game.getEntityManager().addEntity(plasticbinEntity);
         game.getEntityManager().addEntity(paperbinEntity);
-        game.getEntityManager().addEntity(wastebinEntity);
+        game.getEntityManager().addEntity(canbinEntity);
                
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
@@ -238,7 +239,7 @@ public class PlayScreen extends BaseScreen {
                     AI ai = (AI) entity;
                     
                     // Check if this AI entity is the monsterEntity
-                    if (ai.getAIObjectName().equals("canbin.png")) {
+                    if (ai.getAIObjectName().equals("thrashbin.png")) {
                     	monsterEntity = ai;
                         break;
                     }
