@@ -4,7 +4,7 @@ import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.CollidableEntity;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
-
+import java.util.List;
 import java.util.ArrayList;
 
 import com.mygdx.game.SimulationLifeCycleManager;
@@ -81,65 +81,46 @@ public class CollisionManager {
 //        }
 //    }
 	public void checkForCollision(SimulationLifeCycleManager game) {
-		Player playerEntity = null;
-		for (Entity entity : game.getEntityManager().getEntities()) {
-			if (entity instanceof Player) {
-				playerEntity = (Player) entity; // if is type player = typecast it
-				break;
-			}
-		}
-		if (playerEntity == null)
-			return; // No player found, so exit the method
+	    Player playerEntity = null;
+	    for (Entity entity : game.getEntityManager().getEntities()) {
+	        if (entity instanceof Player) {
+	            playerEntity = (Player) entity;
+	            break;
+	        }
+	    }
+	    if (playerEntity == null) return; // No player found, exit the method
 
-		for (Entity entity : game.getEntityManager().getEntities()) {
-			if (entity instanceof AI) {
-				AI aiEntity = (AI) entity;
-				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
+	    // Check for collisions with bins
+	    for (CollidableEntity entity : collidableList) {
+	        if (entity instanceof AI && ((AI) entity).getType().contains("bin")) {
+	            AI bin = (AI) entity;
+	            if (playerEntity.hasCollided(bin, collisionRange)) {
+	                List<CollidableEntity> collectedItems = new ArrayList<>(playerEntity.getPickedUpEntities());
+	                for (CollidableEntity itemEntity : collectedItems) {
+	                    if (itemEntity instanceof AI) {
+	                        AI item = (AI) itemEntity;
+	                        if (isCorrectBin(item, bin)) {
+	                            // Logic for correctly placed item
+	                            System.out.println(item.getAIObjectName() + " successfully recycled in " + bin.getAIObjectName());
+	                            playerEntity.getPickedUpEntities().remove(item);
+	                            // Optionally: Increment score or play sound here
+	                        } else {
+	                            // Logic for incorrectly placed item
+	                            System.out.println("Not in correct bin: " + item.getAIObjectName() + " cannot go into " + bin.getAIObjectName());
+	                            // Optionally: Decrement score or play different sound here
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
 
-				// Check if this AI entity has the specific image you're interested in
+	private boolean isCorrectBin(AI item, AI bin) {
+	    String itemType = item.getAIObjectName().replace(".png", ""); // Removing .png for comparison
+	    String binType = bin.getAIObjectName().replace("bin.png", ""); // Removing bin.png for comparison
 
-				// if player and AI < distance = collide
-//              if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
-//                  Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) 
-				// If there is a collision with player and ai entity
-				if (playerEntity.hasCollided(aiEntity, distance)) // use icollision
-				{
-					// If monster catches player
-					if (aiEntity.getAIObjectName().equals("canbin.png")) {
-						game.getAudioManager().playSound();
-						handlePlayerAICollision(game);
-						return;
-					}
-					// If player touches thrash entity
-					else if (aiEntity.getAIObjectName().equals("bottle.png")
-							|| aiEntity.getAIObjectName().equals("glass.png")
-							|| aiEntity.getAIObjectName().equals("paper.png")
-							|| aiEntity.getAIObjectName().equals("can.png")) {
-						// Attach entity to player
-						playerEntity.attachEntity(aiEntity);
-						return;
-					} 
-					
-					if (aiEntity.getType() == aiEntity.getType()) {
-						System.out.println("CORRECT BIN : " + aiEntity.getAIObjectName());
-						
-					}
-					
-//					if (aiEntity.getAIObjectName().equals("bottle.png") == aiEntity.getAIObjectName()
-//							.equals("plasticbin.png")
-//							|| aiEntity.getAIObjectName().equals("glass.png") == aiEntity.getAIObjectName()
-//									.equals("glassbin.png")
-//							|| aiEntity.getAIObjectName().equals("can.png") == aiEntity.getAIObjectName()
-//									.equals("thrashbin.png")
-//							|| aiEntity.getAIObjectName().equals("paper.png") == aiEntity.getAIObjectName()
-//									.equals("paperbin.png")) {
-//						System.out.println("CORRECT BIN : " + aiEntity.getAIObjectName());
-//						
-//					}
-				}
-
-			}
-		}
+	    return itemType.equals(binType);
 	}
 
 	public void checkForCollisionTest(SimulationLifeCycleManager game) {
