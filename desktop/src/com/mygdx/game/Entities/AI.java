@@ -5,9 +5,17 @@ import com.badlogic.gdx.graphics.Texture;
 public class AI extends CollidableEntity{
 
     private String AIObject;
-
+    private String type;
     
-    public AI() {
+    public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public AI() {
         //coordinates are randomly generated within the game screen
         super("whale.png", (800), (int)(Math.random() * 500));
         this.AIObject = "whale.png"; //default AIObject

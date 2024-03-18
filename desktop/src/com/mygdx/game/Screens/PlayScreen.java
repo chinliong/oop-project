@@ -31,6 +31,8 @@ public class PlayScreen extends BaseScreen {
 	
 	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
 	private String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
+	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
+
 	
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
@@ -82,6 +84,11 @@ public class PlayScreen extends BaseScreen {
         game.getEntityManager().addEntity(aEntity);
         }
         
+        glassbinEntity.setType("glass");
+        plasticbinEntity.setType("plastic");
+        paperbinEntity.setType("paper");
+        wastebinEntity.setType("waste");
+        
         //Add bin entities
         game.getEntityManager().addEntity(monsterEntity);
         game.getEntityManager().addEntity(glassbinEntity);
@@ -118,14 +125,19 @@ public class PlayScreen extends BaseScreen {
         game.getBatch().end();
         
         
-     //To generate thrash entities randomly at intervals
+      //To generate trash entities randomly at intervals
         timeSinceLastGeneration += delta;
         if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
             timeSinceLastGeneration = 0; // Reset the timer
 
             int[] coord = generatedCoordinates.get(nextTrashIndex);
-            String image = thrashImages[nextTrashIndex % thrashImages.length]; // Ensure cycling through images
+            int index = nextTrashIndex % thrashImages.length; // Calculate index for type
+            String image = thrashImages[index]; // Select image based on index
+            String type = thrashTypes[index]; // Select type based on same index
+
             AI thrashEntity = new AI(image, coord[0], coord[1]);
+            thrashEntity.setType(type); // Set the type for the trash entity
+
             game.getEntityManager().addEntity(thrashEntity);
 
             nextTrashIndex++; // Prepare for the next entity
