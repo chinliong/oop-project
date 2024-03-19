@@ -134,7 +134,7 @@ public class CollisionManager {
 			if (entity instanceof AI) {
 				AI aiEntity = (AI) entity;
 				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
-				System.out.println("in 107");
+				
 				// Check if this AI entity has the specific image you're interested in
 
 				// if player and AI < distance = collide
@@ -157,7 +157,7 @@ public class CollisionManager {
 							|| aiEntity.getAIObjectName().equals("can.png")) {
 						// Attach entity to player
 //						game.getEntityManager().getEntities().remove(aiEntity);
-						System.out.println("in 131");
+						
 						System.out.println("size listing before " + playerEntity.getPickedupEntityList().size());
 						playerEntity.attachEntity(aiEntity);
 						System.out.println("size listing after " + playerEntity.getPickedupEntityList().size());
@@ -166,7 +166,7 @@ public class CollisionManager {
 					} 
 				
 
-					else if (aiEntity.getAIObjectName().equals("thrashbin.png"))
+					else if (aiEntity.getAIObjectName().equals("canbin.png"))
 					{
 						if(playerEntity.getPickedupEntityList().size() != 0)
 						{
