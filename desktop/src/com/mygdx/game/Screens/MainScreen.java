@@ -43,8 +43,6 @@ public class MainScreen extends BaseScreen {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
             // Handle the click event
-            	game.getSceneManager().setScreen(game.getSceneManager().getScreen(collidebinTest.class));
-
             	game.getAudioManager().getMusic("MainMenu").stop();
                     }
                 }, 100, 100, 50, 300); //first 2 is size then position

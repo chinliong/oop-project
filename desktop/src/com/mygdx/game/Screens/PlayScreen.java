@@ -12,6 +12,7 @@ import com.mygdx.game.Entities.AI;
 import com.mygdx.game.Entities.Entity;
 import com.mygdx.game.Entities.Player;
 import com.mygdx.game.Entities.PlayerGame;
+import com.mygdx.game.AIControl.IMoveable;
 import com.mygdx.game.Camera;
 //import com.mygdx.game.GameMaster;
 import com.mygdx.game.SimulationLifeCycleManager;
@@ -129,8 +130,8 @@ public class PlayScreen extends BaseScreen {
             //Calculate center position
             float centerX = mouseX - draggedEntity.getWidth() / 2;
             float centerY = mouseY - draggedEntity.getHeight() / 2;
-            
-            game.getEntityManager().getAIControlManager().getDirections().setPosition(draggedEntity, centerX, centerY);
+            draggedEntity.setPosX(centerX);
+            draggedEntity.setPosY(centerY);
         }
         game.getBatch().end();
         
@@ -187,9 +188,7 @@ public class PlayScreen extends BaseScreen {
             }
             
         }
-    	
-    	
-    	
+    	// Function for dragging
     	// if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
     	     //   if (draggedEntity == null) {
     	            // Get mouse position
@@ -276,7 +275,8 @@ public class PlayScreen extends BaseScreen {
                     float canbinposX = monsterEntity.getPosX() + nx * speed;
                     float canbinposY = monsterEntity.getPosY() + ny * speed;
 
-                    game.getEntityManager().getAIControlManager().getDirections().setPosition(monsterEntity,canbinposX ,canbinposY );
+                    monsterEntity.setPosX(canbinposX);
+                    monsterEntity.setPosY(canbinposY);
                 }
             }
         }
@@ -294,9 +294,6 @@ public class PlayScreen extends BaseScreen {
         game.getEntityManager().getCollisionManager().checkForCollision(game);
         checkWinCondition();
     }
-    
-
-
 
 
     private void pauseScreenIfRequested() {
@@ -328,7 +325,7 @@ public class PlayScreen extends BaseScreen {
     	
         ArrayList<int[]> coordinates = new ArrayList<>();
         
-        while (coordinates.size() < 8) { // Generate until 8 unique coordinates are found
+        while (coordinates.size() < 8) { // Generate until 4 unique coordinates are found
             // Generate coordinates within screen bounds, ensuring y is at least 200
             int[] newCoordinate = {
                 MathUtils.random(700), //screen width

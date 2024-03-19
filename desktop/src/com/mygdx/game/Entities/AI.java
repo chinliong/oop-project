@@ -39,7 +39,6 @@ public class AI extends CollidableEntity{
     public String getAIObjectName() {
         return this.AIObject;
     }
-
 	
 
 }

@@ -1,30 +1,28 @@
 package com.mygdx.game.Managers;
 
-import com.badlogic.gdx.Gdx;
-import com.mygdx.game.AIControl.Directions;
-import com.mygdx.game.Entities.*;
+import com.mygdx.game.AIControl.IMoveable;
+import com.mygdx.game.Entities.AI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class AIControlManager {
-	
+    
     private List<AI> AIList;
-    private Directions directions;
-    
-   // public AIControlManager(List<AI> AIList){
-     //   this.AIList = AIList;
-    //}
-    
-    //constructor initializing vertical and horizontal movement for AI list
-    public AIControlManager(){
-        this.AIList = null;
-        this.directions = new Directions();
+
+    // Constructor initializing the AI list
+    public AIControlManager() {
+        this.AIList = new ArrayList<>();
     }
-    
-    // Returns the movements
-    public Directions getDirections(){
-        return this.directions;
+
+    // Method to add an AI entity to the list
+    public void addAI(AI ai) {
+        AIList.add(ai);
     }
-    
+
+    // Method to remove an AI entity from the list
+    public void removeAI(AI ai) {
+        AIList.remove(ai);
+    }
+
 }
