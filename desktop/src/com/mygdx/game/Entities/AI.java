@@ -15,7 +15,7 @@ public class AI extends CollidableEntity{
 		this.type = type;
 	}
 
-	public AI() {
+	public AI() { 
         //coordinates are randomly generated within the game screen
         super("whale.png", (800), (int)(Math.random() * 500));
         this.AIObject = "whale.png"; //default AIObject
@@ -33,8 +33,6 @@ public class AI extends CollidableEntity{
     	 super(image, (int)(Math.random() * 700), 200 + (int)(Math.random() * 300));
         this.AIObject = image; //default AIObject
     }
-    
-
     
     
     // Method to get the name of the AIObject (the texture name or image file name)

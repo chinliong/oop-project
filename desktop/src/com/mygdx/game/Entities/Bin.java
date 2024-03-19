@@ -1,8 +1,8 @@
 package com.mygdx.game.Entities;
 
-public class Bin extends CollidableEntity {
+public class Bin extends AI {
 		public Bin()
 		{
-			super(null, 5, 5);
+			
 		}
 }
