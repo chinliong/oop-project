@@ -35,57 +35,7 @@ public class CollisionManager {
 		collidableList.remove(cEntity);
 	}
 
-//    public void checkForCollision(SimulationLifeCycleManager game) {
-//        Player playerEntity = null;
-//        for (Entity entity : game.getEntityManager().getEntities()) {
-//            if (entity instanceof Player) {
-//                playerEntity = (PlayerShip) entity; // if is type player = typecast it
-//                break; 
-//            }
-//        }
-//
-//        if (playerEntity == null) return; // No player found, so exit the method
-//
-////        for (Entity entity : game.getEntityManager().getEntities()) {
-////            if (entity instanceof AI) {
-////                AI aiEntity = (AI) entity;
-////                	//collisionRange value set at PlayScreen
-////                int distance = game.getEntityManager().getCollisionManager().getCollisionRange(); 
-////                // if player and AI  < distance = collide
-//////                if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
-//////                    Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) 
-////                if(playerEntity.hasCollided(aiEntity, distance)) // use icollision
-////                {
-////                    game.getAudioManager().playSound();
-////                    playerEntity = (PlayerShip) playerEntity;
-////                    playerEntity.set
-////                    handlePlayerAICollision(game);
-////                    return;
-////                }       
-////            }
-////        }
-//        for (Entity entity : game.getEntityManager().getEntities()) {
-//            if (entity instanceof PlayerShip) { // Directly check for PlayerShip
-//                PlayerShip playerShip = (PlayerShip) entity; // Correctly cast and store in a PlayerShip variable
-//                if (entity instanceof AI)
-//                {
-//                    AI aiEntity = (AI) entity;
-//                }
-//                // Loop through entities again to check for collisions with AI...
-//                // Assuming you're inside another loop checking for AI entities:
-//            ;
-//                int distance = getCollisionRange(); // Directly access the collision range from this class
-//                
-//                if(playerShip.hasCollided(aiEntity, distance)) {
-//                    game.getAudioManager().playSound();
-//                    playerShip.setPlayerHealth(playerShip.getPlayerHealth() - 1); // Correctly call getPlayerHealth method
-//                    
-//                    handlePlayerAICollision(game);
-//                    return;
-//                }
-//            }
-//        }
-//    }
+
 	public void checkForCollision(SimulationLifeCycleManager game) {
 	    PlayerGame playerEntity = null;
 	    for (Entity entity : game.getEntityManager().getEntities()) {
@@ -96,31 +46,7 @@ public class CollisionManager {
 	    }
 	    if (playerEntity == null) return; // No player found, exit the method
 
-	    // JACOB CODES
-	    // Check for collisions with bins 
-//	    for (CollidableEntity entity : collidableList) {
-//	        if (entity instanceof AI && ((AI) entity).getType().contains("bin")) {
-//	            AI bin = (AI) entity;
-//	            if (playerEntity.hasCollided(bin, collisionRange)) {
-//	                List<CollidableEntity> collectedItems = new ArrayList<>(playerEntity.getPickedUpEntities());
-//	                for (CollidableEntity itemEntity : collectedItems) {
-//	                    if (itemEntity instanceof AI) {
-//	                        AI item = (AI) itemEntity;
-//	                        if (isCorrectBin(item, bin)) {
-//	                            // Logic for correctly placed item
-//	                            System.out.println(item.getAIObjectName() + " successfully recycled in " + bin.getAIObjectName());
-//	                            playerEntity.getPickedUpEntities().remove(item);
-//	                            // Optionally: Increment score or play sound here
-//	                        } else {
-//	                            // Logic for incorrectly placed item
-//	                            System.out.println("Not in correct bin: " + item.getAIObjectName() + " cannot go into " + bin.getAIObjectName());
-//	                            // Optionally: Decrement score or play different sound here
-//	                        }
-//	                    }
-//	                }
-//	            }
-//	        }
-//	    }
+	    
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof PlayerGame) {
 				playerEntity = (PlayerGame) entity; // if is type player = typecast it
@@ -129,28 +55,23 @@ public class CollisionManager {
 		}
 		if (playerEntity == null)
 			return; // No player found, so exit the method
-//		System.out.println("ur removelist BEFORE:" + entitiesToRemove.size() );
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof AI) {
 				AI aiEntity = (AI) entity;
 				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
 				
-				// Check if this AI entity has the specific image you're interested in
 
-				// if player and AI < distance = collide
-//              if (Math.abs(playerEntity.getPosX() - aiEntity.getPosX()) < distance &&
-//                  Math.abs(playerEntity.getPosY() - aiEntity.getPosY()) < distance) 
-				// If there is a collision with player and ai entity
-				if (playerEntity.hasCollided(aiEntity, distance)) // use icollision
+				if (playerEntity.hasCollided(aiEntity, distance)) // use iCollision
 				{
-					// If monster catches player
+					// If monster catches player, player die
 					if (aiEntity.getAIObjectName().equals("thrashbin.png")) {
 						game.getAudioManager().playSound();
-						handlePlayerAICollision(game);
+						//handlePlayerAICollision(game);
+						checkForCollisionTest(game);
 						return;
 					}
 
-					
+					// Attach recyclable to entity
 	                else if (aiEntity.getAIObjectName().matches("plastic.png|glass.png|paper.png|can.png")) {
 	                    playerEntity.attachEntity(aiEntity);
 	                    break;
@@ -191,15 +112,15 @@ public class CollisionManager {
 
 	public void checkForCollisionTest(SimulationLifeCycleManager game) {
 		PlayerGame playerShip = null;
-		// First, find the PlayerShip
+		// First, find the Playership
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof PlayerGame) {
 				playerShip = (PlayerGame) entity;
-				break; // Assuming there's only one PlayerShip, we can break after finding it
+				break; // Assuming there's only one Playership, we can break after finding it
 			}
 		}
 
-		// If a PlayerShip was found, check for collisions with AI entities
+		// If a Player was found, check for collisions with AI entities
 		if (playerShip != null) {
 			for (Entity entity : game.getEntityManager().getEntities()) {
 				if (entity instanceof AI) {
@@ -229,10 +150,6 @@ public class CollisionManager {
 		System.out.println("Player and AI are within the range of " + collisionRange);
 		game.getSceneManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen
 	}
-
-	// private void handlePickupCollision(SimulationLifeCycleManager game, AI
-	// thrashEntity) {
-	// }
 
 	// Sets the collision range for collision detection
 	public void setCollisionRange(int collisionRange) {
