@@ -328,7 +328,7 @@ public class PlayScreen extends BaseScreen {
     	
         ArrayList<int[]> coordinates = new ArrayList<>();
         
-        while (coordinates.size() < 4) { // Generate until 4 unique coordinates are found
+        while (coordinates.size() < 8) { // Generate until 8 unique coordinates are found
             // Generate coordinates within screen bounds, ensuring y is at least 200
             int[] newCoordinate = {
                 MathUtils.random(700), //screen width
