@@ -144,7 +144,7 @@ public class CollisionManager {
 				if (playerEntity.hasCollided(aiEntity, distance)) // use icollision
 				{
 					// If monster catches player
-					if (aiEntity.getAIObjectName().equals("canbin.png")) {
+					if (aiEntity.getAIObjectName().equals("thrashbin.png")) {
 						game.getAudioManager().playSound();
 						handlePlayerAICollision(game);
 						return;
