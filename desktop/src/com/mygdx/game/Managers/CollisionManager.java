@@ -88,8 +88,8 @@ public class CollisionManager {
 	                            playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
 	                            System.out.println(entityType + " disposed correctly in " + binType + " bin. Score increased.");
 	                        } else {
-	                            playerEntity.setScoreCounter(playerEntity.getScoreCounter() - 1);
-	                            System.out.println(entityType + " disposed incorrectly in " + binType + " bin. Score decreased.");
+	                            playerEntity.setScoreCounter(playerEntity.getScoreCounter() - 0);
+	                            System.out.println(entityType + " disposed incorrectly in " + binType + " bin. Score remained the same.");
 	                        }
 
 	                        entitiesToRemove.add(pickedUpEntity);
