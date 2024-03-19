@@ -150,38 +150,35 @@ public class CollisionManager {
 						return;
 					}
 
-					// If player touches thrash entity
-					else if (aiEntity.getAIObjectName().equals("bottle.png")
-							|| aiEntity.getAIObjectName().equals("glass.png")
-							|| aiEntity.getAIObjectName().equals("paper.png")
-							|| aiEntity.getAIObjectName().equals("can.png")) {
-						// Attach entity to player
-//						game.getEntityManager().getEntities().remove(aiEntity);
-						
-						System.out.println("size listing before " + playerEntity.getPickedupEntityList().size());
-						playerEntity.attachEntity(aiEntity);
-						System.out.println("size listing after " + playerEntity.getPickedupEntityList().size());
-
-						break;
-					} 
-				
-
-					else if (aiEntity.getAIObjectName().equals("canbin.png"))
-					{
-						if(playerEntity.getPickedupEntityList().size() != 0)
-						{
-							System.out.println("size before" + entitiesToRemove.size());
-							entitiesToRemove.add(playerEntity.getPickedupEntityList().get(0));
-							System.out.println("the size is now" + entitiesToRemove.size());
-							playerEntity.setScoreCounter(playerEntity.getScoreCounter() +1);
-							break;
-						}
-					}
 					
-				}
+	                else if (aiEntity.getAIObjectName().matches("plastic.png|glass.png|paper.png|can.png")) {
+	                    playerEntity.attachEntity(aiEntity);
+	                    break;
+	                } 
+	                // Handling disposal into bins with correct type matching
+	                else if (aiEntity.getAIObjectName().endsWith("bin.png")) {
+	                    if (!playerEntity.getPickedupEntityList().isEmpty()) {
+	                        AI pickedUpEntity = (AI) playerEntity.getPickedupEntityList().get(0);
+	                        String entityType = pickedUpEntity.getAIObjectName().replace(".png", "");
+	                        String binType = aiEntity.getAIObjectName().replace("bin.png", "");
 
-			}
-		}
+	                        boolean disposalCorrect = entityType.equals(binType);
+	                        if (disposalCorrect) {
+	                            playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
+	                            System.out.println(entityType + " disposed correctly in " + binType + " bin. Score increased.");
+	                        } else {
+	                            playerEntity.setScoreCounter(playerEntity.getScoreCounter() - 1);
+	                            System.out.println(entityType + " disposed incorrectly in " + binType + " bin. Score decreased.");
+	                        }
+
+	                        entitiesToRemove.add(pickedUpEntity);
+	                        break; // Stop checking after handling disposal for one item
+	                    }
+	                }
+	            }
+	        }
+	    }
+
 		if (entitiesToRemove.size() > 0)
 		{
 			System.out.println("out");
@@ -191,12 +188,6 @@ public class CollisionManager {
 		}
 	}
 
-	private boolean isCorrectBin(AI item, AI bin) {
-	    String itemType = item.getAIObjectName().replace(".png", ""); // Removing .png for comparison
-	    String binType = bin.getAIObjectName().replace("bin.png", ""); // Removing bin.png for comparison
-
-	    return itemType.equals(binType);
-	}
 
 	public void checkForCollisionTest(SimulationLifeCycleManager game) {
 		PlayerGame playerShip = null;

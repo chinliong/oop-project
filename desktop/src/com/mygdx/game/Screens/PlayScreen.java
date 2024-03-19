@@ -33,7 +33,7 @@ public class PlayScreen extends BaseScreen {
 	private float timeSinceLastGeneration = generationInterval; // Timer to track time since last generation
 	
 	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
-	private String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
+	private String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
 	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
 
 	
@@ -72,7 +72,7 @@ public class PlayScreen extends BaseScreen {
         //Generate coordinates for thrash entities
       //  ArrayList<int[]> generatedCoordinates = generateCoordinates();
         // Array of thrash entity images, assuming you have different images for each
-       // String[] thrashImages = {"bottle.png", "can.png", "glass.png", "paper.png"};
+       // String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
         
         // Create thrash entities with generated coordinates and add them to the entity manager
         //if (game.getEntityManager().checkClass(AI.class) == null) {
