@@ -49,6 +49,13 @@ public class Monster extends AI {
 //          }
 	}
 	
+	 public void reset() {
+	        // Reset monster's position and other relevant attributes
+	        setPosX(200);
+	        setPosY(10);
+	        // Reset other attributes as needed
+	    }
+	
 //	 // If monsterEntity is found, move it towards pEntity
 //    if (monsterEntity != null) {
 //        // Calculate direction vector from monsterEntity to pEntity

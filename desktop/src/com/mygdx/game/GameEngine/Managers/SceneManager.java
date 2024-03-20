@@ -72,14 +72,14 @@ public class SceneManager {
         }
     }
 
-    // Removes a screen of the specified type from the list
     public void removeScreen(Class<? extends Screen> type) {
-        for (Screen screen : screenList) {
+        screenList.removeIf(screen -> {
             if (screen.getClass().equals(type)) {
-            	screenList.remove(screen);
-                return;
+                screen.dispose();
+                return true;
             }
-        }
+            return false;
+        });
     }
     
     // Creates a new screen instance of the specified class, using reflection to invoke the constructor with arguments
@@ -128,6 +128,8 @@ public class SceneManager {
             }
         }
     }
+    
+    
     
     public void dispose() {
         // Iterate through all screens and dispose of them

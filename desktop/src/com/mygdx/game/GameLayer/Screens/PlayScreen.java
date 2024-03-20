@@ -428,5 +428,16 @@ public class PlayScreen extends BaseScreen {
         prefs.flush();
     }
     
+    public static void resetGameEntities() {
+        if (monsterEntitystatic != null) {
+            monsterEntitystatic.reset();
+        }
+        if (pEntityStatic != null) {
+	        pEntityStatic.reset();
+	        pEntityStatic.removeAttached();
+        }
+        
+    }
+    
  
   }

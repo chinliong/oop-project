@@ -34,11 +34,15 @@ public class PauseScreen extends BaseScreen {
         createButton("Main Menu", 100, 200, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.getEntityManager().disposeEntities();
+              
                 //remove the play screen from the list of screens
-                game.getSceneManager().removeScreen(PlayScreen.class);
-                game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
-
+               // game.getSceneManager().removeScreen(PlayScreen.class);
+            	Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
+          	  	prefs.clear();
+          	  	prefs.flush();
+               
+          	  	
+          	  game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
             }
         });
 

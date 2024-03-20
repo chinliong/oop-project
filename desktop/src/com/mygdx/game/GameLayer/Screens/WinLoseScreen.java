@@ -36,6 +36,10 @@ public class WinLoseScreen extends BaseScreen{
         createButton("Main Menu", 100, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+            	//Clear saved data
+          	  Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
+          	  prefs.clear();
+          	  prefs.flush();
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
        
             }
