@@ -26,8 +26,8 @@ public class PauseScreen extends BaseScreen {
     	createButton("Resume", 100, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-            	game.getAudioManager().getMusic("Gameplay").play();
-                game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
+                game.getAudioManager().getMusic("Gameplay").play();
+                game.getSceneManager().setScreen(PlayScreen.class);
             }
         });
 
@@ -55,10 +55,5 @@ public class PauseScreen extends BaseScreen {
         });
 
     }
-
-
-
-
-
 
 }

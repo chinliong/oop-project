@@ -1,3 +1,4 @@
+
 package com.mygdx.game.GameLayer.Screens;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class PlayScreen extends BaseScreen {
 	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
 	private String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
 	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
+
 	
 	//To prevent re-instantiation
 	private static PlayerGame pEntityStatic;
@@ -80,6 +82,7 @@ public class PlayScreen extends BaseScreen {
         startAudio("Gameplay", 1.0f);
         
         AI aEntity = new AI();
+       
         
         Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
         //Load player coords
@@ -134,10 +137,13 @@ public class PlayScreen extends BaseScreen {
       //  }
         
         //Check for existing entity before adding
+        if (game.getEntityManager().checkClass(Player.class) == null) {
+        game.getEntityManager().addEntity(pEntity);
         System.out.println("Checking for existing PlayerGame entity...");
         if (game.getEntityManager().checkClass(PlayerGame.class) == null) {
         	 game.getEntityManager().addEntity(pEntity);
         }
+        if (game.getEntityManager().checkClass(AI.class) == null) {
         
         if(game.getEntityManager().checkClass(AI.class) == null) {
         game.getEntityManager().addEntity(aEntity);
@@ -149,6 +155,7 @@ public class PlayScreen extends BaseScreen {
 //        paperbinEntity.setType("paper");
 //        canbinEntity.setType("can");
         
+        //Add bin entities
         //Add Monster entity
         if (game.getEntityManager().checkClass(Monster.class) == null) {
         game.getEntityManager().addEntity(monsterEntity);
@@ -164,7 +171,7 @@ public class PlayScreen extends BaseScreen {
                
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
-
+        }}
     }
       
 
@@ -231,10 +238,7 @@ public class PlayScreen extends BaseScreen {
         
         
         updatePlayerScore();
-   
-            checkGameConditions();
-        
-        
+        checkGameConditions();
     
 //         Update the camera to follow the player
 //        if (pEntity != null) {
@@ -253,6 +257,7 @@ public class PlayScreen extends BaseScreen {
     	scoreLabel.setText("Player Score: " + scoreCounter);
     	healthLabel.setText("Player Health: " + healthCounter);
     }
+    
     private void handleInput() {
     	if(game.getInputOutputManager().getInputMouse().mousePressed()){  // check if mouse pressed
     		
@@ -299,16 +304,8 @@ public class PlayScreen extends BaseScreen {
     	}
     }
     
-    private void moveEntities() {
-    	//loop through all entities
-    
-        	
-        	/* PREVIOUS CODE TO MOVE WHALE LEFT
-        	//Move AI entities to the left up to distance of 800 and speed of 1
-            game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
-            */
-        	
-    	 // Directly check for player input and update pEntity's position.
+    private void moveEntities() {    	
+         //Check for player input and update pEntity's position.
         if (game.getInputOutputManager().getInputKeyboard().keyPressed()) {
             // Assume these methods in PlayerControlManager handle movement based on direction
             if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()) {
@@ -333,13 +330,11 @@ public class PlayScreen extends BaseScreen {
         if (pEntity != null) {
             pEntity.updateAttachedEntities();
         }
-        
-
+            
+       }
  
-    }
 
     private void checkGameConditions() {
- 
         pauseScreenIfRequested();
         game.getEntityManager().getCollisionManager().checkForCollision(game);
         checkWinCondition();
@@ -430,11 +425,8 @@ public class PlayScreen extends BaseScreen {
     	prefs.putFloat("monsterY", monsterEntity.getPosY());
     	//Save last generaeted thrash time
         prefs.putFloat("timeSinceLastGeneration", timeSinceLastGeneration);
-
         prefs.flush();
     }
     
-
-
-    // Call this method before transitioning to the PauseScreen
-    }
+ 
+  }
