@@ -14,11 +14,20 @@ import java.util.List;
 public class SceneManager {
     private List<Screen> screenList; // List to keep track of instantiated screens
     private SimulationLifeCycleManager game; 
+    private GameState currentGameState;
 
     // Constructor initializes the scene manager with a reference to the SimulationLifeCycleManager
     public SceneManager(SimulationLifeCycleManager game){
         this.game = game;
         this.screenList = new ArrayList<>();
+    }
+    
+    public GameState getGameState() {
+        return this.currentGameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.currentGameState = gameState;
     }
     
     // Sets the last screen in the list as the current screen, creating the MainScreen if no screens exist
@@ -50,6 +59,16 @@ public class SceneManager {
             return screen; // Return the newly created screen
         } catch (Exception e) {
             throw new RuntimeException("Failed to create screen: " + type.getName(), e);
+        }
+    }
+    
+    public void setScreen(Class<? extends Screen> screenClass) {
+        // Get or create the screen of the specified class
+        Screen screen = getScreen(screenClass);
+        if (screen != null) {
+            setScreen(screen); // Use the existing setScreen method
+        } else {
+            System.err.println("Failed to set screen: " + screenClass.getSimpleName());
         }
     }
 

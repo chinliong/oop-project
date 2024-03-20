@@ -1,6 +1,7 @@
 package com.mygdx.game.GameLayer.Screens;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -11,6 +12,8 @@ import com.badlogic.gdx.math.MathUtils;
 
 import com.mygdx.game.GameEngine.Camera;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
+import com.mygdx.game.GameEngine.Managers.SceneManager;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameEngine.Entities.AI;
@@ -39,7 +42,8 @@ public class PlayScreen extends BaseScreen {
 	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
 	private String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
 	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
-
+	
+	private GameState gameState;
 	
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
@@ -118,6 +122,14 @@ public class PlayScreen extends BaseScreen {
                
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
+
+        if (gameState != null) {
+            restoreGameFromState(gameState);
+        } else {
+            gameState = new GameState();
+            // Handle the case where there's no existing gameState, possibly initializing a new game
+        }
+        
     }
 
     @Override
@@ -321,10 +333,63 @@ public class PlayScreen extends BaseScreen {
         }
     
     }
+    
+    public void loadGameState() {
+    	GameState gameState = game.getSceneManager().getGameState();
+        if (gameState != null) {
+            // Update player and monster state
+            updateEntityState(pEntity, gameState.getPlayerPosition(), gameState.getPlayerScore(), gameState.getPlayerHealth());
+            updateEntityState(monsterEntity, gameState.getMonsterPosition(), null, null);
+        }
+    }
+
+    private void updateEntityState(Entity entity, Vector2 position, Integer score, Integer health) {
+        entity.setPosX(position.x);
+        entity.setPosY(position.y);
+        // Add more parameters as needed
+    }
+
+    public void saveGameState() {
+        GameState gameState = new GameState();
+        gameState.setPlayerPosition(new Vector2(pEntity.getPosX(), pEntity.getPosY()));
+        gameState.setPlayerScore(pEntity.getScoreCounter());
+        gameState.setPlayerHealth(pEntity.getPlayerHealth());
+        gameState.setMonsterPosition(new Vector2(monsterEntity.getPosX(), monsterEntity.getPosY()));
+
+        // Assuming Recyclables are also part of the game state
+        List<Vector2> recyclablePositions = new ArrayList<>();
+        for (Entity entity : game.getEntityManager().getEntities()) {
+            if (entity instanceof Recyclables) {
+                recyclablePositions.add(new Vector2(entity.getPosX(), entity.getPosY()));
+            }
+        }
+        gameState.setRecyclablePositions(recyclablePositions);
+
+        game.getSceneManager().setGameState(gameState);
+    }
+
+
+    private void restoreGameFromState(GameState state) {
+        // Use the data in GameState to restore your game entities and data
+        // Example:
+        pEntity.setPosX(state.getPlayerPosition().x);
+        pEntity.setPosY(state.getPlayerPosition().y);
+        pEntity.setScoreCounter(state.getPlayerScore());
+        pEntity.setPlayerHealth(state.getPlayerHealth());
+
+        // Similar restoration for other entities based on stored positions and states
+    }
+    
+    public void pauseGame() {
+        saveGameState();
+        game.getSceneManager().setScreen(PauseScreen.class);
+    }
+    
 
     @Override
     public void hide() {
         game.getSceneManager().removeScreen(PlayScreen.class);
+        saveGameState();
     }
     
    //Function to generate random coordinates higher than 200units, and at least 50units apart from each other
