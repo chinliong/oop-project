@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
@@ -39,7 +40,10 @@ public class PlayScreen extends BaseScreen {
 	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
 	private String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
 	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
-
+	
+	//To prevent re-instantiation
+	private static PlayerGame pEntityStatic;
+	private static Monster monsterEntitystatic;
 	
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
@@ -59,13 +63,49 @@ public class PlayScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
+   
+        
+        //Create entities, preventing re-instantion
+        if (pEntityStatic == null) {
+            pEntityStatic = new PlayerGame();
+        }
+        pEntity = pEntityStatic;
+        
+        if (monsterEntitystatic == null) {
+        	monsterEntitystatic = new Monster();
+        }
+        monsterEntity = monsterEntitystatic;
+        
+        
         startAudio("Gameplay", 1.0f);
         
         AI aEntity = new AI();
-        pEntity = new PlayerGame();
-       
+        
+        Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
+        //Load player coords
+        if (prefs.contains("playerX") && prefs.contains("playerY")) {
+            float playerX = prefs.getFloat("playerX", 0); // Default to 0 if not found
+            float playerY = prefs.getFloat("playerY", 0);
+            pEntity.setPosX(playerX);
+            pEntity.setPosY(playerY);
+            Gdx.app.log("GameState", "Restored pEntity state: X=" + pEntity.getPosX() + ", Y=" + pEntity.getPosY());
+        }
+        //Load monster coords
+        if (prefs.contains("monsterX") && prefs.contains("monsterY")) {
+            float monsterX = prefs.getFloat("monsterX", 0); // Default to 0 if not found
+            float monsterY = prefs.getFloat("monsterY", 0);
+            monsterEntity.setPosX(monsterX);
+            monsterEntity.setPosY(monsterY);
+        }
+        //Load time since last generated thrash to prevent repeated generation after resuming
+        if (prefs.contains("timeSinceLastGeneration")) {
+            timeSinceLastGeneration = prefs.getFloat("timeSinceLastGeneration", 0);
+        } else {
+            timeSinceLastGeneration = generationInterval;
+        }
+  
         generatedCoordinates = generateCoordinates();
-         monsterEntity = new Monster("1.png",200, 10); // Monster entity that follows player
+      
 //        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
 //        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
 //        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
@@ -94,10 +134,12 @@ public class PlayScreen extends BaseScreen {
       //  }
         
         //Check for existing entity before adding
-        if (game.getEntityManager().checkClass(Player.class) == null) {
-        game.getEntityManager().addEntity(pEntity);
+        System.out.println("Checking for existing PlayerGame entity...");
+        if (game.getEntityManager().checkClass(PlayerGame.class) == null) {
+        	 game.getEntityManager().addEntity(pEntity);
         }
-        if (game.getEntityManager().checkClass(AI.class) == null) {
+        
+        if(game.getEntityManager().checkClass(AI.class) == null) {
         game.getEntityManager().addEntity(aEntity);
         }
         
@@ -107,8 +149,12 @@ public class PlayScreen extends BaseScreen {
 //        paperbinEntity.setType("paper");
 //        canbinEntity.setType("can");
         
-        //Add bin entities
+        //Add Monster entity
+        if (game.getEntityManager().checkClass(Monster.class) == null) {
         game.getEntityManager().addEntity(monsterEntity);
+        }
+        
+        //Add Bin entities
         game.getEntityManager().addEntity(glassbinEntity);
         game.getEntityManager().addEntity(plasticbinEntity);
         game.getEntityManager().addEntity(paperbinEntity);
@@ -118,10 +164,14 @@ public class PlayScreen extends BaseScreen {
                
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
+
     }
+      
 
     @Override
     public void render(float delta) {
+    	
+    	
         super.stage.act(delta);
         super.stage.draw();
         
@@ -181,7 +231,11 @@ public class PlayScreen extends BaseScreen {
         
         
         updatePlayerScore();
-        checkGameConditions();
+   
+            checkGameConditions();
+        
+        
+    
 //         Update the camera to follow the player
 //        if (pEntity != null) {
 //            camera1.camera.position.set(pEntity.getPosX(), pEntity.getPosY(), 0);
@@ -247,29 +301,33 @@ public class PlayScreen extends BaseScreen {
     
     private void moveEntities() {
     	//loop through all entities
-        for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
+    
         	
         	/* PREVIOUS CODE TO MOVE WHALE LEFT
         	//Move AI entities to the left up to distance of 800 and speed of 1
             game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
             */
         	
-            if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
-                if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
-                    game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.RIGHT);
-                } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()==true) { 
-                    game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.LEFT);                    
-                } 
-                else if (game.getInputOutputManager().getInputKeyboard().ifUpPressed()==true) { 
-                    game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
-                }
-                else if (game.getInputOutputManager().getInputKeyboard().ifDownPressed()==true) { 
-                    game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
-                }
+    	 // Directly check for player input and update pEntity's position.
+        if (game.getInputOutputManager().getInputKeyboard().keyPressed()) {
+            // Assume these methods in PlayerControlManager handle movement based on direction
+            if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()) {
+            	 Gdx.app.log("Debug", "Right key pressed. Moving pEntity.");
+                game.getPlayerControlManager().walk(pEntity, Keys.RIGHT);
+            } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()) {
+                game.getPlayerControlManager().walk(pEntity, Keys.LEFT);
             } 
+            
+            if (game.getInputOutputManager().getInputKeyboard().ifUpPressed()) {
+                game.getPlayerControlManager().jump(pEntity, true);
+            } else if (game.getInputOutputManager().getInputKeyboard().ifDownPressed()) {
+                game.getPlayerControlManager().jump(pEntity, false);
+            }
         }
         
+        
       //Make monster entity follow player
+        Gdx.app.log("Before chasePlayer()", "pEntity X: " + pEntity.getPosX() + " pEntityY: " + pEntity.getPosY());
         monsterEntity.chasePlayer(pEntity, game);
         
         if (pEntity != null) {
@@ -281,6 +339,7 @@ public class PlayScreen extends BaseScreen {
     }
 
     private void checkGameConditions() {
+ 
         pauseScreenIfRequested();
         game.getEntityManager().getCollisionManager().checkForCollision(game);
         checkWinCondition();
@@ -289,12 +348,15 @@ public class PlayScreen extends BaseScreen {
 
     private void pauseScreenIfRequested() {
         if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
+        	saveGameState();	
+        	Gdx.app.log("Pausealert", "Paused");
             game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
             game.getAudioManager().getMusic("Gameplay").stop();
         }
     }
     
-    private void checkWinCondition() {
+    private void checkWinCondition() {	
+    
     	if (pEntity.getScoreCounter() == 4)
     	{
             game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
@@ -316,6 +378,7 @@ public class PlayScreen extends BaseScreen {
         }
         
         if (!foundRecyclables && pEntity.getScoreCounter() < 4) {
+        	Gdx.app.log("Tag","foundrecyclables false and score is less than 4");
             game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
 
         }
@@ -355,4 +418,23 @@ public class PlayScreen extends BaseScreen {
         
         return coordinates;
     }
+    
+    //Function to save 
+    public void saveGameState() {
+        Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
+        //Save coords for player
+    	prefs.putFloat("playerX", pEntity.getPosX());
+    	prefs.putFloat("playerY", pEntity.getPosY());
+    	//Save coords for monster
+    	prefs.putFloat("monsterX", monsterEntity.getPosX());
+    	prefs.putFloat("monsterY", monsterEntity.getPosY());
+    	//Save last generaeted thrash time
+        prefs.putFloat("timeSinceLastGeneration", timeSinceLastGeneration);
+
+        prefs.flush();
+    }
+    
+
+
+    // Call this method before transitioning to the PauseScreen
     }

@@ -20,6 +20,7 @@ public class PlayerControlManager {
 			// Moves the player to the left by decreasing the X position if any key other than right is pressed
 			player.setPosX(player.getPosX() - (int) (200 * Gdx.graphics.getDeltaTime()));
 		}
+		
 
 	}
 	

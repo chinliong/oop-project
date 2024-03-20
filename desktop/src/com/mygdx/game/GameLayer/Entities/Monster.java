@@ -1,14 +1,15 @@
 package com.mygdx.game.GameLayer.Entities;
 
+import com.badlogic.gdx.Gdx;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Entities.AI;
 
 public class Monster extends AI {
 	
 	
-	public Monster(String entityImagePath, int posX, int posY)
+	public Monster()
 	{
-		super(entityImagePath,posX,posY);
+		super("1.png", 200, 10);
 	}
 	
 	
@@ -25,12 +26,12 @@ public class Monster extends AI {
            float ny = dy / distance;
            // Move monsterEntity towards the player
            float speed = 1; // Adjust speed as needed
-           float canbinposX = this.getPosX() + nx * speed;
-           float canbinposY = this.getPosY() + ny * speed;
+           float monsterposX = this.getPosX() + nx * speed;
+           float monsterposY = this.getPosY() + ny * speed;
 
-          this.setPosX(canbinposX);
-          this.setPosY(canbinposY);
-       }
+          this.setPosX(monsterposX);
+          this.setPosY(monsterposY);
+          Gdx.app.log("After chasePlayer()", "pEntity X: " + player.getPosX() + " pEntityY: " + player.getPosY());}
 //      //Make monster entity follow player
 //      if (pEntity != null) {
 //          AI monsterEntity = null;

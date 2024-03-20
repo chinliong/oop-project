@@ -1,6 +1,9 @@
 package com.mygdx.game.GameEngine;
 
+import com.badlogic.gdx.Preferences;
+
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -58,6 +61,9 @@ public class SimulationLifeCycleManager extends Game {
         {
         	sceneManager.dispose();
         }
+        Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
+        prefs.clear();
+        prefs.flush();
         
     }
 
