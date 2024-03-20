@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
-import com.mygdx.game.GameEngine.Screens.collidebinTest;
 
 public class MainScreen extends BaseScreen { 
 
@@ -43,8 +42,7 @@ public class MainScreen extends BaseScreen {
         	createImageButton("badlogic.jpg", new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-            // Handle the click event
-            	game.getSceneManager().setScreen(game.getSceneManager().getScreen(collidebinTest.class));
+            
 
             	game.getAudioManager().getMusic("MainMenu").stop();
                     }

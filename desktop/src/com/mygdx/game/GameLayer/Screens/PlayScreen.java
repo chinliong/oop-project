@@ -269,6 +269,8 @@ public class PlayScreen extends BaseScreen {
             } 
         }
         
+      //Make monster entity follow player
+        monsterEntity.chasePlayer(pEntity, game);
         
         if (pEntity != null) {
             pEntity.updateAttachedEntities();

@@ -7,7 +7,7 @@ import com.mygdx.game.GameEngine.Entities.AI;
 import com.mygdx.game.GameEngine.Entities.CollidableEntity;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
-import com.mygdx.game.GameEngine.Screens.WinLoseScreen;
+import com.mygdx.game.GameLayer.Screens.WinLoseScreen;
 import com.mygdx.game.GameLayer.Entities.Bin;
 import com.mygdx.game.GameLayer.Entities.Monster;
 import com.mygdx.game.GameLayer.Entities.PlayerGame;
