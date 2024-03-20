@@ -64,10 +64,12 @@ public class PlayScreen extends BaseScreen {
 
     @Override
     public void show() {
+    	
         super.show();
-   
+        startAudio("Gameplay", 1.0f);
         
-        //Create entities, preventing re-instantion
+        //Create player and monster entities
+        //Static references used to fix errors after pausing and resuming
         if (pEntityStatic == null) {
             pEntityStatic = new PlayerGame();
         }
@@ -79,48 +81,41 @@ public class PlayScreen extends BaseScreen {
         monsterEntity = monsterEntitystatic;
         
         
-        startAudio("Gameplay", 1.0f);
-        
-        AI aEntity = new AI();
-       
-        
-        Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
-        //Load player coords
-        if (prefs.contains("playerX") && prefs.contains("playerY")) {
-            float playerX = prefs.getFloat("playerX", 0); // Default to 0 if not found
-            float playerY = prefs.getFloat("playerY", 0);
-            pEntity.setPosX(playerX);
-            pEntity.setPosY(playerY);
-            Gdx.app.log("GameState", "Restored pEntity state: X=" + pEntity.getPosX() + ", Y=" + pEntity.getPosY());
+       //Add player and monster entities
+        if (game.getEntityManager().checkClass(PlayerGame.class) == null) {
+        	 game.getEntityManager().addEntity(pEntity);
         }
-        //Load monster coords
-        if (prefs.contains("monsterX") && prefs.contains("monsterY")) {
-            float monsterX = prefs.getFloat("monsterX", 0); // Default to 0 if not found
-            float monsterY = prefs.getFloat("monsterY", 0);
-            monsterEntity.setPosX(monsterX);
-            monsterEntity.setPosY(monsterY);
-        }
-        //Load time since last generated thrash to prevent repeated generation after resuming
-        if (prefs.contains("timeSinceLastGeneration")) {
-            timeSinceLastGeneration = prefs.getFloat("timeSinceLastGeneration", 0);
-        } else {
-            timeSinceLastGeneration = generationInterval;
-        }
-  
-        generatedCoordinates = generateCoordinates();
-      
-//        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
-//        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
-//        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
-//        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
-//        AI binEntity = new AI("thrashbin.png",200,10);
         
+        if (game.getEntityManager().checkClass(Monster.class) == null) {
+            game.getEntityManager().addEntity(monsterEntity);
+            }
+        
+        //Create bin entities
         Bin glassbinEntity = new Bin("glassbin.png",300, 10, RecyclableType.GLASS); // trashbin2
         Bin paperbinEntity = new Bin("paperbin.png",500, 10, RecyclableType.PAPER); // trashbin2
         Bin canbinEntity = new Bin("canbin.png",600, 10, RecyclableType.METAL); // trashbin2
         Bin plasticbinEntity = new Bin("plasticbin.png",400,10,RecyclableType.PLASTIC);
+        
+        //Add Bin entities
+        game.getEntityManager().addEntity(glassbinEntity);
+        game.getEntityManager().addEntity(plasticbinEntity);
+        game.getEntityManager().addEntity(paperbinEntity);
+        game.getEntityManager().addEntity(canbinEntity);
+         
+        loadGameState(); //Load saved game
+        generatedCoordinates = generateCoordinates(); //Generate random coords for thrash
+        
+        /*
+        AI aEntity = new AI();
+        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
+        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
+        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
+        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
+        AI binEntity = new AI("thrashbin.png",200,10);
+        */
        
-//        Recyclables glassTrash = new Recyclables("thrashbin.png", 200, 10,RecyclableType.GLASS);
+       
+      //  Recyclables glassTrash = new Recyclables("thrashbin.png", 200, 10,RecyclableType.GLASS);
         
         //Generate coordinates for thrash entities
       //  ArrayList<int[]> generatedCoordinates = generateCoordinates();
@@ -136,18 +131,14 @@ public class PlayScreen extends BaseScreen {
        // }
       //  }
         
-        //Check for existing entity before adding
-        if (game.getEntityManager().checkClass(Player.class) == null) {
-        game.getEntityManager().addEntity(pEntity);
-        System.out.println("Checking for existing PlayerGame entity...");
-        if (game.getEntityManager().checkClass(PlayerGame.class) == null) {
-        	 game.getEntityManager().addEntity(pEntity);
-        }
-        if (game.getEntityManager().checkClass(AI.class) == null) {
+      
         
-        if(game.getEntityManager().checkClass(AI.class) == null) {
-        game.getEntityManager().addEntity(aEntity);
-        }
+        
+       if (game.getEntityManager().checkClass(AI.class) == null) {
+        
+//        if(game.getEntityManager().checkClass(AI.class) == null) {
+//        game.getEntityManager().addEntity(aEntity);
+//        }}
         
 //        monsterEntity.setType("waste");
 //        glassbinEntity.setType("glass");
@@ -157,22 +148,16 @@ public class PlayScreen extends BaseScreen {
         
         //Add bin entities
         //Add Monster entity
-        if (game.getEntityManager().checkClass(Monster.class) == null) {
-        game.getEntityManager().addEntity(monsterEntity);
-        }
+       
         
-        //Add Bin entities
-        game.getEntityManager().addEntity(glassbinEntity);
-        game.getEntityManager().addEntity(plasticbinEntity);
-        game.getEntityManager().addEntity(paperbinEntity);
-        game.getEntityManager().addEntity(canbinEntity);
+       
         
 //        game.getEntityManager().addEntity(binEntity);
                
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
         }}
-    }
+    
       
 
     @Override
@@ -202,36 +187,39 @@ public class PlayScreen extends BaseScreen {
         game.getBatch().end();
         
         
-      //To generate trash entities randomly at intervals
+     // To generate trash entities randomly at intervals
         timeSinceLastGeneration += delta;
         if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
             timeSinceLastGeneration = 0; // Reset the timer
 
             int[] coord = generatedCoordinates.get(nextTrashIndex);
-            String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
-        	RecyclableType type = RecyclableType.PLASTIC;
-            int index = nextTrashIndex % thrashImages.length; // Calculate index for type, % to prevent index error
-            switch (thrashImages[index]) {
-            case "plastic.png":
-                type = RecyclableType.PLASTIC;
-                break;
-            case "can.png":
-                type = RecyclableType.METAL;
-                break;
-            case "glass.png":
-                type = RecyclableType.GLASS;
-                break;
-            case "paper.png":
-                type = RecyclableType.PAPER;
-                break;
-            default:
-                break;
-        }
 
-            Recyclables thrashEntity = new Recyclables(thrashImages[index], coord[0], coord[1],type);
-//            thrashEntity.setType(type); // Set the type for the trash entity
+            // Randomly select an index for the type of trash to generate
+            int randomIndex = MathUtils.random(thrashImages.length - 1);
 
-            game.getEntityManager().addEntity(thrashEntity);
+            // Use the randomly selected index to get the image and type
+            String selectedImage = thrashImages[randomIndex];
+            RecyclableType type;
+            switch (selectedImage) {
+                case "plastic.png":
+                    type = RecyclableType.PLASTIC;
+                    break;
+                case "can.png":
+                    type = RecyclableType.METAL;
+                    break;
+                case "glass.png":
+                    type = RecyclableType.GLASS;
+                    break;
+                case "paper.png":
+                    type = RecyclableType.PAPER;
+                    break;
+                default:
+                    type = RecyclableType.PLASTIC; // Default case, or handle error
+                    break;
+            }
+
+            Recyclables trashEntity = new Recyclables(selectedImage, coord[0], coord[1], type);
+            game.getEntityManager().addEntity(trashEntity);
 
             nextTrashIndex++; // Prepare for the next entity
         }
@@ -426,6 +414,32 @@ public class PlayScreen extends BaseScreen {
     	//Save last generaeted thrash time
         prefs.putFloat("timeSinceLastGeneration", timeSinceLastGeneration);
         prefs.flush();
+    }
+    
+    //Function to load
+    public void loadGameState() {
+    	 Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
+         //Load player coords
+         if (prefs.contains("playerX") && prefs.contains("playerY")) {
+             float playerX = prefs.getFloat("playerX", 0); // Default to 0 if not found
+             float playerY = prefs.getFloat("playerY", 0);
+             pEntity.setPosX(playerX);
+             pEntity.setPosY(playerY);
+             Gdx.app.log("GameState", "Restored pEntity state: X=" + pEntity.getPosX() + ", Y=" + pEntity.getPosY());
+         }
+         //Load monster coords
+         if (prefs.contains("monsterX") && prefs.contains("monsterY")) {
+             float monsterX = prefs.getFloat("monsterX", 0); // Default to 0 if not found
+             float monsterY = prefs.getFloat("monsterY", 0);
+             monsterEntity.setPosX(monsterX);
+             monsterEntity.setPosY(monsterY);
+         }
+         //Load time since last generated thrash to prevent repeated generation after resuming
+         if (prefs.contains("timeSinceLastGeneration")) {
+             timeSinceLastGeneration = prefs.getFloat("timeSinceLastGeneration", 0);
+         } else {
+             timeSinceLastGeneration = generationInterval;
+         }
     }
     
     public static void resetGameEntities() {
