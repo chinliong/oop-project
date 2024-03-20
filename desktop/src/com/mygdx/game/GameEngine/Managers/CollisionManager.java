@@ -109,7 +109,8 @@ public class CollisionManager {
 					if (aiEntity instanceof Monster)
 					{
 						game.getAudioManager().playSound();
-						handlePlayerAICollision(game);
+						checkForCollisionTest(game);
+						//handlePlayerAICollision(game);
 						return;
 					}
 //					// If monster catches player, player die
@@ -159,41 +160,41 @@ public class CollisionManager {
 	}
 
 
-//	public void checkForCollisionTest(SimulationLifeCycleManager game) {
-//		PlayerGame playerShip = null;
-//		// First, find the Playership
-//		for (Entity entity : game.getEntityManager().getEntities()) {
-//			if (entity instanceof PlayerGame) {
-//				playerShip = (PlayerGame) entity;
-//				break; // Assuming there's only one Playership, we can break after finding it
-//			}
-//		}
-//
-//		// If a Player was found, check for collisions with AI entities
-//		if (playerShip != null) {
-//			for (Entity entity : game.getEntityManager().getEntities()) {
-//				if (entity instanceof AI) {
-//					AI aiEntity = (AI) entity;
-//					int distance = getCollisionRange(); // Directly access the collision range from this class
-//
-//					// Check for collision between the playerShip and the AI entity
-//					if (playerShip.hasCollidedRect(aiEntity)) {
-//						game.getAudioManager().playSound();
-//						playerShip.setPlayerHealth(playerShip.getPlayerHealth() - 1);
-//						playerShip.setPosX(50);
-//						playerShip.setPosY(20);
-//						System.out.println("player health is now " + playerShip.getPlayerHealth());
-//						// Correct method call
-//						if (playerShip.getPlayerHealth() == 0) {
-//							handlePlayerAICollision(game);
-//						}
-//						return; // Exit if a collision is detected and handled
-//					}
-//				}
-//			}
-//		}
-//
-//	}
+	public void checkForCollisionTest(SimulationLifeCycleManager game) {
+		PlayerGame playerShip = null;
+		// First, find the Playership
+		for (Entity entity : game.getEntityManager().getEntities()) {
+			if (entity instanceof PlayerGame) {
+				playerShip = (PlayerGame) entity;
+				break; // Assuming there's only one Playership, we can break after finding it
+			}
+		}
+
+		// If a Player was found, check for collisions with AI entities
+		if (playerShip != null) {
+			for (Entity entity : game.getEntityManager().getEntities()) {
+				if (entity instanceof AI) {
+					AI aiEntity = (AI) entity;
+					int distance = getCollisionRange(); // Directly access the collision range from this class
+
+					// Check for collision between the playerShip and the AI entity
+					if (playerShip.hasCollidedRect(aiEntity)) {
+						game.getAudioManager().playSound();
+						playerShip.setPlayerHealth(playerShip.getPlayerHealth() - 1);
+						playerShip.setPosX(50);
+						playerShip.setPosY(20);
+						System.out.println("player health is now " + playerShip.getPlayerHealth());
+						// Correct method call
+						if (playerShip.getPlayerHealth() == 0) {
+							handlePlayerAICollision(game);
+						}
+						return; // Exit if a collision is detected and handled
+					}
+				}
+			}
+		}
+
+	}
 
 	private void handlePlayerAICollision(SimulationLifeCycleManager game) {
 		System.out.println("Player and AI are within the range of " + collisionRange);
