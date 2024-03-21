@@ -33,13 +33,7 @@ public class MainScreen extends BaseScreen {
         @Override
         public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
         // Handle the click event
-        	//Reset entities
-        	PlayScreen.resetGameEntities();
-       
-        	
-        	//game.getSceneManager().setScreen(PlayScreen.class);
-        	game.getSceneManager().removeScreen(PlayScreen.class);
-        	game.getSceneManager().setScreen(PlayScreen.class);
+        	game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
 
         	game.getAudioManager().getMusic("MainMenu").stop();
                 }
@@ -54,13 +48,6 @@ public class MainScreen extends BaseScreen {
                     }
                 }, 100, 100, 50, 300); //first 2 is size then position
             }
-    
-    
-    public void reset() {
-    	
-    	
-    	
-    }
         }
     
 

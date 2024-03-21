@@ -56,11 +56,6 @@ public class PlayerGame extends Player{
   
     }
     
-    public void reset() {
-        setPosX(0);
-        setPosY(10);
-    }
-    
     public List<CollidableEntity> getPickedUpEntities() {
         return new ArrayList<>(pickedupEntities); // Returns a copy to protect the original list
     }

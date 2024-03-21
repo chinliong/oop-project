@@ -1,4 +1,3 @@
-
 package com.mygdx.game.GameLayer.Screens;
 
 import java.util.ArrayList;
@@ -7,7 +6,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
@@ -75,58 +73,26 @@ public class PlayScreen extends BaseScreen {
 
     @Override
     public void show() {
-    	
         super.show();
         startAudio("Gameplay", 1.0f);
         
-        //Create player and monster entities
-        //Static references used to fix errors after pausing and resuming
-        if (pEntityStatic == null) {
-            pEntityStatic = new PlayerGame();
-        }
-        pEntity = pEntityStatic;
+        AI aEntity = new AI();
+        pEntity = new PlayerGame();
+       
+        generatedCoordinates = generateCoordinates();
+         monsterEntity = new Monster("1.png",200, 10); // Monster entity that follows player
+//        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
+//        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
+//        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
+//        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
+//        AI binEntity = new AI("thrashbin.png",200,10);
         
-        if (monsterEntitystatic == null) {
-        	monsterEntitystatic = new Monster();
-        }
-        monsterEntity = monsterEntitystatic;
-        
-        
-       //Add player and monster entities
-        if (game.getEntityManager().checkClass(PlayerGame.class) == null) {
-        	 game.getEntityManager().addEntity(pEntity);
-        }
-        
-        if (game.getEntityManager().checkClass(Monster.class) == null) {
-            game.getEntityManager().addEntity(monsterEntity);
-            }
-        
-        //Create bin entities
         Bin glassbinEntity = new Bin("glassbin.png",300, 10, RecyclableType.GLASS); // trashbin2
         Bin paperbinEntity = new Bin("paperbin.png",500, 10, RecyclableType.PAPER); // trashbin2
         Bin canbinEntity = new Bin("canbin.png",600, 10, RecyclableType.METAL); // trashbin2
         Bin plasticbinEntity = new Bin("plasticbin.png",400,10,RecyclableType.PLASTIC);
-        
-        //Add Bin entities
-        game.getEntityManager().addEntity(glassbinEntity);
-        game.getEntityManager().addEntity(plasticbinEntity);
-        game.getEntityManager().addEntity(paperbinEntity);
-        game.getEntityManager().addEntity(canbinEntity);
-         
-        loadGameState(); //Load saved game
-        generatedCoordinates = generateCoordinates(); //Generate random coords for thrash
-        
-        /*
-        AI aEntity = new AI();
-        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
-        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
-        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
-        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
-        AI binEntity = new AI("thrashbin.png",200,10);
-        */
        
-       
-      //  Recyclables glassTrash = new Recyclables("thrashbin.png", 200, 10,RecyclableType.GLASS);
+//        Recyclables glassTrash = new Recyclables("thrashbin.png", 200, 10,RecyclableType.GLASS);
         
         //Generate coordinates for thrash entities
       //  ArrayList<int[]> generatedCoordinates = generateCoordinates();
@@ -142,14 +108,13 @@ public class PlayScreen extends BaseScreen {
        // }
       //  }
         
-      
-        
-        
-       if (game.getEntityManager().checkClass(AI.class) == null) {
-        
-//        if(game.getEntityManager().checkClass(AI.class) == null) {
-//        game.getEntityManager().addEntity(aEntity);
-//        }}
+        //Check for existing entity before adding
+        if (game.getEntityManager().checkClass(Player.class) == null) {
+        game.getEntityManager().addEntity(pEntity);
+        }
+        if (game.getEntityManager().checkClass(AI.class) == null) {
+        game.getEntityManager().addEntity(aEntity);
+        }
         
 //        monsterEntity.setType("waste");
 //        glassbinEntity.setType("glass");
@@ -158,10 +123,11 @@ public class PlayScreen extends BaseScreen {
 //        canbinEntity.setType("can");
         
         //Add bin entities
-        //Add Monster entity
-       
-        
-       
+        game.getEntityManager().addEntity(monsterEntity);
+        game.getEntityManager().addEntity(glassbinEntity);
+        game.getEntityManager().addEntity(plasticbinEntity);
+        game.getEntityManager().addEntity(paperbinEntity);
+        game.getEntityManager().addEntity(canbinEntity);
         
 //        game.getEntityManager().addEntity(binEntity);
                
@@ -302,7 +268,6 @@ public class PlayScreen extends BaseScreen {
     	scoreLabel.setText("Player Score: " + scoreCounter);
     	healthLabel.setText("Player Health: " + healthCounter);
     }
-    
     private void handleInput() {
     	if(game.getInputOutputManager().getInputMouse().mousePressed()){  // check if mouse pressed
     		
@@ -349,35 +314,40 @@ public class PlayScreen extends BaseScreen {
     	}
     }
     
-    private void moveEntities() {    	
-         //Check for player input and update pEntity's position.
-        if (game.getInputOutputManager().getInputKeyboard().keyPressed()) {
-            // Assume these methods in PlayerControlManager handle movement based on direction
-            if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()) {
-            	 Gdx.app.log("Debug", "Right key pressed. Moving pEntity.");
-                game.getPlayerControlManager().walk(pEntity, Keys.RIGHT);
-            } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()) {
-                game.getPlayerControlManager().walk(pEntity, Keys.LEFT);
+    private void moveEntities() {
+    	//loop through all entities
+        for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
+        	
+        	/* PREVIOUS CODE TO MOVE WHALE LEFT
+        	//Move AI entities to the left up to distance of 800 and speed of 1
+            game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
+            */
+        	
+            if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
+                if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
+                    game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.RIGHT);
+                } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()==true) { 
+                    game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.LEFT);                    
+                } 
+                else if (game.getInputOutputManager().getInputKeyboard().ifUpPressed()==true) { 
+                    game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
+                }
+                else if (game.getInputOutputManager().getInputKeyboard().ifDownPressed()==true) { 
+                    game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
+                }
             } 
-            
-            if (game.getInputOutputManager().getInputKeyboard().ifUpPressed()) {
-                game.getPlayerControlManager().jump(pEntity, true);
-            } else if (game.getInputOutputManager().getInputKeyboard().ifDownPressed()) {
-                game.getPlayerControlManager().jump(pEntity, false);
-            }
         }
         
-        
       //Make monster entity follow player
-        Gdx.app.log("Before chasePlayer()", "pEntity X: " + pEntity.getPosX() + " pEntityY: " + pEntity.getPosY());
         monsterEntity.chasePlayer(pEntity, game);
         
         if (pEntity != null) {
             pEntity.updateAttachedEntities();
         }
-            
-       }
+        
+
  
+    }
 
     private void checkGameConditions() {
 //        pauseScreenIfRequested();
@@ -394,8 +364,7 @@ public class PlayScreen extends BaseScreen {
 //        }
 //    }
     
-    private void checkWinCondition() {	
-    
+    private void checkWinCondition() {
     	if (pEntity.getScoreCounter() == 4)
     	{
             game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
@@ -417,7 +386,6 @@ public class PlayScreen extends BaseScreen {
         }
         
         if (!foundRecyclables && pEntity.getScoreCounter() < 4) {
-        	Gdx.app.log("Tag","foundrecyclables false and score is less than 4");
             game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
 
         }

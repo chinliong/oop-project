@@ -1,7 +1,6 @@
 package com.mygdx.game.GameLayer.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
@@ -26,23 +25,19 @@ public class PauseScreen extends BaseScreen {
     	createButton("Resume", 100, 100, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.getAudioManager().getMusic("Gameplay").play();
-                game.getSceneManager().setScreen(PlayScreen.class);
+            	game.getAudioManager().getMusic("Gameplay").play();
+                game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
             }
         });
 
         createButton("Main Menu", 100, 200, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-              
+                game.getEntityManager().disposeEntities();
                 //remove the play screen from the list of screens
-               // game.getSceneManager().removeScreen(PlayScreen.class);
-            	Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
-          	  	prefs.clear();
-          	  	prefs.flush();
-               
-          	  	
-          	  game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
+                game.getSceneManager().removeScreen(PlayScreen.class);
+                game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
+
             }
         });
 
@@ -50,14 +45,15 @@ public class PauseScreen extends BaseScreen {
         createButton("Exit", 100, 300, new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-            	  //Clear saved data
-            	  Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
-            	  prefs.clear();
-            	  prefs.flush();
-                 Gdx.app.exit();
+                Gdx.app.exit();
             }
         });
 
     }
+
+
+
+
+
 
 }

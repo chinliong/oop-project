@@ -1,14 +1,10 @@
 package com.mygdx.game.GameEngine;
 
-import com.badlogic.gdx.Preferences;
-
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameEngine.Managers.*;
-import com.mygdx.game.GameLayer.Screens.MainScreen;
 
 public class SimulationLifeCycleManager extends Game {
 
@@ -62,12 +58,8 @@ public class SimulationLifeCycleManager extends Game {
         {
         	sceneManager.dispose();
         }
-        Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
-        prefs.clear();
-        prefs.flush();
         
     }
-    
 
     // getters to access attributes of this class
     public SpriteBatch getBatch()
