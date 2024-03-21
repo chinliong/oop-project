@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.GameEngine.Camera;
 import com.mygdx.game.GameEngine.Entities.CollidableEntity;
 import com.mygdx.game.GameEngine.Entities.Player;
@@ -69,6 +71,46 @@ public class PlayerGame extends Player{
             entity.setPosX(this.getPosX());
             entity.setPosY(this.getPosY());
         }
+    }
+    
+   //Method to detach attached entity from the player
+    public CollidableEntity detachLastAttachedEntity() {
+        if (!pickedupEntities.isEmpty()) {
+            return pickedupEntities.remove(pickedupEntities.size() - 1); // Remove and return the last entity
+        }
+        return null; // Return null if there are no attached entities
+    }
+    
+   // Method to check if there are any attached entities
+    public boolean hasAttachedEntities() {
+        return !pickedupEntities.isEmpty();
+    }
+    
+ // Method to detach and throw the last attached entity towards a given direction
+    public void throwAttachedEntity(Vector2 direction) {
+        if (!pickedupEntities.isEmpty()) {
+            CollidableEntity entity = pickedupEntities.remove(pickedupEntities.size() - 1); // Detach the last entity
+            if (entity instanceof Recyclables) { 
+            float throwStrength = 100; // Adjust this value based on your game's scale
+            
+            // Calculate the new position based on the direction and throw strength
+            float newX = this.getPosX() + direction.x * throwStrength;
+            float newY = this.getPosY() + direction.y * throwStrength;
+            
+            entity.setPosX(newX);
+            entity.setPosY(newY);
+            ((Recyclables) entity).setThrown(true);
+            Timer.schedule(new Task(){
+                @Override
+                public void run() {
+                    ((Recyclables) entity).setThrown(false);
+                }
+            }, 3); // Delay in seconds
+            }
+           
+        
+        }
+      
     }
     
 }

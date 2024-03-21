@@ -31,6 +31,8 @@ public class Monster extends AI {
           this.setPosX(canbinposX);
           this.setPosY(canbinposY);
        }
+       
+    
 //      //Make monster entity follow player
 //      if (pEntity != null) {
 //          AI monsterEntity = null;
@@ -47,6 +49,11 @@ public class Monster extends AI {
 //              }
 //          }
 	}
+	
+	  public void resetMonster() {
+    	  this.setPosX(200);
+    	  this.setPosY(10);
+      }
 	
 //	 // If monsterEntity is found, move it towards pEntity
 //    if (monsterEntity != null) {

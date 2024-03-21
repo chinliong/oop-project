@@ -9,7 +9,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
-
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameEngine.Camera;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.badlogic.gdx.math.Vector3;
@@ -376,15 +376,15 @@ public class PlayScreen extends BaseScreen {
             */
         	
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
-                if (game.getInputOutputManager().getInputKeyboard().ifRightPressed()==true) { 
+                if (game.getInputOutputManager().getInputKeyboard().ifDPressed()==true) { 
                     game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.RIGHT);
-                } else if (game.getInputOutputManager().getInputKeyboard().ifLeftPressed()==true) { 
+                } else if (game.getInputOutputManager().getInputKeyboard().ifAPressed()==true) { 
                     game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.LEFT);                    
                 } 
-                else if (game.getInputOutputManager().getInputKeyboard().ifUpPressed()==true) { 
+                else if (game.getInputOutputManager().getInputKeyboard().ifWPressed()==true) { 
                     game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
                 }
-                else if (game.getInputOutputManager().getInputKeyboard().ifDownPressed()==true) { 
+                else if (game.getInputOutputManager().getInputKeyboard().ifSPressed()==true) { 
                     game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
                 }
             } 
@@ -397,6 +397,19 @@ public class PlayScreen extends BaseScreen {
             pEntity.updateAttachedEntities();
         }
         
+        //Check for throwing
+        if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
+            if(pEntity.hasAttachedEntities()) {
+            	 // Get mouse position in screen coordinates
+                Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                // Inverting the Y-coordinate if necessary
+                float mouseYInverted = Gdx.graphics.getHeight() - mousePos.y;
+                // Calculate the direction vector from the player to the cursor
+                Vector2 direction = new Vector2(mousePos.x - pEntity.getPosX(), mouseYInverted - pEntity.getPosY()).nor();
+                pEntity.throwAttachedEntity(direction);
+
+            }
+        }
 
  
     }

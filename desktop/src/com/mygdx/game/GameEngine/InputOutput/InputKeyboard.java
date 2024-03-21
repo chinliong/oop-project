@@ -57,8 +57,18 @@ public class InputKeyboard extends Input { // extends abstract Input class
     }
     
     // Game
-    public boolean ifCPressed(){
-        return Gdx.input.isKeyPressed(Keys.C);
+
+    public boolean ifDPressed(){
+        return Gdx.input.isKeyPressed(Keys.D);
+    }
+    public boolean ifAPressed(){
+        return Gdx.input.isKeyPressed(Keys.A);
+    }
+    public boolean ifSPressed(){
+        return Gdx.input.isKeyPressed(Keys.S);
+    }
+    public boolean ifWPressed(){
+        return Gdx.input.isKeyPressed(Keys.W);
     }
     
 }

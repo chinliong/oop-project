@@ -40,15 +40,30 @@ public class CollisionManager {
 
 	public void checkForCollision(SimulationLifeCycleManager game) {
 		PlayerGame playerEntity = null;
+		Monster monsterEntity = null;
+		
+		//Find player entity
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof Player) {
 				playerEntity = (PlayerGame) entity;
 				break;
 			}
 		}
+		
 		if (playerEntity == null)
 			return; // No player found, exit the method
+		
+		for (Entity entity : game.getEntityManager().getEntities()) {
+			if (entity instanceof Monster) {
+				monsterEntity = (Monster) entity;
+				break;
+			}
+		}
+		
+		if (monsterEntity == null)
+			return; // No player found, exit the method
 
+     /*		
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof PlayerGame) {
 				playerEntity = (PlayerGame) entity; // if is type player = typecast it
@@ -56,31 +71,51 @@ public class CollisionManager {
 			}
 		}
 		if (playerEntity == null)
-			return; // No player found, so exit the method
+	     return; // No player found, so exit the method
+	  */
+		
+		
 		for (Entity entity : game.getEntityManager().getEntities()) {
+			//If entity is AI
 			if (entity instanceof AI) {
 				AI aiEntity = (AI) entity;
 				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
-
+				
+				//Check for thrown item with monster
+				if (monsterEntity.hasCollided(aiEntity, distance)) {
+					if (aiEntity instanceof Recyclables) {
+						Recyclables rEntity = (Recyclables) aiEntity;
+						if (collidableList.contains(rEntity) && rEntity.isThrown()) {
+							
+							monsterEntity.resetMonster();
+							System.out.println("monster collided with thrash");
+				
+								break;
+							//}
+						}
+					}
+				}
+					
+				//If player collides with AI entity
 				if (playerEntity.hasCollided(aiEntity, distance)) // use iCollision
 				{
-
+                    //If player collides with recyclable, attach entity
 					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
 						if (collidableList.contains(rEntity)) {
-							if (game.getInputOutputManager().getInputKeyboard().ifCPressed()) {
+							if (game.getInputOutputManager().getInputKeyboard().ifSpacePressed()) {
 								playerEntity.attachEntity(rEntity);
 								break;
 							}
 						}
 					}
-
+                    
 					if (aiEntity instanceof Bin) {
 						Bin bEntity = (Bin) aiEntity;
 						if (playerEntity.getPickedUpEntities().size() != 0) {
 							Recyclables rEntity = (Recyclables) playerEntity.getPickedUpEntities().get(0);
 							// same type = score increase
-							if (game.getInputOutputManager().getInputKeyboard().ifCPressed()) {
+							if (game.getInputOutputManager().getInputKeyboard().ifSpacePressed()) {
 
 							if (bEntity.getType() == rEntity.getType()) {
 								entitiesToRemove.add(rEntity);
