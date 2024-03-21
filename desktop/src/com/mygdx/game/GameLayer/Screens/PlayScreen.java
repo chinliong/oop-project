@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.GameEngine.Camera;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -22,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameEngine.Entities.AI;
 import com.mygdx.game.GameEngine.Entities.Entity;
@@ -30,8 +33,7 @@ import com.mygdx.game.GameEngine.Screens.BaseScreen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
-
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 // Game Layer imports
 import com.mygdx.game.GameLayer.Entities.*;
 
@@ -158,6 +160,16 @@ public class PlayScreen extends BaseScreen {
     	{ // DONT TOUCH - PAUSE STUFF
     	    pStage.act(delta);
     	    pStage.draw();
+    	    
+    	    Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            game.getBatch().begin();
+            backgroundSprite.draw(game.getBatch()); // Draw the pause background
+            game.getBatch().end();
+
+            pStage.act(delta);
+            pStage.draw();
     	}
     	else {
     		
@@ -252,35 +264,53 @@ public class PlayScreen extends BaseScreen {
         pStage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(pStage);
 
-        Skin skin = createBasicSkin(); // Assuming createBasicSkin() is already implemented
-        TextButton resumeButton = new TextButton("Resume", skin);
-        resumeButton.addListener(new ClickListener() {
+        Texture resumeGameTexture = new Texture(Gdx.files.internal("backbutton.png"));
+        Texture menuTexture = new Texture(Gdx.files.internal("menuButton.png"));
+        
+        Drawable menuDrawable = new TextureRegionDrawable(new TextureRegion(menuTexture));
+    	Drawable menuHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menubuttonhover.png"))));
+    	Drawable resumeGameDrawable = new TextureRegionDrawable(new TextureRegion(resumeGameTexture));
+    	Drawable resumeGameHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backbuttonhover.png"))));
+    	
+    	TextButton menuButton = new TextButton("", new TextButton.TextButtonStyle(menuDrawable, menuDrawable, menuDrawable, game.getFont()));
+    	TextButton resumeGameButton = new TextButton("", new TextButton.TextButtonStyle(resumeGameDrawable, resumeGameDrawable, resumeGameDrawable, game.getFont()));
+    	
+    	menuButton.setSize( 160, 60);
+    	resumeGameButton.setSize( 160, 60);
+    	
+    	//menuButton.setPosition((Gdx.graphics.getWidth() - menuButton.getWidth()) / 2, (Gdx.graphics.getHeight() + menuButton.getHeight()) / 2);
+    	//resumeGameButton.setPosition((Gdx.graphics.getWidth() - resumeGameButton.getWidth()) / 2 - 80, (Gdx.graphics.getHeight() + resumeGameButton.getHeight()) / 2);
+    	
+    	menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                paused = false;
-            }
-        });
-        TextButton homeButton = new TextButton("Main Menu", skin);
-        homeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // Logic to go to Main Menu
+            	// Logic to go to Main Menu
                 game.getAudioManager().getMusic("Gameplay").stop();
                 game.getEntityManager().disposeEntities();
                 game.getSceneManager().removeScreen(PlayScreen.class);
                 game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
             }
         });
+    	
+    	resumeGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	paused = false;
+            }
+        });
+    	
+    	menuButton.getStyle().over = menuHoverDrawable;
+    	resumeGameButton.getStyle().over = resumeGameHoverDrawable;        
 
         float spaceBetweenButtons = 20; // 20 pixels space between buttons
-        float buttonWidth = Math.max(resumeButton.getWidth(), homeButton.getWidth());
+        float buttonWidth = Math.max(resumeGameButton.getWidth(), menuButton.getWidth());
         float totalWidth = buttonWidth * 2 + spaceBetweenButtons;
         float startX = (Gdx.graphics.getWidth() - totalWidth) / 2;
-        resumeButton.setPosition(startX, Gdx.graphics.getHeight() / 2 - resumeButton.getHeight() / 2);
-        homeButton.setPosition(startX + resumeButton.getWidth() + spaceBetweenButtons, Gdx.graphics.getHeight() / 2 - homeButton.getHeight() / 2);
+        resumeGameButton.setPosition(startX, Gdx.graphics.getHeight() / 2 - resumeGameButton.getHeight() / 2);
+        menuButton.setPosition(startX + resumeGameButton.getWidth() + spaceBetweenButtons, Gdx.graphics.getHeight() / 2 - menuButton.getHeight() / 2);
 
-        pStage.addActor(resumeButton);
-        pStage.addActor(homeButton); // Add the buttons to the stage
+        pStage.addActor(resumeGameButton);
+        pStage.addActor(menuButton);
     }
 
     private void updatePlayerScore()

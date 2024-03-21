@@ -83,15 +83,10 @@ public class WinLoseScreen extends BaseScreen{
     	menuButton.setSize( 160, 60);
     	exitGameButton.setSize( 160, 60);
     	
-    	menuButton.setPosition((Gdx.graphics.getWidth() - menuButton.getWidth()) / 2 - 80, (Gdx.graphics.getHeight() + menuButton.getHeight()) / 2 - 80);
-    	exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2 + 80, (Gdx.graphics.getHeight() + exitGameButton.getHeight()) / 2 - 80);
+    	menuButton.setPosition((Gdx.graphics.getWidth() - menuButton.getWidth()) / 2 - 80, (Gdx.graphics.getHeight() + menuButton.getHeight()) / 2 - 150);
+    	exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2 + 80, (Gdx.graphics.getHeight() + exitGameButton.getHeight()) / 2 - 150);
     	
     	menuButton.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
@@ -99,11 +94,6 @@ public class WinLoseScreen extends BaseScreen{
         });
     	
     	exitGameButton.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Gdx.app.exit();

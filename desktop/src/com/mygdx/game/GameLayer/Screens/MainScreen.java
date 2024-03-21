@@ -76,11 +76,6 @@ public class MainScreen extends BaseScreen {
     	
     	newGameButton.addListener(new ClickListener() {
             @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
             public void clicked(InputEvent event, float x, float y) {
             	game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
             	game.getAudioManager().getMusic("MainMenu").stop();
@@ -88,11 +83,6 @@ public class MainScreen extends BaseScreen {
         });
     	
     	exitGameButton.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
             	Gdx.app.exit();
