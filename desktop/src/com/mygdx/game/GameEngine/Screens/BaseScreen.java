@@ -31,7 +31,13 @@ public abstract class BaseScreen implements Screen {
 
     protected abstract void initialiseUI();
     
-    public void setBgColour(Color colour) {
+    
+    
+    public Color getBgColour() {
+		return bgColour;
+	}
+
+	public void setBgColour(Color colour) {
     	this.bgColour = colour;
     }
 

@@ -28,7 +28,7 @@ public class MainScreen extends BaseScreen {
         super(game);
         initialiseUI();
         
-        Texture backgroundTexture = new Texture(Gdx.files.internal("forest.jpg"));
+        Texture backgroundTexture = new Texture(Gdx.files.internal("half.jpg"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
@@ -60,22 +60,28 @@ public class MainScreen extends BaseScreen {
     @Override
     protected void initialiseUI() {
     	
-    	Texture newGameTexture = new Texture(Gdx.files.internal("startbutton.png"));
-    	Texture exitGameTexture = new Texture(Gdx.files.internal("backbutton.png"));
+    	Texture newGameTexture = new Texture(Gdx.files.internal("playbutton.png"));
+//    	Texture exitGameTexture = new Texture(Gdx.files.internal("backbutton.png"));
     	
     	Drawable newGameDrawable = new TextureRegionDrawable(new TextureRegion(newGameTexture));
-    	Drawable newGameHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("startbuttonhover.png"))));
-    	Drawable exitGameDrawable = new TextureRegionDrawable(new TextureRegion(exitGameTexture));
-    	Drawable exitGameHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backbuttonhover.png"))));
+//    	Drawable newGameHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("startbuttonhover.png"))));
+//    	Drawable exitGameDrawable = new TextureRegionDrawable(new TextureRegion(exitGameTexture));
+//    	Drawable exitGameHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backbuttonhover.png"))));
     	
     	TextButton newGameButton = new TextButton("", new TextButton.TextButtonStyle( newGameDrawable, newGameDrawable, newGameDrawable, game.getFont()));
-    	TextButton exitGameButton = new TextButton("", new TextButton.TextButtonStyle( exitGameDrawable, exitGameDrawable, exitGameDrawable, game.getFont()));
+//    	TextButton exitGameButton = new TextButton("", new TextButton.TextButtonStyle( exitGameDrawable, exitGameDrawable, exitGameDrawable, game.getFont()));
     	
-    	newGameButton.setSize( 160, 60);
-    	exitGameButton.setSize( 160, 60);
+    	newGameButton.setSize(500, 300);
+//    	exitGameButton.setSize( 160, 60);
     	
-    	newGameButton.setPosition((Gdx.graphics.getWidth() - newGameButton.getWidth()) / 2, (Gdx.graphics.getHeight() + newGameButton.getHeight()) / 2);
-    	exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2, (Gdx.graphics.getHeight() + exitGameButton.getHeight()) / 2 - 50);
+    	// Calculate the center for horizontal (X) and vertical (Y)
+    	float centerX = (Gdx.graphics.getWidth() - newGameButton.getWidth()) / 2;
+    	float centerY = (Gdx.graphics.getHeight() - newGameButton.getHeight()) / 2;
+
+    	// Set the position of the new game button to be centered
+    	newGameButton.setPosition(centerX, centerY);
+
+//    	exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2, (Gdx.graphics.getHeight() + exitGameButton.getHeight()) / 2 - 50);
     	
     	newGameButton.addListener(new ClickListener() {
             @Override
@@ -90,23 +96,23 @@ public class MainScreen extends BaseScreen {
             }
         });
     	
-    	exitGameButton.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	Gdx.app.exit();
-            }
-        });
+//    	exitGameButton.addListener(new ClickListener() {
+//            @Override
+//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+//                super.enter(event, x, y, pointer, fromActor);
+//            }
+//
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//            	Gdx.app.exit();
+//            }
+//        });
     	
-    	newGameButton.getStyle().over = newGameHoverDrawable;
-    	exitGameButton.getStyle().over = exitGameHoverDrawable;
+//    	newGameButton.getStyle().over = newGameHoverDrawable;
+//    	exitGameButton.getStyle().over = exitGameHoverDrawable;
 
         stage.addActor(newGameButton);
-        stage.addActor(exitGameButton);
+//        stage.addActor(exitGameButton);
         
         }
     
