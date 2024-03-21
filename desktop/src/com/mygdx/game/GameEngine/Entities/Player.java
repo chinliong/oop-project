@@ -51,6 +51,11 @@ public abstract class Player extends CollidableEntity {
         }
         return false; // Recycling unsuccessful
     }
+    
+    public void removeAttached() {
+        pickedupEntities.clear();
+
+    }
 
     // Helper method to determine if an item can be recycled in a bin
     private boolean isCorrectBinForItem(AI item, AI bin) {

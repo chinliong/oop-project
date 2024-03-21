@@ -14,11 +14,20 @@ import java.util.List;
 public class SceneManager {
     private List<Screen> screenList; // List to keep track of instantiated screens
     private SimulationLifeCycleManager game; 
+    private GameState currentGameState;
 
     // Constructor initializes the scene manager with a reference to the SimulationLifeCycleManager
     public SceneManager(SimulationLifeCycleManager game){
         this.game = game;
         this.screenList = new ArrayList<>();
+    }
+    
+    public GameState getGameState() {
+        return this.currentGameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.currentGameState = gameState;
     }
     
     // Sets the last screen in the list as the current screen, creating the MainScreen if no screens exist
@@ -52,15 +61,25 @@ public class SceneManager {
             throw new RuntimeException("Failed to create screen: " + type.getName(), e);
         }
     }
-
-    // Removes a screen of the specified type from the list
-    public void removeScreen(Class<? extends Screen> type) {
-        for (Screen screen : screenList) {
-            if (screen.getClass().equals(type)) {
-            	screenList.remove(screen);
-                return;
-            }
+    
+    public void setScreen(Class<? extends Screen> screenClass) {
+        // Get or create the screen of the specified class
+        Screen screen = getScreen(screenClass);
+        if (screen != null) {
+            setScreen(screen); // Use the existing setScreen method
+        } else {
+            System.err.println("Failed to set screen: " + screenClass.getSimpleName());
         }
+    }
+
+    public void removeScreen(Class<? extends Screen> type) {
+        screenList.removeIf(screen -> {
+            if (screen.getClass().equals(type)) {
+                screen.dispose();
+                return true;
+            }
+            return false;
+        });
     }
     
     // Creates a new screen instance of the specified class, using reflection to invoke the constructor with arguments
@@ -109,6 +128,8 @@ public class SceneManager {
             }
         }
     }
+    
+    
     
     public void dispose() {
         // Iterate through all screens and dispose of them
