@@ -20,7 +20,6 @@ public class CollisionManager {
 	private ArrayList<CollidableEntity> collidableList;
 	List<Entity> entitiesToRemove = new ArrayList<>();
 
-
 	// Constructor initializes the collision manager with default collision range
 	public CollisionManager() {
 		collidableList = new ArrayList<>();
@@ -34,23 +33,22 @@ public class CollisionManager {
 	public ArrayList<CollidableEntity> getCollidableList() {
 		return collidableList;
 	}
-	
+
 	public void removeCollidable(CollidableEntity cEntity) {
 		collidableList.remove(cEntity);
 	}
 
-
 	public void checkForCollision(SimulationLifeCycleManager game) {
-	    PlayerGame playerEntity = null;
-	    for (Entity entity : game.getEntityManager().getEntities()) {
-	        if (entity instanceof Player) {
-	            playerEntity = (PlayerGame) entity;
-	            break;
-	        }
-	    }
-	    if (playerEntity == null) return; // No player found, exit the method
+		PlayerGame playerEntity = null;
+		for (Entity entity : game.getEntityManager().getEntities()) {
+			if (entity instanceof Player) {
+				playerEntity = (PlayerGame) entity;
+				break;
+			}
+		}
+		if (playerEntity == null)
+			return; // No player found, exit the method
 
-	    
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof PlayerGame) {
 				playerEntity = (PlayerGame) entity; // if is type player = typecast it
@@ -63,54 +61,50 @@ public class CollisionManager {
 			if (entity instanceof AI) {
 				AI aiEntity = (AI) entity;
 				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
-				
 
 				if (playerEntity.hasCollided(aiEntity, distance)) // use iCollision
 				{
 
-					if(aiEntity instanceof Recyclables)
-					{
+					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
-						if (collidableList.contains(rEntity))
-						{
-							playerEntity.attachEntity(rEntity);
-							break;
+						if (collidableList.contains(rEntity)) {
+							if (game.getInputOutputManager().getInputKeyboard().ifCPressed()) {
+								playerEntity.attachEntity(rEntity);
+								break;
+							}
 						}
 					}
-					
-					if (aiEntity instanceof Bin)
-					{
+
+					if (aiEntity instanceof Bin) {
 						Bin bEntity = (Bin) aiEntity;
-						if(playerEntity.getPickedUpEntities().size() != 0)
-						{
+						if (playerEntity.getPickedUpEntities().size() != 0) {
 							Recyclables rEntity = (Recyclables) playerEntity.getPickedUpEntities().get(0);
 							// same type = score increase
-							if (bEntity.getType() == rEntity.getType())
-							{
+							if (game.getInputOutputManager().getInputKeyboard().ifCPressed()) {
+
+							if (bEntity.getType() == rEntity.getType()) {
 								entitiesToRemove.add(rEntity);
-								playerEntity.setScoreCounter(playerEntity.getScoreCounter() +1);
+								playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
 								System.out.println("my score is " + playerEntity.getScoreCounter());
 								System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
 								break;
 							}
-							
+
 							// different type = score same
-							if (bEntity.getType() != rEntity.getType())
-							{
+							if (bEntity.getType() != rEntity.getType()) {
 								entitiesToRemove.add(rEntity);
 								System.out.println("my score is unchanged " + playerEntity.getScoreCounter());
 								System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
 								break;
 							}
-							
+							}
 						}
 					}
-					
-					if (aiEntity instanceof Monster)
-					{
+
+					if (aiEntity instanceof Monster) {
 						game.getAudioManager().playSound();
 						checkForCollisionTest(game);
-						//handlePlayerAICollision(game);
+						// handlePlayerAICollision(game);
 						return;
 					}
 //					// If monster catches player, player die
@@ -126,7 +120,7 @@ public class CollisionManager {
 //	                    playerEntity.attachEntity(aiEntity);
 //	                    break;
 //	                } 
-	                // Handling disposal into bins with correct type matching
+					// Handling disposal into bins with correct type matching
 //	                else if (aiEntity.getAIObjectName().endsWith("bin.png")) {
 //	                    if (!playerEntity.getPickedupEntityList().isEmpty()) {
 //	                        AI pickedUpEntity = (AI) playerEntity.getPickedupEntityList().get(0);
@@ -146,19 +140,17 @@ public class CollisionManager {
 //	                        break; // Stop checking after handling disposal for one item
 //	                    }
 //	                }
-	            }
-	        }
-	    }
+				}
+			}
+		}
 
-		if (entitiesToRemove.size() > 0)
-		{
+		if (entitiesToRemove.size() > 0) {
 			System.out.println("out");
 			game.getEntityManager().getEntities().remove(entitiesToRemove.remove(0));
 			playerEntity.getPickedupEntityList().remove(0);
 			System.out.println("the list now is" + playerEntity.getPickedupEntityList().size());
 		}
 	}
-
 
 	public void checkForCollisionTest(SimulationLifeCycleManager game) {
 		PlayerGame playerShip = null;
