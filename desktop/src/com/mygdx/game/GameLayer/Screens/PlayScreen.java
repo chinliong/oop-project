@@ -27,6 +27,10 @@ import com.mygdx.game.GameEngine.Entities.AI;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 
 // Game Layer imports
 import com.mygdx.game.GameLayer.Entities.*;
@@ -54,11 +58,21 @@ public class PlayScreen extends BaseScreen {
 	private boolean paused;
 	private Stage pStage;
 	
+	// background UI 
+    private Texture backgroundTexture;
+    private Sprite backgroundSprite;
+	
+	
 	
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
         initialiseUI();
+        
+        backgroundTexture = new Texture(Gdx.files.internal("forest.jpg"));
+        backgroundSprite = new Sprite(backgroundTexture);
+        backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         
         camera1 = new Camera(); 
     }
@@ -146,6 +160,14 @@ public class PlayScreen extends BaseScreen {
     	    pStage.draw();
     	}
     	else {
+    		
+    		Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
+    		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            // Draw the background
+            game.getBatch().begin();
+            backgroundSprite.draw(game.getBatch());
+            game.getBatch().end();
 
 			super.stage.act(delta);
             super.stage.draw();
