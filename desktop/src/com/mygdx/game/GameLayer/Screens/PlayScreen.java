@@ -3,6 +3,7 @@ package com.mygdx.game.GameLayer.Screens;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -14,7 +15,16 @@ import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.GameEngine.Camera;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameEngine.Entities.AI;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
@@ -42,10 +52,10 @@ public class PlayScreen extends BaseScreen {
 	private String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
 	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
 
+	// pause screen and stuffs
+	private boolean paused;
+	private Stage pStage;
 	
-	//To prevent re-instantiation
-	private static PlayerGame pEntityStatic;
-	private static Monster monsterEntitystatic;
 	
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
@@ -60,6 +70,7 @@ public class PlayScreen extends BaseScreen {
     	createText("This is the PlayScreen screen");
     	scoreLabel = createText("Player Score Counter: ", 50,100);
     	healthLabel = createText("Player Health: ", 50,80);
+    
     }
 
     @Override
@@ -156,51 +167,53 @@ public class PlayScreen extends BaseScreen {
                
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
-        }}
-    
-      
+        
+        // Pause stage window
+//        Window pStage = new Window("PAUSE", skin);
+    }
 
     @Override
     public void render(float delta) {
-    	
-    	
-        super.stage.act(delta);
-        super.stage.draw();
-        
-        
-        game.getBatch().begin();
-        handleInput();
-        drawEntities();
-        moveEntities();
-        
-        //To drag entity with mouse cursor
-        if (draggedEntity != null) {
-            // Update the entity's position to follow the mouse cursor
-            float mouseX = Gdx.input.getX();
-            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
-            //Calculate center position
-            float centerX = mouseX - draggedEntity.getWidth() / 2;
-            float centerY = mouseY - draggedEntity.getHeight() / 2;
-            draggedEntity.setPosX(centerX);
-            draggedEntity.setPosY(centerY);
-        }
-        game.getBatch().end();
-        
-        
-     // To generate trash entities randomly at intervals
-        timeSinceLastGeneration += delta;
-        if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
-            timeSinceLastGeneration = 0; // Reset the timer
+    	if (paused)
+    	{ // DONT TOUCH - PAUSE STUFF
+    	    pStage.act(delta);
+    	    pStage.draw();
+    	}
+    	else {
 
-            int[] coord = generatedCoordinates.get(nextTrashIndex);
+			super.stage.act(delta);
+            super.stage.draw();
+            
+            moveEntities();
 
-            // Randomly select an index for the type of trash to generate
-            int randomIndex = MathUtils.random(thrashImages.length - 1);
+            game.getBatch().begin();
+            handleInput();
+            drawEntities();
+            
+            //To drag entity with mouse cursor
+            if (draggedEntity != null) {
+                // Update the entity's position to follow the mouse cursor
+                float mouseX = Gdx.input.getX();
+                float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
+                //Calculate center position
+                float centerX = mouseX - draggedEntity.getWidth() / 2;
+                float centerY = mouseY - draggedEntity.getHeight() / 2;
+                draggedEntity.setPosX(centerX);
+                draggedEntity.setPosY(centerY);
+            }
+            game.getBatch().end();
+            
+            
+          //To generate trash entities randomly at intervals
+            timeSinceLastGeneration += delta;
+            if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
+                timeSinceLastGeneration = 0; // Reset the timer
 
-            // Use the randomly selected index to get the image and type
-            String selectedImage = thrashImages[randomIndex];
-            RecyclableType type;
-            switch (selectedImage) {
+                int[] coord = generatedCoordinates.get(nextTrashIndex);
+                String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
+            	RecyclableType type = RecyclableType.PLASTIC;
+                int index = nextTrashIndex % thrashImages.length; // Calculate index for type, % to prevent index error
+                switch (thrashImages[index]) {
                 case "plastic.png":
                     type = RecyclableType.PLASTIC;
                     break;
@@ -214,28 +227,72 @@ public class PlayScreen extends BaseScreen {
                     type = RecyclableType.PAPER;
                     break;
                 default:
-                    type = RecyclableType.PLASTIC; // Default case, or handle error
                     break;
             }
 
-            Recyclables trashEntity = new Recyclables(selectedImage, coord[0], coord[1], type);
-            game.getEntityManager().addEntity(trashEntity);
+                Recyclables thrashEntity = new Recyclables(thrashImages[index], coord[0], coord[1],type);
+//                thrashEntity.setType(type); // Set the type for the trash entity
 
-            nextTrashIndex++; // Prepare for the next entity
-        }
-        
-        
-        updatePlayerScore();
-        checkGameConditions();
+                game.getEntityManager().addEntity(thrashEntity);
+
+                nextTrashIndex++; // Prepare for the next entity
+            }
+            
+            
+            updatePlayerScore();
+            checkGameConditions();
+//             Update the camera to follow the player
+//            if (pEntity != null) {
+//                camera1.camera.position.set(pEntity.getPosX(), pEntity.getPosY(), 0);
+//                camera1.camera.update();
+//            }
+
+            // Set the batch's projection matrix
+//            game.getBatch().setProjectionMatrix(camera1.camera.combined);
+            
+    	}
+    	
+    	if(game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
+			paused = true;
+			setupPauseMenu();
+		}
+    }
     
-//         Update the camera to follow the player
-//        if (pEntity != null) {
-//            camera1.camera.position.set(pEntity.getPosX(), pEntity.getPosY(), 0);
-//            camera1.camera.update();
-//        }
+    // Pause stuff, maybe need to link to the methods that is already inside BaseScreen, 
+    // see how to implement BaseScreen methods to do all these
+    private void setupPauseMenu() {
+        pStage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(pStage);
 
-        // Set the batch's projection matrix
-//        game.getBatch().setProjectionMatrix(camera1.camera.combined);
+        Skin skin = createBasicSkin(); // Assuming createBasicSkin() is already implemented
+        TextButton resumeButton = new TextButton("Resume", skin);
+        resumeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                paused = false;
+            }
+        });
+        TextButton homeButton = new TextButton("Main Menu", skin);
+        homeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Logic to go to Main Menu
+                game.getAudioManager().getMusic("Gameplay").stop();
+                game.getEntityManager().disposeEntities();
+                game.getSceneManager().removeScreen(PlayScreen.class);
+                game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
+            }
+        });
+
+        float spaceBetweenButtons = 20; // 20 pixels space between buttons
+        float buttonWidth = Math.max(resumeButton.getWidth(), homeButton.getWidth());
+        float totalWidth = buttonWidth * 2 + spaceBetweenButtons;
+        float startX = (Gdx.graphics.getWidth() - totalWidth) / 2;
+        resumeButton.setPosition(startX, Gdx.graphics.getHeight() / 2 - resumeButton.getHeight() / 2);
+        homeButton.setPosition(startX + resumeButton.getWidth() + spaceBetweenButtons, Gdx.graphics.getHeight() / 2 - homeButton.getHeight() / 2);
+
+        pStage.addActor(resumeButton);
+        pStage.addActor(homeButton); // Add the buttons to the stage
     }
 
     private void updatePlayerScore()
@@ -323,20 +380,19 @@ public class PlayScreen extends BaseScreen {
  
 
     private void checkGameConditions() {
-        pauseScreenIfRequested();
+//        pauseScreenIfRequested();
         game.getEntityManager().getCollisionManager().checkForCollision(game);
         checkWinCondition();
     }
 
 
-    private void pauseScreenIfRequested() {
-        if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
-        	saveGameState();	
-        	Gdx.app.log("Pausealert", "Paused");
-            game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
-            game.getAudioManager().getMusic("Gameplay").stop();
-        }
-    }
+//    private void pauseScreenIfRequested() {
+//        if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
+////            game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
+////            game.getAudioManager().getMusic("Gameplay").stop();
+//        	pause();
+//        }
+//    }
     
     private void checkWinCondition() {	
     
@@ -401,57 +457,6 @@ public class PlayScreen extends BaseScreen {
         
         return coordinates;
     }
-    
-    //Function to save 
-    public void saveGameState() {
-        Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
-        //Save coords for player
-    	prefs.putFloat("playerX", pEntity.getPosX());
-    	prefs.putFloat("playerY", pEntity.getPosY());
-    	//Save coords for monster
-    	prefs.putFloat("monsterX", monsterEntity.getPosX());
-    	prefs.putFloat("monsterY", monsterEntity.getPosY());
-    	//Save last generaeted thrash time
-        prefs.putFloat("timeSinceLastGeneration", timeSinceLastGeneration);
-        prefs.flush();
+
     }
-    
-    //Function to load
-    public void loadGameState() {
-    	 Preferences prefs = Gdx.app.getPreferences("MyGamePrefs");
-         //Load player coords
-         if (prefs.contains("playerX") && prefs.contains("playerY")) {
-             float playerX = prefs.getFloat("playerX", 0); // Default to 0 if not found
-             float playerY = prefs.getFloat("playerY", 0);
-             pEntity.setPosX(playerX);
-             pEntity.setPosY(playerY);
-             Gdx.app.log("GameState", "Restored pEntity state: X=" + pEntity.getPosX() + ", Y=" + pEntity.getPosY());
-         }
-         //Load monster coords
-         if (prefs.contains("monsterX") && prefs.contains("monsterY")) {
-             float monsterX = prefs.getFloat("monsterX", 0); // Default to 0 if not found
-             float monsterY = prefs.getFloat("monsterY", 0);
-             monsterEntity.setPosX(monsterX);
-             monsterEntity.setPosY(monsterY);
-         }
-         //Load time since last generated thrash to prevent repeated generation after resuming
-         if (prefs.contains("timeSinceLastGeneration")) {
-             timeSinceLastGeneration = prefs.getFloat("timeSinceLastGeneration", 0);
-         } else {
-             timeSinceLastGeneration = generationInterval;
-         }
-    }
-    
-    public static void resetGameEntities() {
-        if (monsterEntitystatic != null) {
-            monsterEntitystatic.reset();
-        }
-        if (pEntityStatic != null) {
-	        pEntityStatic.reset();
-	        pEntityStatic.removeAttached();
-        }
-        
-    }
-    
- 
-  }
+
