@@ -105,7 +105,7 @@ public class PlayerGame extends Player{
                 public void run() {
                     ((Recyclables) entity).setThrown(false);
                 }
-            }, 3); // Delay in seconds
+            }, 2); // Delay in seconds
             }
            
         
