@@ -1,7 +1,7 @@
 package com.mygdx.game.GameEngine.Managers;
 
 import java.util.List;
-
+import java.util.ArrayList;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Entities.AI;
 import com.mygdx.game.GameEngine.Entities.CollidableEntity;
@@ -12,8 +12,6 @@ import com.mygdx.game.GameLayer.Entities.Bin;
 import com.mygdx.game.GameLayer.Entities.Monster;
 import com.mygdx.game.GameLayer.Entities.PlayerGame;
 import com.mygdx.game.GameLayer.Entities.Recyclables;
-
-import java.util.ArrayList;
 
 public class CollisionManager {
 	private int collisionRange; // The range within which entities are considered to be in collision range
@@ -63,13 +61,6 @@ public class CollisionManager {
 		if (monsterEntity == null)
 			return; // No player found, exit the method
 
-		/*
-		 * for (Entity entity : game.getEntityManager().getEntities()) { if (entity
-		 * instanceof PlayerGame) { playerEntity = (PlayerGame) entity; // if is type
-		 * player = typecast it break; } } if (playerEntity == null) return; // No
-		 * player found, so exit the method
-		 */
-
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			// If entity is AI
 			if (entity instanceof AI) {
@@ -77,7 +68,6 @@ public class CollisionManager {
 				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
 
 				// Check for thrown item with monster
-//				if (monsterEntity.hasCollided(aiEntity, distance)) {
 				if (monsterEntity.hasCollidedRect(aiEntity)) {
 					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
@@ -87,14 +77,10 @@ public class CollisionManager {
 							System.out.println("monster collided with thrash");
 
 							break;
-							// }
 						}
 					}
 				}
-
-				// If player collides with AI entity
-//				if (playerEntity.hasCollided(aiEntity, distance)) // use iCollision
-				if (playerEntity.hasCollidedRect(aiEntity)) // use iCollision
+				if (playerEntity.hasCollidedRect(aiEntity)) // Use iCollision
 				{
 					// If player collides with recyclable, attach entity
 					if (aiEntity instanceof Recyclables) {
@@ -132,46 +118,11 @@ public class CollisionManager {
 							}
 						}
 					}
-
-//					// If monster catches player, player die
-//					if (aiEntity.getAIObjectName().equals("1.png")) {
-//						game.getAudioManager().playSound();
-//						handlePlayerAICollision(game);
-////						checkForCollisionTest(game);
-//						return;
-//					}
-
-					// Attach recyclable to entity
-//	                else if (aiEntity.getAIObjectName().matches("plastic.png|glass.png|paper.png|can.png")) {
-//	                    playerEntity.attachEntity(aiEntity);
-//	                    break;
-//	                } 
-					// Handling disposal into bins with correct type matching
-//	                else if (aiEntity.getAIObjectName().endsWith("bin.png")) {
-//	                    if (!playerEntity.getPickedupEntityList().isEmpty()) {
-//	                        AI pickedUpEntity = (AI) playerEntity.getPickedupEntityList().get(0);
-//	                        String entityType = pickedUpEntity.getAIObjectName().replace(".png", "");
-//	                        String binType = aiEntity.getAIObjectName().replace("bin.png", "");
-//
-//	                        boolean disposalCorrect = entityType.equals(binType);
-//	                        if (disposalCorrect) {
-//	                            playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
-//	                            System.out.println(entityType + " disposed correctly in " + binType + " bin. Score increased.");
-//	                        } else {
-//	                            playerEntity.setScoreCounter(playerEntity.getScoreCounter() - 0);
-//	                            System.out.println(entityType + " disposed incorrectly in " + binType + " bin. Score remained the same.");
-//	                        }
-//
-//	                        entitiesToRemove.add(pickedUpEntity);
-//	                        break; // Stop checking after handling disposal for one item
-//	                    }
-//	                }
 				}
 				if (playerEntity.hasCollided(monsterEntity, distance)) {
 					if (aiEntity instanceof Monster) {
 						game.getAudioManager().playSound();
 						checkForCollisionTest(game);
-						// handlePlayerAICollision(game);
 						return;
 					}
 				}

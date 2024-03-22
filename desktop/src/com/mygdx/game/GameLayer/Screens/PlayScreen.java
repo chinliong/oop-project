@@ -1,47 +1,34 @@
 package com.mygdx.game.GameLayer.Screens;
 
 import java.util.ArrayList;
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameEngine.Camera;
-import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.GameEngine.Entities.AI;
-import com.mygdx.game.GameEngine.Entities.Entity;
-import com.mygdx.game.GameEngine.Entities.Player;
-import com.mygdx.game.GameEngine.Screens.BaseScreen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-// Game Layer imports
+import com.mygdx.game.GameEngine.Entities.AI;
+import com.mygdx.game.GameEngine.Entities.Entity;
+import com.mygdx.game.GameEngine.Entities.Player;
+import com.mygdx.game.GameEngine.Screens.BaseScreen;
+import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameLayer.Entities.*;
 
 public class PlayScreen extends BaseScreen {
 	private AI draggedEntity = null;
-	//camera stuff
-	private Vector3 position = new Vector3();
-	private Camera camera1;
 	private PlayerGame pEntity;
 	private Monster monsterEntity;
 	//Player Stats
@@ -53,8 +40,6 @@ public class PlayScreen extends BaseScreen {
 	private float timeSinceLastGeneration = generationInterval; // Timer to track time since last generation
 	
 	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
-	private String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
-	private String[] thrashTypes = { "plastic", "metal", "glass", "paper" };
 
 	// pause screen and stuffs
 	private boolean paused;
@@ -75,8 +60,6 @@ public class PlayScreen extends BaseScreen {
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        
-        camera1 = new Camera(); 
     }
 
     @Override
@@ -404,14 +387,14 @@ public class PlayScreen extends BaseScreen {
             } 
         }
         
-      //Make monster entity follow player
+        // Make monster entity follow player
         monsterEntity.chasePlayer(pEntity, game);
         
         if (pEntity != null) {
             pEntity.updateAttachedEntities();
         }
         
-        //Check for throwing
+        // Check for throwing
         if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
             if(pEntity.hasAttachedEntities()) {
             	 // Get mouse position in screen coordinates

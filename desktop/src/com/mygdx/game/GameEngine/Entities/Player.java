@@ -4,7 +4,6 @@ package com.mygdx.game.GameEngine.Entities;
 import java.util.ArrayList;
 import java.util.List;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.shaders.DepthShader;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Player extends CollidableEntity {
@@ -30,10 +29,8 @@ public abstract class Player extends CollidableEntity {
     {
   		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
     }
-    
 
-
- // Method to simulate recycling an item into a bin
+    // Method to simulate recycling an item into a bin
     public boolean recycleItem(AI bin) {
         // Assuming the last item picked up is the one to be recycled
         if (!pickedupEntities.isEmpty()) {
@@ -71,22 +68,5 @@ public abstract class Player extends CollidableEntity {
                 return false; // The item does not match the bin
         }
     }
-//    public void disposePickedupEntity(CollidableEntity entity)
-//    {
-//    	pickedupEntities.remove(entity);
-//    }
-//    
-//    public void detachEntity(CollidableEntity entity)
-//    {
-//    	if (pickedupEntities.contains(entity)){
-//    	
-//    	}
-//    	System.out.println("In the detachenetity func");
-//    }
-
-//    public List<CollidableEntity> getPickedupEntityList()
-//    {
-//    	return this.pickedupEntities;
-//    }
 
 }

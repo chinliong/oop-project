@@ -1,14 +1,11 @@
 package com.mygdx.game.GameEngine.Entities;
+
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CollidableEntity extends Entity implements iCollision {
 
 	public CollidableEntity(String entityImagePath, int posX, int posY) {
 		super(entityImagePath,posX,posY);
-		// TODO Auto-generated constructor stub
 	}
   
   @Override

@@ -2,9 +2,7 @@ package com.mygdx.game.GameEngine.Managers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.mygdx.game.GameEngine.Entities.*;
-
 
 public class EntityManager {
 

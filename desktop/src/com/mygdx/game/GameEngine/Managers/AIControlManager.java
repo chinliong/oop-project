@@ -1,10 +1,8 @@
 package com.mygdx.game.GameEngine.Managers;
 
-
 import com.mygdx.game.GameEngine.Entities.AI;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class AIControlManager {
     

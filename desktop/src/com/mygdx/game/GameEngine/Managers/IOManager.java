@@ -9,14 +9,14 @@ public class IOManager {
 	private InputKeyboard inputKeyboard;
 	private InputMouse inputMouse;
 
-	public IOManager() { // default constructor, initializes new instance
+	public IOManager() { // Default constructor, initializes new instance
 		this.inputKeyboard = new InputKeyboard();
 		this.inputMouse = new InputMouse();
 		this.output = new Output();
 
 	}
 
-	// getters and setters
+	// Getters and setters
 	public Output getOutput() {
 		return this.output;
 	}

@@ -6,7 +6,7 @@ import com.mygdx.game.GameEngine.Entities.Player;
 
 public class PlayerControlManager {
 	
-	// empty constructor 
+	// Empty constructor 
 	public PlayerControlManager() {
 		
 	}

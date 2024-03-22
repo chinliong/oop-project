@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
-//entity abstract class
+// Entity abstract class
 public abstract class Entity{
     protected Texture entityImage;
     
-    protected float posX; //Y position of entity
-    protected float posY; //Y position of entity
-    protected float width = 90; // width of entity
-    protected float height = 100; // height of entity
+    protected float posX; // Y position of entity
+    protected float posY; // Y position of entity
+    protected float width = 90; // Width of entity
+    protected float height = 100; // Height of entity
 
     private static int idCounter = 0 ;
     protected int id;
@@ -95,27 +95,6 @@ public abstract class Entity{
     public int getID(){
         return this.id;
     }
-    
-
-    
-    
-//    collide checks
-//    @Override
-//   public boolean hasCollided(Entity cEntity, int range)
-//    {
-//		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
-//    	
-//    }
-//    
-//    @Override
-//   public boolean hasCollidedRect(Entity cEntity) {
-//	    // Get the bounding rectangles for this entity and the other entity
-//	    Rectangle thisBounds = this.getBounds();
-//	    Rectangle otherBounds = cEntity.getBounds();
-//
-//	    // Check if the two rectangles overlap, indicating a collision
-//	    return thisBounds.overlaps(otherBounds);
-//	}
 
 }
 

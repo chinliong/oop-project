@@ -2,32 +2,17 @@ package com.mygdx.game.GameLayer.Entities;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.mygdx.game.GameEngine.Camera;
 import com.mygdx.game.GameEngine.Entities.CollidableEntity;
 import com.mygdx.game.GameEngine.Entities.Player;
-import com.mygdx.game.GameEngine.Managers.PlayerControlManager;
 
 public class PlayerGame extends Player{
 	private int playerHealth = 3;
 	private int scoreCounter = 0;
-	private PlayerControlManager pcm;
-	private Camera mCamera;
 	
-	 private List<CollidableEntity> pickedupEntities = new ArrayList<>();
-
-	public PlayerGame(Camera camera)
-	{
-		super();
-		mCamera = camera;
-		
-	}
+	private List<CollidableEntity> pickedupEntities = new ArrayList<>();
 	
 	public PlayerGame()
 	{

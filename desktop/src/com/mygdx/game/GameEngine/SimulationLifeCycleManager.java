@@ -8,31 +8,29 @@ import com.mygdx.game.GameEngine.Managers.*;
 
 public class SimulationLifeCycleManager extends Game {
 
-	// attributes 
+	// Attributes 
     protected SpriteBatch batch;
     private BitmapFont font;
     private SceneManager sceneManager; 
     private EntityManager entityManager; 
     private IOManager ioManager;
-//    private AIControlManager AIControlManager;
     private PlayerControlManager playerControlManager;
     private AudioManager audioManager;
     private SimulationLifeCycleManager simulationLifeCycleManager;
-//    private CollisionManager collisionManager;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont(); 
+        
         // Initialize all managers
         entityManager = new EntityManager(); 
         sceneManager = new SceneManager(this); 
         ioManager = new IOManager();
         playerControlManager = new PlayerControlManager(); 
         audioManager = new AudioManager();
-//        AIControlManager = new AIControlManager();
-//        collisionManager = new CollisionManager();
         sceneManager.setScreen();
+        
         System.out.println("Managers intialized");
     }
     @Override
@@ -61,7 +59,6 @@ public class SimulationLifeCycleManager extends Game {
         
     }
 
-    // getters to access attributes of this class
     public SpriteBatch getBatch()
     {
     	return batch;
@@ -82,15 +79,10 @@ public class SimulationLifeCycleManager extends Game {
         return ioManager;
     }
 
-
     public PlayerControlManager getPlayerControlManager(){
         return playerControlManager;
     }
 
-//    public AIControlManager getAIControlManager(){
-//        return AIControlManager;
-//    }
-//    
     public AudioManager getAudioManager(){
         return audioManager;
     }
@@ -99,7 +91,4 @@ public class SimulationLifeCycleManager extends Game {
         return simulationLifeCycleManager;
     }
 
-//    public CollisionManager getCollisionManager(){
-//        return collisionManager;
-//    }
 }

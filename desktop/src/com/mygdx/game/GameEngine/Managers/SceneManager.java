@@ -4,13 +4,12 @@ import com.badlogic.gdx.Screen;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Screens.*;
 import com.mygdx.game.GameLayer.Screens.*;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-//Manages the creation and lifecycle of game screens to ensure they are instantiated when needed
+// Manages the creation and lifecycle of game screens to ensure they are instantiated when needed
 public class SceneManager {
     private List<Screen> screenList; // List to keep track of instantiated screens
     private SimulationLifeCycleManager game; 
@@ -35,7 +34,6 @@ public class SceneManager {
     	// Directly set the provided screen
         game.setScreen(screen);
     }
-
 
     // Retrieves an existing screen of the specified type, or creates a new one if it does not exist
     public <T extends Screen> T getScreen(Class<T> type) {
