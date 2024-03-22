@@ -354,6 +354,10 @@ public class PlayScreen extends BaseScreen {
     	   //     draggedEntity = null; // Release the entity when the mouse button is released
     	   // }
     }
+    
+    private float clampValue(float value, float min, float max) {
+        return Math.max(min, Math.min(max, value));
+    }
 
     private void drawEntities()
     {
@@ -374,6 +378,16 @@ public class PlayScreen extends BaseScreen {
         	//Move AI entities to the left up to distance of 800 and speed of 1
             game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
             */
+        	 if (pEntity != null) {
+        	        // Assuming pEntity.posX and pEntity.posY are your entity's current positions
+        	        // And assuming pEntity.width and pEntity.height are the entity's dimensions
+        	        // Screen width and height can be retrieved via Gdx.graphics.getWidth() and Gdx.graphics.getHeight()
+        	        
+        	        pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
+        	        pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
+
+        	        // Update other entities' positions similarly...
+        	    }
         	
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
                 if (game.getInputOutputManager().getInputKeyboard().ifDPressed()==true) { 
