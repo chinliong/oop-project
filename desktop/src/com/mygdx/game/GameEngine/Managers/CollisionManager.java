@@ -41,65 +41,62 @@ public class CollisionManager {
 	public void checkForCollision(SimulationLifeCycleManager game) {
 		PlayerGame playerEntity = null;
 		Monster monsterEntity = null;
-		
-		//Find player entity
+
+		// Find player entity
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof Player) {
 				playerEntity = (PlayerGame) entity;
 				break;
 			}
 		}
-		
+
 		if (playerEntity == null)
 			return; // No player found, exit the method
-		
+
 		for (Entity entity : game.getEntityManager().getEntities()) {
 			if (entity instanceof Monster) {
 				monsterEntity = (Monster) entity;
 				break;
 			}
 		}
-		
+
 		if (monsterEntity == null)
 			return; // No player found, exit the method
 
-     /*		
+		/*
+		 * for (Entity entity : game.getEntityManager().getEntities()) { if (entity
+		 * instanceof PlayerGame) { playerEntity = (PlayerGame) entity; // if is type
+		 * player = typecast it break; } } if (playerEntity == null) return; // No
+		 * player found, so exit the method
+		 */
+
 		for (Entity entity : game.getEntityManager().getEntities()) {
-			if (entity instanceof PlayerGame) {
-				playerEntity = (PlayerGame) entity; // if is type player = typecast it
-				break;
-			}
-		}
-		if (playerEntity == null)
-	     return; // No player found, so exit the method
-	  */
-		
-		
-		for (Entity entity : game.getEntityManager().getEntities()) {
-			//If entity is AI
+			// If entity is AI
 			if (entity instanceof AI) {
 				AI aiEntity = (AI) entity;
 				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
-				
-				//Check for thrown item with monster
+
+				// Check for thrown item with monster
 				if (monsterEntity.hasCollided(aiEntity, distance)) {
+//				if (monsterEntity.hasCollidedRect(aiEntity)) {
 					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
 						if (collidableList.contains(rEntity) && rEntity.isThrown()) {
-							
+
 							monsterEntity.resetMonster();
 							System.out.println("monster collided with thrash");
-				
-								break;
-							//}
+
+							break;
+							// }
 						}
 					}
 				}
-					
-				//If player collides with AI entity
-				if (playerEntity.hasCollided(aiEntity, distance)) // use iCollision
+
+				// If player collides with AI entity
+//				if (playerEntity.hasCollided(aiEntity, distance)) // use iCollision
+				if (playerEntity.hasCollidedRect(aiEntity)) // use iCollision
 				{
-                    //If player collides with recyclable, attach entity
+					// If player collides with recyclable, attach entity
 					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
 						if (collidableList.contains(rEntity)) {
@@ -109,7 +106,7 @@ public class CollisionManager {
 							}
 						}
 					}
-                    
+
 					if (aiEntity instanceof Bin) {
 						Bin bEntity = (Bin) aiEntity;
 						if (playerEntity.getPickedUpEntities().size() != 0) {
@@ -117,31 +114,25 @@ public class CollisionManager {
 							// same type = score increase
 							if (game.getInputOutputManager().getInputKeyboard().ifSpacePressed()) {
 
-							if (bEntity.getType() == rEntity.getType()) {
-								entitiesToRemove.add(rEntity);
-								playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
-								System.out.println("my score is " + playerEntity.getScoreCounter());
-								System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
-								break;
-							}
+								if (bEntity.getType() == rEntity.getType()) {
+									entitiesToRemove.add(rEntity);
+									playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
+									System.out.println("my score is " + playerEntity.getScoreCounter());
+									System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
+									break;
+								}
 
-							// different type = score same
-							if (bEntity.getType() != rEntity.getType()) {
-								entitiesToRemove.add(rEntity);
-								System.out.println("my score is unchanged " + playerEntity.getScoreCounter());
-								System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
-								break;
-							}
+								// different type = score same
+								if (bEntity.getType() != rEntity.getType()) {
+									entitiesToRemove.add(rEntity);
+									System.out.println("my score is unchanged " + playerEntity.getScoreCounter());
+									System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
+									break;
+								}
 							}
 						}
 					}
 
-					if (aiEntity instanceof Monster) {
-						game.getAudioManager().playSound();
-						checkForCollisionTest(game);
-						// handlePlayerAICollision(game);
-						return;
-					}
 //					// If monster catches player, player die
 //					if (aiEntity.getAIObjectName().equals("1.png")) {
 //						game.getAudioManager().playSound();
@@ -176,6 +167,15 @@ public class CollisionManager {
 //	                    }
 //	                }
 				}
+				if (playerEntity.hasCollided(monsterEntity, distance)) {
+					if (aiEntity instanceof Monster) {
+						game.getAudioManager().playSound();
+						checkForCollisionTest(game);
+						// handlePlayerAICollision(game);
+						return;
+					}
+				}
+
 			}
 		}
 
