@@ -77,8 +77,8 @@ public class CollisionManager {
 				int distance = game.getEntityManager().getCollisionManager().getCollisionRange();
 
 				// Check for thrown item with monster
-				if (monsterEntity.hasCollided(aiEntity, distance)) {
-//				if (monsterEntity.hasCollidedRect(aiEntity)) {
+//				if (monsterEntity.hasCollided(aiEntity, distance)) {
+				if (monsterEntity.hasCollidedRect(aiEntity)) {
 					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
 						if (collidableList.contains(rEntity) && rEntity.isThrown()) {
