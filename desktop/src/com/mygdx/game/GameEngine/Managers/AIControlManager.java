@@ -1,11 +1,10 @@
 package com.mygdx.game.GameEngine.Managers;
 
-import com.mygdx.game.GameEngine.AIControl.IMoveable;
-import com.mygdx.game.GameEngine.Entities.AI;
 
+import com.mygdx.game.GameEngine.Entities.AI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
 
 public class AIControlManager {
     
