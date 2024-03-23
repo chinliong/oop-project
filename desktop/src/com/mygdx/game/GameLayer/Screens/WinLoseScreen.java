@@ -1,22 +1,16 @@
 package com.mygdx.game.GameLayer.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+
 
 
 public class WinLoseScreen extends BaseScreen{
@@ -113,19 +107,6 @@ public class WinLoseScreen extends BaseScreen{
     	menuButton.setPosition((Gdx.graphics.getWidth() - menuButton.getWidth()) / 2 - 80, (Gdx.graphics.getHeight() + menuButton.getHeight()) / 2 - 150);
     	exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2 + 80, (Gdx.graphics.getHeight() + exitGameButton.getHeight()) / 2 - 150);
     	
-//    	menuButton.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//            	game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
-//            }
-//        });
-//    	
-//    	exitGameButton.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//            	Gdx.app.exit();
-//            }
-//        });
     	
     	menuButton.getStyle().over = menuHoverDrawable;
     	exitGameButton.getStyle().over = exitGameHoverDrawable;

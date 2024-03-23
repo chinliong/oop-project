@@ -5,19 +5,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameEngine.Entities.AI;
-import com.mygdx.game.GameEngine.Entities.CollidableEntity;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
@@ -26,12 +22,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import com.mygdx.game.GameEngine.Entities.AI;
-import com.mygdx.game.GameEngine.Entities.Entity;
-import com.mygdx.game.GameEngine.Entities.Player;
-import com.mygdx.game.GameEngine.Screens.BaseScreen;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 // Game Layer imports
 import com.mygdx.game.GameLayer.Entities.*;
 
@@ -249,23 +240,6 @@ public class PlayScreen extends BaseScreen {
 		menuButton.setSize(160, 60);
 		resumeGameButton.setSize(160, 60);
 
-//		menuButton.addListener(new ClickListener() {
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				// Logic to go to Main Menu
-//				game.getAudioManager().getMusic("Gameplay").stop();
-//				game.getEntityManager().disposeEntities();
-//				game.getSceneManager().removeScreen(PlayScreen.class);
-//				game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
-//			}
-//		});
-//
-//		resumeGameButton.addListener(new ClickListener() {
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				paused = false;
-//			}
-//		});
 
 		menuButton.getStyle().over = menuHoverDrawable;
 		resumeGameButton.getStyle().over = resumeGameHoverDrawable;
