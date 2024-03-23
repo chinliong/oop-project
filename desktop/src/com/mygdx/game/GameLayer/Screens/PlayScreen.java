@@ -87,35 +87,13 @@ public class PlayScreen extends BaseScreen {
         
         AI aEntity = new AI();
         pEntity = new PlayerGame();
-       //shape = new ShapeRenderer();
-       //ArrayList<int[]> generatedCoordinates = AI.generateCoordinates();
-         monsterEntity = new Monster(); // Monster entity that follows player
-//        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
-//        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
-//        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
-//        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
-//        AI binEntity = new AI("thrashbin.png",200,10);
+        monsterEntity = new Monster(); // Monster entity that follows player
         
         Bin glassbinEntity = new Bin("glassbin.png",150, 10, RecyclableType.GLASS); // trashbin2
         Bin paperbinEntity = new Bin("paperbin.png",300, 10, RecyclableType.PAPER); // trashbin2
         Bin canbinEntity = new Bin("canbin.png",450, 10, RecyclableType.METAL); // trashbin2
         Bin plasticbinEntity = new Bin("plasticbin.png",600,10,RecyclableType.PLASTIC);
-       
-//        Recyclables glassTrash = new Recyclables("thrashbin.png", 200, 10,RecyclableType.GLASS);
-        
-        //Generate coordinates for thrash entities
-      //  ArrayList<int[]> generatedCoordinates = generateCoordinates();
-        // Array of thrash entity images, assuming you have different images for each
-       // String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
-        
-        // Create thrash entities with generated coordinates and add them to the entity manager
-        //if (game.getEntityManager().checkClass(AI.class) == null) {
-       // for (int i = 0; i < generatedCoordinates.size(); i++) {
-        //    int[] coord = generatedCoordinates.get(i);
-      //      AI thrashEntity = new AI(thrashImages[i], coord[0], coord[1]);
-      //      game.getEntityManager().addEntity(thrashEntity);
-       // }
-      //  }
+
         
         //Check for existing entity before adding
         if (game.getEntityManager().checkClass(Player.class) == null) {
@@ -125,26 +103,16 @@ public class PlayScreen extends BaseScreen {
         game.getEntityManager().addEntity(aEntity);
         }
         
-//        monsterEntity.setType("waste");
-//        glassbinEntity.setType("glass");
-//        plasticbinEntity.setType("plastic");
-//        paperbinEntity.setType("paper");
-//        canbinEntity.setType("can");
-        
         //Add bin entities
         game.getEntityManager().addEntity(monsterEntity);
         game.getEntityManager().addEntity(glassbinEntity);
         game.getEntityManager().addEntity(plasticbinEntity);
         game.getEntityManager().addEntity(paperbinEntity);
         game.getEntityManager().addEntity(canbinEntity);
-        
-//        game.getEntityManager().addEntity(binEntity);
-               
+
         //Set collision range
         game.getEntityManager().getCollisionManager().setCollisionRange(24);
         
-        // Pause stage window
-//        Window pStage = new Window("PAUSE", skin);
     }
 
     @Override
@@ -165,9 +133,6 @@ public class PlayScreen extends BaseScreen {
             pStage.draw();
     	}
     	else {
-    		//shape.begin(ShapeRenderer.ShapeType.Line);
-    		
-
     		Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
     		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -185,7 +150,6 @@ public class PlayScreen extends BaseScreen {
             handleInput();
             drawEntities();
             
-            //shape.end();
             game.getBatch().end();
             
            //To generate trash entities randomly at intervals
@@ -216,7 +180,6 @@ public class PlayScreen extends BaseScreen {
             }
 
                 Recyclables thrashEntity = new Recyclables(thrashImages[index], coord[0], coord[1],type);
-//                thrashEntity.setType(type); // Set the type for the trash entity
 
                 game.getEntityManager().addEntity(thrashEntity);
 
@@ -226,14 +189,6 @@ public class PlayScreen extends BaseScreen {
             
             updatePlayerScore();
             checkGameConditions();
-//             Update the camera to follow the player
-//            if (pEntity != null) {
-//                camera1.camera.position.set(pEntity.getPosX(), pEntity.getPosY(), 0);
-//                camera1.camera.update();
-//            }
-
-            // Set the batch's projection matrix
-//            game.getBatch().setProjectionMatrix(camera1.camera.combined);
             
     	}
     	
@@ -262,10 +217,7 @@ public class PlayScreen extends BaseScreen {
     	
     	menuButton.setSize( 160, 60);
     	resumeGameButton.setSize( 160, 60);
-    	
-    	//menuButton.setPosition((Gdx.graphics.getWidth() - menuButton.getWidth()) / 2, (Gdx.graphics.getHeight() + menuButton.getHeight()) / 2);
-    	//resumeGameButton.setPosition((Gdx.graphics.getWidth() - resumeGameButton.getWidth()) / 2 - 80, (Gdx.graphics.getHeight() + resumeGameButton.getHeight()) / 2);
-    	
+    		
     	menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -334,11 +286,7 @@ public class PlayScreen extends BaseScreen {
     		{
     			entity.draw(game.getBatch());
     		}
-//    		for (Entity cEntity: game.getEntityManager().getEntities())
-//    		{
-//    			CollidableEntity eEntity = (CollidableEntity) cEntity;
-//    			eEntity.draw(shape);
-//    		}
+
     	}
     }
     
@@ -391,19 +339,11 @@ public class PlayScreen extends BaseScreen {
     }
 
     private void checkGameConditions() {
-//        pauseScreenIfRequested();
         game.getEntityManager().getCollisionManager().checkForCollision(game);
         checkWinCondition();
     }
 
 
-//    private void pauseScreenIfRequested() {
-//        if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
-////            game.getSceneManager().setScreen(game.getSceneManager().getScreen(PauseScreen.class));
-////            game.getAudioManager().getMusic("Gameplay").stop();
-//        	pause();
-//        }
-//    }
     
     private void checkWinCondition() {
     	if (pEntity.getScoreCounter() == 4)
