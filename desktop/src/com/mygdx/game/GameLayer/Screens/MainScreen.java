@@ -35,7 +35,7 @@ public class MainScreen extends BaseScreen {
 		newGameButtonX = (Gdx.graphics.getWidth() - newGameButtonWidth) / 2;
 		newGameButtonY = (Gdx.graphics.getHeight() + newGameButtonHeight) / 2;
 		exitGameButtonX = newGameButtonX;
-		exitGameButtonY = newGameButtonY - 50 - newGameButtonHeight; 
+		exitGameButtonY = newGameButtonY - newGameButtonHeight; 
 
 	}
 
@@ -59,23 +59,21 @@ public class MainScreen extends BaseScreen {
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
 
-		handleCustomInput();
+		handleMouseInput();
 
 	}
 
-	private void handleCustomInput() {
+	private void handleMouseInput() {
 		float mouseX = Gdx.input.getX();
 		float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
 		if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
 			if (mouseX >= newGameButtonX && mouseX <= newGameButtonX + newGameButtonWidth && mouseY >= newGameButtonY
 					&& mouseY <= newGameButtonY + newGameButtonHeight) {
-				// New Game button logic
 				game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
 				game.getAudioManager().getMusic("MainMenu").stop();
 			} else if (mouseX >= exitGameButtonX && mouseX <= exitGameButtonX + exitGameButtonWidth
 					&& mouseY >= exitGameButtonY && mouseY <= exitGameButtonY + exitGameButtonHeight) {
-				// Exit button logic
 				Gdx.app.exit();
 			}
 		}
