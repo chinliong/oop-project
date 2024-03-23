@@ -47,7 +47,6 @@ public class PlayScreen extends BaseScreen {
 	private final float generationInterval = 3; // Interval between generations, in seconds
 	private float timeSinceLastGeneration = generationInterval; // Timer to track time since last generation
 	
-	//private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
 
 	// pause screen and stuffs
 	private boolean paused;
@@ -57,10 +56,7 @@ public class PlayScreen extends BaseScreen {
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
     
-    //private ShapeRenderer shape;
-	
-	
-	
+
     public PlayScreen(SimulationLifeCycleManager game) {
         super(game);
         setBgColour(Color.SKY);
@@ -74,7 +70,6 @@ public class PlayScreen extends BaseScreen {
 
     @Override
     public void initialiseUI() {
-    	createText("This is the PlayScreen screen");
     	scoreLabel = createText("Player Score Counter: ", 50,580);
     	healthLabel = createText("Player Health: ", 500,580);
     
