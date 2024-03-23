@@ -16,15 +16,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.GameEngine.Entities.AI;
+import com.mygdx.game.GameEngine.Entities.CollidableEntity;
+import com.mygdx.game.GameEngine.Entities.Entity;
+import com.mygdx.game.GameEngine.Entities.Player;
+import com.mygdx.game.GameEngine.Screens.BaseScreen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import com.mygdx.game.GameEngine.Entities.AI;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+// Game Layer imports
 import com.mygdx.game.GameLayer.Entities.*;
 
 public class PlayScreen extends BaseScreen {
@@ -48,6 +56,8 @@ public class PlayScreen extends BaseScreen {
 	// background UI 
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
+    
+    private ShapeRenderer shape;
 	
 	
 	
@@ -65,8 +75,8 @@ public class PlayScreen extends BaseScreen {
     @Override
     public void initialiseUI() {
     	createText("This is the PlayScreen screen");
-    	scoreLabel = createText("Player Score Counter: ", 50,100);
-    	healthLabel = createText("Player Health: ", 50,80);
+    	scoreLabel = createText("Player Score Counter: ", 50,580);
+    	healthLabel = createText("Player Health: ", 500,580);
     
     }
 
@@ -77,7 +87,7 @@ public class PlayScreen extends BaseScreen {
         
         AI aEntity = new AI();
         pEntity = new PlayerGame();
-       
+       shape = new ShapeRenderer();
         generatedCoordinates = generateCoordinates();
          monsterEntity = new Monster("1.png",200, 10); // Monster entity that follows player
 //        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
@@ -86,10 +96,10 @@ public class PlayScreen extends BaseScreen {
 //        AI canbinEntity = new AI("canbin.png",600, 10); // trashbin2
 //        AI binEntity = new AI("thrashbin.png",200,10);
         
-        Bin glassbinEntity = new Bin("glassbin.png",300, 10, RecyclableType.GLASS); // trashbin2
-        Bin paperbinEntity = new Bin("paperbin.png",500, 10, RecyclableType.PAPER); // trashbin2
-        Bin canbinEntity = new Bin("canbin.png",600, 10, RecyclableType.METAL); // trashbin2
-        Bin plasticbinEntity = new Bin("plasticbin.png",400,10,RecyclableType.PLASTIC);
+        Bin glassbinEntity = new Bin("glassbin.png",150, 10, RecyclableType.GLASS); // trashbin2
+        Bin paperbinEntity = new Bin("paperbin.png",300, 10, RecyclableType.PAPER); // trashbin2
+        Bin canbinEntity = new Bin("canbin.png",450, 10, RecyclableType.METAL); // trashbin2
+        Bin plasticbinEntity = new Bin("plasticbin.png",600,10,RecyclableType.PLASTIC);
        
 //        Recyclables glassTrash = new Recyclables("thrashbin.png", 200, 10,RecyclableType.GLASS);
         
@@ -155,7 +165,8 @@ public class PlayScreen extends BaseScreen {
             pStage.draw();
     	}
     	else {
-    		
+    		shape.begin(ShapeRenderer.ShapeType.Line);
+
     		Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
     		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -184,8 +195,8 @@ public class PlayScreen extends BaseScreen {
                 draggedEntity.setPosX(centerX);
                 draggedEntity.setPosY(centerY);
             }
+            shape.end();
             game.getBatch().end();
-            
             
           //To generate trash entities randomly at intervals
             timeSinceLastGeneration += delta;
@@ -349,6 +360,11 @@ public class PlayScreen extends BaseScreen {
     		for(Entity entity: game.getEntityManager().getEntities())
     		{
     			entity.draw(game.getBatch());
+    		}
+    		for (Entity cEntity: game.getEntityManager().getEntities())
+    		{
+    			CollidableEntity eEntity = (CollidableEntity) cEntity;
+    			eEntity.draw(shape);
     		}
     	}
     }

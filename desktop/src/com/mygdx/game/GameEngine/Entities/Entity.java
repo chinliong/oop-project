@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 
 // Entity abstract class
@@ -39,6 +40,11 @@ public abstract class Entity{
         // Rectangle to represent the collision space
         return new Rectangle(posX, posY, width, height);
     }
+	public void draw(ShapeRenderer shape)
+{
+			shape.rect(posX, posY, width, height);
+		}
+
 
     public void draw(SpriteBatch batch) {
         // Draw the texture at its position with width and height
