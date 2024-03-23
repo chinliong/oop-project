@@ -53,4 +53,13 @@ public class InputMouse extends Input { // extends abstract Input class
 		} else
 			return -1; // no valid button press
 	}
+	
+	//Get mouse coords
+	public int getposXPressed() {
+		return Gdx.input.getX();
+		}
+			
+	public int getposYPressed() {
+		return Gdx.input.getY();
+		}
 }

@@ -11,7 +11,7 @@ public abstract class Player extends CollidableEntity {
 
     public Player() {
     	// Entity constructor 1
-        super("fish.png", 0, 10);
+        super("fish.png", 300, 200);
     }
 
     @Override

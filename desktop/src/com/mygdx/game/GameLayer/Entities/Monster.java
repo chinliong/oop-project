@@ -8,8 +8,8 @@ import com.mygdx.game.GameEngine.AIControl.ChasingPlayer;
 public class Monster extends AI {
     private IChase chasePlayer;
 
-    public Monster(String entityImagePath, int posX, int posY) {
-        super(entityImagePath, posX, posY);
+    public Monster() {
+        super("1.png", -100, 200);
         this.chasePlayer = new ChasingPlayer(); 
     }
 
@@ -24,8 +24,8 @@ public class Monster extends AI {
     }
     
     public void resetMonster() {
-  	  this.setPosX(200);
-  	  this.setPosY(10);
+  	  this.setPosX(-100);
+  	  this.setPosY(200);
     }
 	
 }

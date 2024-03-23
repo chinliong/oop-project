@@ -72,10 +72,8 @@ public class CollisionManager {
 					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
 						if (collidableList.contains(rEntity) && rEntity.isThrown()) {
-
+							game.getAudioManager().playSound();
 							monsterEntity.resetMonster();
-							System.out.println("monster collided with thrash");
-
 							break;
 						}
 					}

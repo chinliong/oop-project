@@ -89,7 +89,7 @@ public class PlayScreen extends BaseScreen {
         pEntity = new PlayerGame();
        //shape = new ShapeRenderer();
        //ArrayList<int[]> generatedCoordinates = AI.generateCoordinates();
-         monsterEntity = new Monster("1.png",200, 10); // Monster entity that follows player
+         monsterEntity = new Monster(); // Monster entity that follows player
 //        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
 //        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
 //        AI paperbinEntity = new AI("paperbin.png",500, 10); // trashbin2
@@ -185,21 +185,10 @@ public class PlayScreen extends BaseScreen {
             handleInput();
             drawEntities();
             
-            //To drag entity with mouse cursor
-            if (draggedEntity != null) {
-                // Update the entity's position to follow the mouse cursor
-                float mouseX = Gdx.input.getX();
-                float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
-                //Calculate center position
-                float centerX = mouseX - draggedEntity.getWidth() / 2;
-                float centerY = mouseY - draggedEntity.getHeight() / 2;
-                draggedEntity.setPosX(centerX);
-                draggedEntity.setPosY(centerY);
-            }
             //shape.end();
             game.getBatch().end();
             
-          //To generate trash entities randomly at intervals
+           //To generate trash entities randomly at intervals
             ArrayList<int[]> generatedCoordinates = Recyclables.generateCoordinates();
             timeSinceLastGeneration += delta;
             if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
@@ -374,20 +363,12 @@ public class PlayScreen extends BaseScreen {
     private void moveEntities() {
     	//loop through all entities
         for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
-        	
-        	/* PREVIOUS CODE TO MOVE WHALE LEFT
-        	//Move AI entities to the left up to distance of 800 and speed of 1
-            game.getEntityManager().getAIControlManager().getDirections().moveLeft((AI)game.getEntityManager().checkClass(AI.class), 1, 800);
-            */
         	 if (pEntity != null) {
         	        // Assuming pEntity.posX and pEntity.posY are your entity's current positions
         	        // And assuming pEntity.width and pEntity.height are the entity's dimensions
-        	        // Screen width and height can be retrieved via Gdx.graphics.getWidth() and Gdx.graphics.getHeight()
-        	        
+        	        // Screen width and height can be retrieved via Gdx.graphics.getWidth() and Gdx.graphics.getHeight()       
         	        pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
         	        pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
-
-        	        // Update other entities' positions similarly...
         	    }
         	
             if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
@@ -416,7 +397,7 @@ public class PlayScreen extends BaseScreen {
         if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
             if(pEntity.hasAttachedEntities()) {
             	 // Get mouse position in screen coordinates
-                Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                Vector3 mousePos = new Vector3(game.getInputOutputManager().getInputMouse().getposXPressed(), game.getInputOutputManager().getInputMouse().getposYPressed(), 0);
                 // Inverting the Y-coordinate if necessary
                 float mouseYInverted = Gdx.graphics.getHeight() - mousePos.y;
                 // Calculate the direction vector from the player to the cursor
@@ -425,8 +406,6 @@ public class PlayScreen extends BaseScreen {
 
             }
         }
-
- 
     }
 
     private void checkGameConditions() {
@@ -469,14 +448,12 @@ public class PlayScreen extends BaseScreen {
             game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
 
         }
-    
     }
 
     @Override
     public void hide() {
         game.getSceneManager().removeScreen(PlayScreen.class);
     }
-    
 
     }
 
