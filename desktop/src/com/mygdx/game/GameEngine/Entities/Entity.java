@@ -57,6 +57,8 @@ public abstract class Entity{
 
     public void setEntityImage(Texture entityImage) {
         this.entityImage = entityImage;
+        this.width = entityImage.getWidth();
+        this.height = entityImage.getHeight();
     }
 
     public float getPosX() {

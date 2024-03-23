@@ -47,7 +47,7 @@ public class PlayScreen extends BaseScreen {
 	private final float generationInterval = 3; // Interval between generations, in seconds
 	private float timeSinceLastGeneration = generationInterval; // Timer to track time since last generation
 	
-	private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
+	//private ArrayList<int[]> generatedCoordinates = new ArrayList<>();
 
 	// pause screen and stuffs
 	private boolean paused;
@@ -57,7 +57,7 @@ public class PlayScreen extends BaseScreen {
     private Texture backgroundTexture;
     private Sprite backgroundSprite;
     
-    private ShapeRenderer shape;
+    //private ShapeRenderer shape;
 	
 	
 	
@@ -87,8 +87,8 @@ public class PlayScreen extends BaseScreen {
         
         AI aEntity = new AI();
         pEntity = new PlayerGame();
-       shape = new ShapeRenderer();
-        generatedCoordinates = generateCoordinates();
+       //shape = new ShapeRenderer();
+       //ArrayList<int[]> generatedCoordinates = AI.generateCoordinates();
          monsterEntity = new Monster("1.png",200, 10); // Monster entity that follows player
 //        AI glassbinEntity = new AI("glassbin.png",300, 10); // trashbin2
 //        AI plasticbinEntity = new AI("plasticbin.png",400, 10); // trashbin2
@@ -165,7 +165,8 @@ public class PlayScreen extends BaseScreen {
             pStage.draw();
     	}
     	else {
-    		shape.begin(ShapeRenderer.ShapeType.Line);
+    		//shape.begin(ShapeRenderer.ShapeType.Line);
+    		
 
     		Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
     		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -195,10 +196,11 @@ public class PlayScreen extends BaseScreen {
                 draggedEntity.setPosX(centerX);
                 draggedEntity.setPosY(centerY);
             }
-            shape.end();
+            //shape.end();
             game.getBatch().end();
             
           //To generate trash entities randomly at intervals
+            ArrayList<int[]> generatedCoordinates = Recyclables.generateCoordinates();
             timeSinceLastGeneration += delta;
             if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
                 timeSinceLastGeneration = 0; // Reset the timer
@@ -361,11 +363,11 @@ public class PlayScreen extends BaseScreen {
     		{
     			entity.draw(game.getBatch());
     		}
-    		for (Entity cEntity: game.getEntityManager().getEntities())
-    		{
-    			CollidableEntity eEntity = (CollidableEntity) cEntity;
-    			eEntity.draw(shape);
-    		}
+//    		for (Entity cEntity: game.getEntityManager().getEntities())
+//    		{
+//    			CollidableEntity eEntity = (CollidableEntity) cEntity;
+//    			eEntity.draw(shape);
+//    		}
     	}
     }
     
@@ -475,34 +477,6 @@ public class PlayScreen extends BaseScreen {
         game.getSceneManager().removeScreen(PlayScreen.class);
     }
     
-   //Function to generate random coordinates higher than 200units, and at least 50units apart from each other
-    private ArrayList<int[]> generateCoordinates() {
-    	
-        ArrayList<int[]> coordinates = new ArrayList<>();
-    
-        while (coordinates.size() < 8) { // Generate until 4 unique coordinates are found
-            // Generate coordinates within screen bounds, ensuring y is at least 200
-            int[] newCoordinate = {
-                MathUtils.random(700), //screen width
-                200 + MathUtils.random(500 - 200) //min height + random(screenheight - minheight)
-            };
-            
-            boolean isValid = true;
-            // Check new coordinate against all existing coordinates for minimum distance
-            for (int[] coord : coordinates) {
-                if (Math.sqrt(Math.pow(newCoordinate[0] - coord[0], 2) + Math.pow(newCoordinate[1] - coord[1], 2)) < 50) {
-                    isValid = false; // New coordinate is too close to an existing one
-                    break;
-                }
-            }
-            
-            if (isValid) {
-                coordinates.add(newCoordinate); // Add valid coordinate to the list
-            }
-        }
-        
-        return coordinates;
-    }
 
     }
 

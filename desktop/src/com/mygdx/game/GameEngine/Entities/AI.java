@@ -1,5 +1,7 @@
 package com.mygdx.game.GameEngine.Entities;
 
+import java.util.ArrayList;
+
 public class AI extends CollidableEntity{
 
     private String AIObject;
@@ -27,6 +29,6 @@ public class AI extends CollidableEntity{
     public String getAIObjectName() {
         return this.AIObject;
     }
-	
+    
 
 }
