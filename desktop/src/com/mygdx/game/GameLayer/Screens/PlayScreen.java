@@ -39,338 +39,371 @@ public class PlayScreen extends BaseScreen {
 	private AI draggedEntity = null;
 	private PlayerGame pEntity;
 	private Monster monsterEntity;
-	//Player Stats
+	// Player Stats
 	private Label scoreLabel;
 	private Label healthLabel;
-	
+
 	private int nextTrashIndex = 0; // Index of the next trash entity to generate
 	private final float generationInterval = 3; // Interval between generations, in seconds
 	private float timeSinceLastGeneration = generationInterval; // Timer to track time since last generation
-	
+
+	private float menuGameButtonX, menuGameButtonY, menuGameButtonWidth = 160, menuGameButtonHeight = 60;
+	private float resumeGameButtonX, resumeGameButtonY, resumeGameButtonWidth = 160, resumeGameButtonHeight = 60;
 
 	// pause screen and stuffs
 	private boolean paused;
 	private Stage pStage;
-	
-	// background UI 
-    private Texture backgroundTexture;
-    private Sprite backgroundSprite;
-    
 
-    public PlayScreen(SimulationLifeCycleManager game) {
-        super(game);
-        setBgColour(Color.SKY);
-        initialiseUI();
-        
-        backgroundTexture = new Texture(Gdx.files.internal("forest.jpg"));
-        backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	// background UI
+	private Texture backgroundTexture;
+	private Sprite backgroundSprite;
 
-    }
+	public PlayScreen(SimulationLifeCycleManager game) {
+		super(game);
+		setBgColour(Color.SKY);
+		initialiseUI();
 
-    @Override
-    public void initialiseUI() {
-    	scoreLabel = createText("Player Score Counter: ", 50,580);
-    	healthLabel = createText("Player Health: ", 500,580);
-    
-    }
+		backgroundTexture = new Texture(Gdx.files.internal("forest.jpg"));
+		backgroundSprite = new Sprite(backgroundTexture);
+		backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-    @Override
-    public void show() {
-        super.show();
-        startAudio("Gameplay", 1.0f);
-        
-        AI aEntity = new AI();
-        pEntity = new PlayerGame();
-        monsterEntity = new Monster(); // Monster entity that follows player
-        
-        Bin glassbinEntity = new Bin("glassbin.png",150, 10, RecyclableType.GLASS); // trashbin2
-        Bin paperbinEntity = new Bin("paperbin.png",300, 10, RecyclableType.PAPER); // trashbin2
-        Bin canbinEntity = new Bin("canbin.png",450, 10, RecyclableType.METAL); // trashbin2
-        Bin plasticbinEntity = new Bin("plasticbin.png",600,10,RecyclableType.PLASTIC);
+		// Initialize button positions
+		menuGameButtonX = (Gdx.graphics.getWidth() - (Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20))
+				/ 2 + resumeGameButtonWidth + 20;
+		menuGameButtonY = Gdx.graphics.getHeight() / 2 - menuGameButtonHeight / 2;
+		resumeGameButtonX = (Gdx.graphics.getWidth() - Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20)
+				/ 2;
+		resumeGameButtonY = Gdx.graphics.getHeight() / 2 - resumeGameButtonHeight / 2;
 
-        
-        //Check for existing entity before adding
-        if (game.getEntityManager().checkClass(Player.class) == null) {
-        game.getEntityManager().addEntity(pEntity);
-        }
-        if (game.getEntityManager().checkClass(AI.class) == null) {
-        game.getEntityManager().addEntity(aEntity);
-        }
-        
-        //Add bin entities
-        game.getEntityManager().addEntity(monsterEntity);
-        game.getEntityManager().addEntity(glassbinEntity);
-        game.getEntityManager().addEntity(plasticbinEntity);
-        game.getEntityManager().addEntity(paperbinEntity);
-        game.getEntityManager().addEntity(canbinEntity);
+	}
 
-        //Set collision range
-        game.getEntityManager().getCollisionManager().setCollisionRange(24);
-        
-    }
+	@Override
+	public void initialiseUI() {
+		scoreLabel = createText("Player Score Counter: ", 50, 580);
+		healthLabel = createText("Player Health: ", 500, 580);
 
-    @Override
-    public void render(float delta) {
-    	if (paused)
-    	{ // DONT TOUCH - PAUSE STUFF
-    	    pStage.act(delta);
-    	    pStage.draw();
-    	    
-    	    Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	}
 
-            game.getBatch().begin();
-            backgroundSprite.draw(game.getBatch()); // Draw the pause background
-            game.getBatch().end();
+	@Override
+	public void show() {
+		super.show();
+		startAudio("Gameplay", 1.0f);
 
-            pStage.act(delta);
-            pStage.draw();
-    	}
-    	else {
-    		Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
-    		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		AI aEntity = new AI();
+		pEntity = new PlayerGame();
+		monsterEntity = new Monster(); // Monster entity that follows player
 
-            // Draw the background
-            game.getBatch().begin();
-            backgroundSprite.draw(game.getBatch());
-            game.getBatch().end();
+		Bin glassbinEntity = new Bin("glassbin.png", 150, 10, RecyclableType.GLASS); // trashbin2
+		Bin paperbinEntity = new Bin("paperbin.png", 300, 10, RecyclableType.PAPER); // trashbin2
+		Bin canbinEntity = new Bin("canbin.png", 450, 10, RecyclableType.METAL); // trashbin2
+		Bin plasticbinEntity = new Bin("plasticbin.png", 600, 10, RecyclableType.PLASTIC);
+
+		// Check for existing entity before adding
+		if (game.getEntityManager().checkClass(Player.class) == null) {
+			game.getEntityManager().addEntity(pEntity);
+		}
+		if (game.getEntityManager().checkClass(AI.class) == null) {
+			game.getEntityManager().addEntity(aEntity);
+		}
+
+		// Add bin entities
+		game.getEntityManager().addEntity(monsterEntity);
+		game.getEntityManager().addEntity(glassbinEntity);
+		game.getEntityManager().addEntity(plasticbinEntity);
+		game.getEntityManager().addEntity(paperbinEntity);
+		game.getEntityManager().addEntity(canbinEntity);
+
+		// Set collision range
+		game.getEntityManager().getCollisionManager().setCollisionRange(24);
+
+	}
+
+	@Override
+	public void render(float delta) {
+		if (paused) { // DONT TOUCH - PAUSE STUFF
+			pStage.act(delta);
+			pStage.draw();
+
+			Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			game.getBatch().begin();
+			backgroundSprite.draw(game.getBatch()); // Draw the pause background
+			game.getBatch().end();
+
+			pStage.act(delta);
+			pStage.draw();
+
+			handleMouseInput();
+
+		} else {
+			Gdx.gl.glClearColor(getBgColour().r, getBgColour().g, getBgColour().b, getBgColour().a);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			// Draw the background
+			game.getBatch().begin();
+			backgroundSprite.draw(game.getBatch());
+			game.getBatch().end();
 
 			super.stage.act(delta);
-            super.stage.draw();
-            
-            moveEntities();
+			super.stage.draw();
 
-            game.getBatch().begin();
-            handleInput();
-            drawEntities();
-            
-            game.getBatch().end();
-            
-           //To generate trash entities randomly at intervals
-            ArrayList<int[]> generatedCoordinates = Recyclables.generateCoordinates();
-            timeSinceLastGeneration += delta;
-            if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
-                timeSinceLastGeneration = 0; // Reset the timer
+			moveEntities();
 
-                int[] coord = generatedCoordinates.get(nextTrashIndex);
-                String[] thrashImages = {"plastic.png", "can.png", "glass.png", "paper.png"};
-            	RecyclableType type = RecyclableType.PLASTIC;
-                int index = nextTrashIndex % thrashImages.length; // Calculate index for type, % to prevent index error
-                switch (thrashImages[index]) {
-                case "plastic.png":
-                    type = RecyclableType.PLASTIC;
-                    break;
-                case "can.png":
-                    type = RecyclableType.METAL;
-                    break;
-                case "glass.png":
-                    type = RecyclableType.GLASS;
-                    break;
-                case "paper.png":
-                    type = RecyclableType.PAPER;
-                    break;
-                default:
-                    break;
-            }
+			game.getBatch().begin();
+			handleInput();
+			drawEntities();
 
-                Recyclables thrashEntity = new Recyclables(thrashImages[index], coord[0], coord[1],type);
+			game.getBatch().end();
 
-                game.getEntityManager().addEntity(thrashEntity);
+			// To generate trash entities randomly at intervals
+			ArrayList<int[]> generatedCoordinates = Recyclables.generateCoordinates();
+			timeSinceLastGeneration += delta;
+			if (timeSinceLastGeneration >= generationInterval && nextTrashIndex < generatedCoordinates.size()) {
+				timeSinceLastGeneration = 0; // Reset the timer
 
-                nextTrashIndex++; // Prepare for the next entity
-            }
-            
-            
-            updatePlayerScore();
-            checkGameConditions();
-            
-    	}
-    	
-    	if(game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
+				int[] coord = generatedCoordinates.get(nextTrashIndex);
+				String[] thrashImages = { "plastic.png", "can.png", "glass.png", "paper.png" };
+				RecyclableType type = RecyclableType.PLASTIC;
+				int index = nextTrashIndex % thrashImages.length; // Calculate index for type, % to prevent index error
+				switch (thrashImages[index]) {
+				case "plastic.png":
+					type = RecyclableType.PLASTIC;
+					break;
+				case "can.png":
+					type = RecyclableType.METAL;
+					break;
+				case "glass.png":
+					type = RecyclableType.GLASS;
+					break;
+				case "paper.png":
+					type = RecyclableType.PAPER;
+					break;
+				default:
+					break;
+				}
+
+				Recyclables thrashEntity = new Recyclables(thrashImages[index], coord[0], coord[1], type);
+
+				game.getEntityManager().addEntity(thrashEntity);
+
+				nextTrashIndex++; // Prepare for the next entity
+			}
+
+			updatePlayerScore();
+			checkGameConditions();
+
+		}
+
+		if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
 			paused = true;
 			setupPauseMenu();
 		}
-    }
-    
-    // Pause stuff, maybe need to link to the methods that is already inside BaseScreen, 
-    // see how to implement BaseScreen methods to do all these
-    private void setupPauseMenu() {
-        pStage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(pStage);
+	}
 
-        Texture resumeGameTexture = new Texture(Gdx.files.internal("backbutton.png"));
-        Texture menuTexture = new Texture(Gdx.files.internal("menuButton.png"));
-        
-        Drawable menuDrawable = new TextureRegionDrawable(new TextureRegion(menuTexture));
-    	Drawable menuHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menubuttonhover.png"))));
-    	Drawable resumeGameDrawable = new TextureRegionDrawable(new TextureRegion(resumeGameTexture));
-    	Drawable resumeGameHoverDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backbuttonhover.png"))));
-    	
-    	TextButton menuButton = new TextButton("", new TextButton.TextButtonStyle(menuDrawable, menuDrawable, menuDrawable, game.getFont()));
-    	TextButton resumeGameButton = new TextButton("", new TextButton.TextButtonStyle(resumeGameDrawable, resumeGameDrawable, resumeGameDrawable, game.getFont()));
-    	
-    	menuButton.setSize( 160, 60);
-    	resumeGameButton.setSize( 160, 60);
-    		
-    	menuButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	// Logic to go to Main Menu
-                game.getAudioManager().getMusic("Gameplay").stop();
-                game.getEntityManager().disposeEntities();
-                game.getSceneManager().removeScreen(PlayScreen.class);
-                game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
-            }
-        });
-    	
-    	resumeGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	paused = false;
-            }
-        });
-    	
-    	menuButton.getStyle().over = menuHoverDrawable;
-    	resumeGameButton.getStyle().over = resumeGameHoverDrawable;        
+	private void handleMouseInput() {
+		float mouseX = Gdx.input.getX();
+		float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-        float spaceBetweenButtons = 20; // 20 pixels space between buttons
-        float buttonWidth = Math.max(resumeGameButton.getWidth(), menuButton.getWidth());
-        float totalWidth = buttonWidth * 2 + spaceBetweenButtons;
-        float startX = (Gdx.graphics.getWidth() - totalWidth) / 2;
-        resumeGameButton.setPosition(startX, Gdx.graphics.getHeight() / 2 - resumeGameButton.getHeight() / 2);
-        menuButton.setPosition(startX + resumeGameButton.getWidth() + spaceBetweenButtons, Gdx.graphics.getHeight() / 2 - menuButton.getHeight() / 2);
+		if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
+			if (mouseX >= menuGameButtonX && mouseX <= menuGameButtonX + menuGameButtonWidth
+					&& mouseY >= menuGameButtonY && mouseY <= menuGameButtonY + menuGameButtonHeight) {
 
-        pStage.addActor(resumeGameButton);
-        pStage.addActor(menuButton);
-    }
+				// Logic to go to Main Menu
+				game.getAudioManager().getMusic("Gameplay").stop();
+				game.getEntityManager().disposeEntities();
+				game.getSceneManager().removeScreen(PlayScreen.class);
+				game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
 
-    private void updatePlayerScore()
-    {
-    	int scoreCounter = pEntity.getScoreCounter();
-    	int healthCounter = pEntity.getPlayerHealth();
-    	scoreLabel.setText("Player Score: " + scoreCounter);
-    	healthLabel.setText("Player Health: " + healthCounter);
-    }
-    private void handleInput() {
-    	if(game.getInputOutputManager().getInputMouse().mousePressed()){  // check if mouse pressed
-    		
-            if(game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
-                game.getInputOutputManager().getInputMouse().setInputReceived(true);
-                game.getInputOutputManager().getOutput().onPressLMB(Buttons.LEFT, game.getInputOutputManager().getInputMouse().getInputReceived());
-            }
+			} else if (mouseX >= resumeGameButtonX && mouseX <= resumeGameButtonX + resumeGameButtonWidth
+					&& mouseY >= resumeGameButtonY && mouseY <= resumeGameButtonY + resumeGameButtonHeight) {
+				paused = false;
+			}
+		}
+	}
 
-            if(game.getInputOutputManager().getInputMouse().ifRMBPressed()) {
-                game.getInputOutputManager().getInputMouse().setInputReceived(true);
-                game.getInputOutputManager().getOutput().onPressRMB(Buttons.RIGHT, game.getInputOutputManager().getInputMouse().getInputReceived());
-            }
-            
-        }
+	// Pause stuff, maybe need to link to the methods that is already inside
+	// BaseScreen,
+	// see how to implement BaseScreen methods to do all these
+	private void setupPauseMenu() {
+		pStage = new Stage(new ScreenViewport());
+		Gdx.input.setInputProcessor(pStage);
 
-    }
-    
-    private float clampValue(float value, float min, float max) {
-        return Math.max(min, Math.min(max, value));
-    }
+		Texture resumeGameTexture = new Texture(Gdx.files.internal("backbutton.png"));
+		Texture menuTexture = new Texture(Gdx.files.internal("menuButton.png"));
 
-    private void drawEntities()
-    {
-    	for(int i = 0 ; i < game.getEntityManager().getEntities().size(); i++)
-    	{
-    		for(Entity entity: game.getEntityManager().getEntities())
-    		{
-    			entity.draw(game.getBatch());
-    		}
+		Drawable menuDrawable = new TextureRegionDrawable(new TextureRegion(menuTexture));
+		Drawable menuHoverDrawable = new TextureRegionDrawable(
+				new TextureRegion(new Texture(Gdx.files.internal("menubuttonhover.png"))));
+		Drawable resumeGameDrawable = new TextureRegionDrawable(new TextureRegion(resumeGameTexture));
+		Drawable resumeGameHoverDrawable = new TextureRegionDrawable(
+				new TextureRegion(new Texture(Gdx.files.internal("backbuttonhover.png"))));
 
-    	}
-    }
-    
-    private void moveEntities() {
-    	//loop through all entities
-        for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
-        	 if (pEntity != null) {
-        	        // Assuming pEntity.posX and pEntity.posY are your entity's current positions
-        	        // And assuming pEntity.width and pEntity.height are the entity's dimensions
-        	        // Screen width and height can be retrieved via Gdx.graphics.getWidth() and Gdx.graphics.getHeight()       
-        	        pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
-        	        pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
-        	    }
-        	
-            if (game.getEntityManager().getEntities().get(i) instanceof Player && game.getInputOutputManager().getInputKeyboard().keyPressed()==true) { 
-                if (game.getInputOutputManager().getInputKeyboard().ifDPressed()==true) { 
-                    game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.RIGHT);
-                } else if (game.getInputOutputManager().getInputKeyboard().ifAPressed()==true) { 
-                    game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i), Keys.LEFT);                    
-                } 
-                else if (game.getInputOutputManager().getInputKeyboard().ifWPressed()==true) { 
-                    game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
-                }
-                else if (game.getInputOutputManager().getInputKeyboard().ifSPressed()==true) { 
-                    game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
-                }
-            } 
-        }
-        
-        // Make monster entity follow player
-        monsterEntity.chasePlayer(pEntity, game);
-        
-        if (pEntity != null) {
-            pEntity.updateAttachedEntities();
-        }
-        
-        // Check for throwing
-        if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
-            if(pEntity.hasAttachedEntities()) {
-            	 // Get mouse position in screen coordinates
-                Vector3 mousePos = new Vector3(game.getInputOutputManager().getInputMouse().getposXPressed(), game.getInputOutputManager().getInputMouse().getposYPressed(), 0);
-                // Inverting the Y-coordinate if necessary
-                float mouseYInverted = Gdx.graphics.getHeight() - mousePos.y;
-                // Calculate the direction vector from the player to the cursor
-                Vector2 direction = new Vector2(mousePos.x - pEntity.getPosX(), mouseYInverted - pEntity.getPosY()).nor();
-                pEntity.throwAttachedEntity(direction);
+		TextButton menuButton = new TextButton("",
+				new TextButton.TextButtonStyle(menuDrawable, menuDrawable, menuDrawable, game.getFont()));
+		TextButton resumeGameButton = new TextButton("", new TextButton.TextButtonStyle(resumeGameDrawable,
+				resumeGameDrawable, resumeGameDrawable, game.getFont()));
 
-            }
-        }
-    }
+		menuButton.setSize(160, 60);
+		resumeGameButton.setSize(160, 60);
 
-    private void checkGameConditions() {
-        game.getEntityManager().getCollisionManager().checkForCollision(game);
-        checkWinCondition();
-    }
+//		menuButton.addListener(new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				// Logic to go to Main Menu
+//				game.getAudioManager().getMusic("Gameplay").stop();
+//				game.getEntityManager().disposeEntities();
+//				game.getSceneManager().removeScreen(PlayScreen.class);
+//				game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
+//			}
+//		});
+//
+//		resumeGameButton.addListener(new ClickListener() {
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				paused = false;
+//			}
+//		});
 
+		menuButton.getStyle().over = menuHoverDrawable;
+		resumeGameButton.getStyle().over = resumeGameHoverDrawable;
 
-    
-    private void checkWinCondition() {
-    	if (pEntity.getScoreCounter() == 4)
-    	{
-            game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
-    	}
-    	if (pEntity.getPlayerHealth() == 0)
-    	{
-            game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+		float spaceBetweenButtons = 20; // 20 pixels space between buttons
+		float buttonWidth = Math.max(resumeGameButton.getWidth(), menuButton.getWidth());
+		float totalWidth = buttonWidth * 2 + spaceBetweenButtons;
+		float startX = (Gdx.graphics.getWidth() - totalWidth) / 2;
+		resumeGameButton.setPosition(startX, Gdx.graphics.getHeight() / 2 - resumeGameButton.getHeight() / 2);
+		menuButton.setPosition(startX + resumeGameButton.getWidth() + spaceBetweenButtons,
+				Gdx.graphics.getHeight() / 2 - menuButton.getHeight() / 2);
 
-    	}
-    	
-        boolean foundRecyclables = false;
-        
-        // Loop through the list to check for any instance of Recyclables
-        for (Entity entity : game.getEntityManager().getEntities()) {
-            if (entity instanceof Recyclables) {
-                foundRecyclables = true;
-                break; // exit loop because found 1 Recyclables instance
-            }
-        }
-        
-        if (!foundRecyclables && pEntity.getScoreCounter() < 4) {
-            game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+		pStage.addActor(resumeGameButton);
+		pStage.addActor(menuButton);
+	}
 
-        }
-    }
+	private void updatePlayerScore() {
+		int scoreCounter = pEntity.getScoreCounter();
+		int healthCounter = pEntity.getPlayerHealth();
+		scoreLabel.setText("Player Score: " + scoreCounter);
+		healthLabel.setText("Player Health: " + healthCounter);
+	}
 
-    @Override
-    public void hide() {
-        game.getSceneManager().removeScreen(PlayScreen.class);
-    }
+	private void handleInput() {
+		if (game.getInputOutputManager().getInputMouse().mousePressed()) { // check if mouse pressed
 
-    }
+			if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
+				game.getInputOutputManager().getInputMouse().setInputReceived(true);
+				game.getInputOutputManager().getOutput().onPressLMB(Buttons.LEFT,
+						game.getInputOutputManager().getInputMouse().getInputReceived());
+			}
 
+			if (game.getInputOutputManager().getInputMouse().ifRMBPressed()) {
+				game.getInputOutputManager().getInputMouse().setInputReceived(true);
+				game.getInputOutputManager().getOutput().onPressRMB(Buttons.RIGHT,
+						game.getInputOutputManager().getInputMouse().getInputReceived());
+			}
+
+		}
+
+	}
+
+	private float clampValue(float value, float min, float max) {
+		return Math.max(min, Math.min(max, value));
+	}
+
+	private void drawEntities() {
+		for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
+			for (Entity entity : game.getEntityManager().getEntities()) {
+				entity.draw(game.getBatch());
+			}
+
+		}
+	}
+
+	private void moveEntities() {
+		// loop through all entities
+		for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
+			if (pEntity != null) {
+				// Assuming pEntity.posX and pEntity.posY are your entity's current positions
+				// And assuming pEntity.width and pEntity.height are the entity's dimensions
+				// Screen width and height can be retrieved via Gdx.graphics.getWidth() and
+				// Gdx.graphics.getHeight()
+				pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
+				pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
+			}
+
+			if (game.getEntityManager().getEntities().get(i) instanceof Player
+					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
+				if (game.getInputOutputManager().getInputKeyboard().ifDPressed() == true) {
+					game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i),
+							Keys.RIGHT);
+				} else if (game.getInputOutputManager().getInputKeyboard().ifAPressed() == true) {
+					game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i),
+							Keys.LEFT);
+				} else if (game.getInputOutputManager().getInputKeyboard().ifWPressed() == true) {
+					game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
+				} else if (game.getInputOutputManager().getInputKeyboard().ifSPressed() == true) {
+					game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
+				}
+			}
+		}
+
+		// Make monster entity follow player
+		monsterEntity.chasePlayer(pEntity, game);
+
+		if (pEntity != null) {
+			pEntity.updateAttachedEntities();
+		}
+
+		// Check for throwing
+		if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
+			if (pEntity.hasAttachedEntities()) {
+				// Get mouse position in screen coordinates
+				Vector3 mousePos = new Vector3(game.getInputOutputManager().getInputMouse().getposXPressed(),
+						game.getInputOutputManager().getInputMouse().getposYPressed(), 0);
+				// Inverting the Y-coordinate if necessary
+				float mouseYInverted = Gdx.graphics.getHeight() - mousePos.y;
+				// Calculate the direction vector from the player to the cursor
+				Vector2 direction = new Vector2(mousePos.x - pEntity.getPosX(), mouseYInverted - pEntity.getPosY())
+						.nor();
+				pEntity.throwAttachedEntity(direction);
+
+			}
+		}
+	}
+
+	private void checkGameConditions() {
+		game.getEntityManager().getCollisionManager().checkForCollision(game);
+		checkWinCondition();
+	}
+
+	private void checkWinCondition() {
+		if (pEntity.getScoreCounter() == 4) {
+			game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
+		}
+		if (pEntity.getPlayerHealth() == 0) {
+			game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+
+		}
+
+		boolean foundRecyclables = false;
+
+		// Loop through the list to check for any instance of Recyclables
+		for (Entity entity : game.getEntityManager().getEntities()) {
+			if (entity instanceof Recyclables) {
+				foundRecyclables = true;
+				break; // exit loop because found 1 Recyclables instance
+			}
+		}
+
+		if (!foundRecyclables && pEntity.getScoreCounter() < 4) {
+			game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+
+		}
+	}
+
+	@Override
+	public void hide() {
+		game.getSceneManager().removeScreen(PlayScreen.class);
+	}
+
+}
