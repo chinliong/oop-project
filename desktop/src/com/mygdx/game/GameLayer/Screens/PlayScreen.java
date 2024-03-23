@@ -319,25 +319,7 @@ public class PlayScreen extends BaseScreen {
             }
             
         }
-    	// Function for dragging
-    	// if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-    	     //   if (draggedEntity == null) {
-    	            // Get mouse position
-    	      //      float mouseX = Gdx.input.getX();
-    	      //      float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Invert Y-axis
 
-    	            // Check if any thrash entity is clicked
-    	        //    for (AI entity : game.getEntityManager().getEntitiesByClass(AI.class)) {
-    	         //       if (mouseX >= entity.getPosX() && mouseX <= entity.getPosX() + entity.getWidth()
-    	         //           && mouseY >= entity.getPosY() && mouseY <= entity.getPosY() + entity.getHeight()) {
-    	         //           draggedEntity = entity; // Mark this entity as being dragged
-    	         //           break;
-    	         //       }
-    	         //   }
-    	      //  }
-    	  //  } else {
-    	   //     draggedEntity = null; // Release the entity when the mouse button is released
-    	   // }
     }
     
     private float clampValue(float value, float min, float max) {
