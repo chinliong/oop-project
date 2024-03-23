@@ -23,6 +23,10 @@ public class WinLoseScreen extends BaseScreen{
     private boolean win;
     private Sprite backgroundSprite;
     private Sprite outcomeSprite;
+    
+	private float menuGameButtonX, menuGameButtonY, menuGameButtonWidth = 160, menuGameButtonHeight = 60;
+	private float exitGameButtonX, exitGameButtonY, exitGameButtonWidth = 160, exitGameButtonHeight = 60;
+
 
     public WinLoseScreen(SimulationLifeCycleManager game, boolean win) {
         super(game);
@@ -32,6 +36,12 @@ public class WinLoseScreen extends BaseScreen{
         Texture backgroundTexture = new Texture(Gdx.files.internal("forest.jpg"));
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        
+		// Initialize button positions
+        menuGameButtonX = (Gdx.graphics.getWidth() - menuGameButtonWidth) / 2 - 80;
+        menuGameButtonY = (Gdx.graphics.getHeight() + menuGameButtonHeight) / 2 - 150;
+		exitGameButtonX = (Gdx.graphics.getWidth() - exitGameButtonWidth) / 2 + 80;
+		exitGameButtonY = (Gdx.graphics.getHeight() + exitGameButtonHeight) / 2 - 150; 
     }
 
     @Override
@@ -54,8 +64,25 @@ public class WinLoseScreen extends BaseScreen{
         
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        
+		handleMouseInput();
     	
     }
+    
+	private void handleMouseInput() {
+		float mouseX = Gdx.input.getX();
+		float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+		if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
+			if (mouseX >= menuGameButtonX && mouseX <= menuGameButtonX + menuGameButtonWidth
+					&& mouseY >= menuGameButtonY && mouseY <= menuGameButtonY + menuGameButtonHeight) {
+				game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
+			} else if (mouseX >= exitGameButtonX && mouseX <= exitGameButtonX + exitGameButtonWidth
+					&& mouseY >= exitGameButtonY && mouseY <= exitGameButtonY + exitGameButtonHeight) {
+				Gdx.app.exit();
+			}
+		}
+	}
     
     public void initialiseUI() {
     	
@@ -86,19 +113,19 @@ public class WinLoseScreen extends BaseScreen{
     	menuButton.setPosition((Gdx.graphics.getWidth() - menuButton.getWidth()) / 2 - 80, (Gdx.graphics.getHeight() + menuButton.getHeight()) / 2 - 150);
     	exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2 + 80, (Gdx.graphics.getHeight() + exitGameButton.getHeight()) / 2 - 150);
     	
-    	menuButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
-            }
-        });
-    	
-    	exitGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-            	Gdx.app.exit();
-            }
-        });
+//    	menuButton.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//            	game.getSceneManager().setScreen(game.getSceneManager().getScreen(MainScreen.class));
+//            }
+//        });
+//    	
+//    	exitGameButton.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//            	Gdx.app.exit();
+//            }
+//        });
     	
     	menuButton.getStyle().over = menuHoverDrawable;
     	exitGameButton.getStyle().over = exitGameHoverDrawable;
