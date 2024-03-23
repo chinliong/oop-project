@@ -197,6 +197,7 @@ public class PlayScreen extends BaseScreen {
 
 		if (game.getInputOutputManager().getInputKeyboard().ifEscPressed()) {
 			paused = true;
+			game.getAudioManager().getMusic("Gameplay").stop();
 			setupPauseMenu();
 		}
 	}
@@ -218,6 +219,7 @@ public class PlayScreen extends BaseScreen {
 			} else if (mouseX >= resumeGameButtonX && mouseX <= resumeGameButtonX + resumeGameButtonWidth
 					&& mouseY >= resumeGameButtonY && mouseY <= resumeGameButtonY + resumeGameButtonHeight) {
 				paused = false;
+				game.getAudioManager().getMusic("Gameplay").play();
 			}
 		}
 	}
