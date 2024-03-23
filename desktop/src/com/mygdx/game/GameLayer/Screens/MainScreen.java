@@ -101,20 +101,6 @@ public class MainScreen extends BaseScreen {
 		exitGameButton.setPosition((Gdx.graphics.getWidth() - exitGameButton.getWidth()) / 2,
 				(Gdx.graphics.getHeight() + exitGameButton.getHeight()) / 2 - 50);
 
-//		newGameButton.addListener(new ClickListener() {
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-//				game.getAudioManager().getMusic("MainMenu").stop();
-//			}
-//		});
-
-//		exitGameButton.addListener(new ClickListener() {
-//			@Override
-//			public void clicked(InputEvent event, float x, float y) {
-//				Gdx.app.exit();
-//			}
-//		});
 
 		newGameButton.getStyle().over = newGameHoverDrawable;
 		exitGameButton.getStyle().over = exitGameHoverDrawable;
