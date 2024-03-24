@@ -80,7 +80,7 @@ public class PlayScreen extends BaseScreen {
 		super.show();
 		startAudio("Gameplay", 1.0f);
 
-		AI aEntity = new AI();
+		//AI aEntity = new AI();
 		pEntity = new PlayerGame();
 		monsterEntity = new Monster(); // Monster entity that follows player
 
@@ -93,9 +93,9 @@ public class PlayScreen extends BaseScreen {
 		if (game.getEntityManager().checkClass(Player.class) == null) {
 			game.getEntityManager().addEntity(pEntity);
 		}
-		if (game.getEntityManager().checkClass(AI.class) == null) {
-			game.getEntityManager().addEntity(aEntity);
-		}
+//		if (game.getEntityManager().checkClass(AI.class) == null) {
+//			game.getEntityManager().addEntity(aEntity);
+//		}
 
 		// Add bin entities
 		game.getEntityManager().addEntity(monsterEntity);
