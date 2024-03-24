@@ -44,11 +44,9 @@ public class PlayerGame extends Player{
     }
     
     public List<CollidableEntity> getPickedUpEntities() {
-        return new ArrayList<>(pickedupEntities); // Returns a copy to protect the original list
+        return pickedupEntities; // Returns a copy to protect the original list
     }
-    public List<CollidableEntity> getPickedupEntityList() {
-        return this.pickedupEntities; // Returns a copy to protect the original list
-    }
+
 
     // Method to update the positions of attached entities
     public void updateAttachedEntities() {
