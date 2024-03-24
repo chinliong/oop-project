@@ -36,16 +36,6 @@ public abstract class Entity{
         this.id = idCounter++; // Assign an id to this entity, idCounter++ = track IDs count
     }    
     
-    public Rectangle getBounds() {
-        // Rectangle to represent the collision space
-        return new Rectangle(posX, posY, width, height);
-    }
-	public void draw(ShapeRenderer shape)
-{
-			shape.rect(posX, posY, width, height);
-		}
-
-
     public void draw(SpriteBatch batch) {
         // Draw the texture at its position with width and height
         batch.draw(entityImage, posX, posY, width, height);

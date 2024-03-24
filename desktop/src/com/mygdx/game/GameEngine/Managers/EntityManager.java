@@ -2,6 +2,8 @@ package com.mygdx.game.GameEngine.Managers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Entities.*;
 
 public class EntityManager {
@@ -9,15 +11,25 @@ public class EntityManager {
     private ArrayList<Entity> entityList;
     private AIControlManager AIControlManager;
     private CollisionManager collisionManager;
-
-    public EntityManager() {
+    private PlayerManager playerManager;
+    
+    public EntityManager(SimulationLifeCycleManager game) {
         this.entityList = new ArrayList<>();
         AIControlManager = new AIControlManager();
         collisionManager = new CollisionManager();
+        this.playerManager = game.getPlayerManager();
     }
     // creates new entity
     public void addEntity(Entity entity) {
         entityList.add(entity);
+        if (entity instanceof Player)
+        {
+        	playerManager.addPlayer((Player) entity);
+        }
+        if (entity instanceof AI)
+        {
+        	AIControlManager.addAI((AI) entity);
+        }
         if (entity instanceof CollidableEntity)
         {
         	collisionManager.addCollidableList((CollidableEntity)entity);
@@ -25,6 +37,14 @@ public class EntityManager {
     }
     public void removeEntity(Entity entity) {
         entityList.remove(entity);
+        if (entity instanceof Player)
+        {
+        	playerManager.removePlayer((Player) entity);
+        }
+        if (entity instanceof AI)
+        {
+        	AIControlManager.removeAI((AI) entity);
+        }
         if (entity instanceof CollidableEntity)
         {
         	collisionManager.removeCollidable((CollidableEntity)entity);

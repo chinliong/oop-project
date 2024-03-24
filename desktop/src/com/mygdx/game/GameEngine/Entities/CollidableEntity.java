@@ -17,8 +17,13 @@ public class CollidableEntity extends Entity implements iCollision {
   {
 		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
   }
-
-@Override
+  
+  public Rectangle getBounds() {
+      // Rectangle to represent the collision space
+      return new Rectangle(posX, posY, width, height);
+  }
+  
+  	@Override
 	public boolean hasCollidedRect(CollidableEntity cEntity) {
 		Rectangle thisBound = this.getBounds();
 		Rectangle otherBound = cEntity.getBounds();

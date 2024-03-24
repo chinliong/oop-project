@@ -58,13 +58,13 @@ public class PlayScreen extends BaseScreen {
 		backgroundSprite = new Sprite(backgroundTexture);
 		backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		// Initialize button positions
-		menuGameButtonX = (Gdx.graphics.getWidth() - (Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20))
-				/ 2 + resumeGameButtonWidth + 20;
-		menuGameButtonY = Gdx.graphics.getHeight() / 2 - menuGameButtonHeight / 2;
-		resumeGameButtonX = (Gdx.graphics.getWidth() - Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20)
-				/ 2;
-		resumeGameButtonY = Gdx.graphics.getHeight() / 2 - resumeGameButtonHeight / 2;
+//		// Initialize button positions
+//		menuGameButtonX = (Gdx.graphics.getWidth() - (Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20))
+//				/ 2 + resumeGameButtonWidth + 20;
+//		menuGameButtonY = Gdx.graphics.getHeight() / 2 - menuGameButtonHeight / 2;
+//		resumeGameButtonX = (Gdx.graphics.getWidth() - Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20)
+//				/ 2;
+//		resumeGameButtonY = Gdx.graphics.getHeight() / 2 - resumeGameButtonHeight / 2;
 
 	}
 
@@ -80,7 +80,6 @@ public class PlayScreen extends BaseScreen {
 		super.show();
 		startAudio("Gameplay", 1.0f);
 
-		//AI aEntity = new AI();
 		pEntity = new PlayerGame();
 		monsterEntity = new Monster(); // Monster entity that follows player
 
@@ -105,7 +104,7 @@ public class PlayScreen extends BaseScreen {
 		game.getEntityManager().addEntity(canbinEntity);
 
 		// Set collision range
-		game.getEntityManager().getCollisionManager().setCollisionRange(24);
+		game.getEntityManager().getCollisionManager().setCollisionRange(60);
 
 	}
 
@@ -240,7 +239,6 @@ public class PlayScreen extends BaseScreen {
 		menuButton.setSize(160, 60);
 		resumeGameButton.setSize(160, 60);
 
-
 		menuButton.getStyle().over = menuHoverDrawable;
 		resumeGameButton.getStyle().over = resumeGameHoverDrawable;
 
@@ -254,6 +252,13 @@ public class PlayScreen extends BaseScreen {
 
 		pStage.addActor(resumeGameButton);
 		pStage.addActor(menuButton);
+//		// Initialize button positions
+		menuGameButtonX = (Gdx.graphics.getWidth() - (Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20))
+				/ 2 + resumeGameButtonWidth + 20;
+		menuGameButtonY = Gdx.graphics.getHeight() / 2 - menuGameButtonHeight / 2;
+		resumeGameButtonX = (Gdx.graphics.getWidth() - Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20)
+				/ 2;
+		resumeGameButtonY = Gdx.graphics.getHeight() / 2 - resumeGameButtonHeight / 2;
 	}
 
 	private void updatePlayerScore() {
@@ -297,7 +302,34 @@ public class PlayScreen extends BaseScreen {
 
 	private void moveEntities() {
 		// loop through all entities
-		for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
+//		for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
+//			if (pEntity != null) {
+//				// Assuming pEntity.posX and pEntity.posY are your entity's current positions
+//				// And assuming pEntity.width and pEntity.height are the entity's dimensions
+//				// Screen width and height can be retrieved via Gdx.graphics.getWidth() and
+//				// Gdx.graphics.getHeight()
+//				pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
+//				pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
+//			}
+//			if (game.getPlayerManager().getPlayerList().get(i) instanceof Player
+//					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
+//				if (game.getInputOutputManager().getInputKeyboard().ifDPressed() == true
+//						|| game.getInputOutputManager().getInputKeyboard().ifAPressed() == true) {
+//					game.getPlayerManager().getPlayerControlManager()
+//							.walk((Player) game.getPlayerManager().getPlayerList().get(i));
+//				} else if (game.getInputOutputManager().getInputKeyboard().ifWPressed() == true
+//						|| game.getInputOutputManager().getInputKeyboard().ifSPressed() == true) {
+//					game.getPlayerManager().getPlayerControlManager()
+//							.jump((Player) game.getPlayerManager().getPlayerList().get(i));
+//				}
+//			}
+////			if (game.getEntityManager().getEntities().get(i) instanceof Player
+////					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
+////
+////			}
+//
+//		}
+		for (int i = 0; i < game.getPlayerManager().getPlayerList().size(); i++) {
 			if (pEntity != null) {
 				// Assuming pEntity.posX and pEntity.posY are your entity's current positions
 				// And assuming pEntity.width and pEntity.height are the entity's dimensions
@@ -306,21 +338,25 @@ public class PlayScreen extends BaseScreen {
 				pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
 				pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
 			}
-
-			if (game.getEntityManager().getEntities().get(i) instanceof Player
+			if (game.getPlayerManager().getPlayerList().get(i) instanceof Player
 					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
-				if (game.getInputOutputManager().getInputKeyboard().ifDPressed() == true) {
-					game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i),
-							Keys.RIGHT);
-				} else if (game.getInputOutputManager().getInputKeyboard().ifAPressed() == true) {
-					game.getPlayerControlManager().walk((Player) game.getEntityManager().getEntities().get(i),
-							Keys.LEFT);
-				} else if (game.getInputOutputManager().getInputKeyboard().ifWPressed() == true) {
-					game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), true);
-				} else if (game.getInputOutputManager().getInputKeyboard().ifSPressed() == true) {
-					game.getPlayerControlManager().jump((Player) game.getEntityManager().getEntities().get(i), false);
+				// move horizontal
+				if (game.getInputOutputManager().getInputKeyboard().ifDPressed() == true
+						|| game.getInputOutputManager().getInputKeyboard().ifAPressed() == true) {
+					game.getPlayerManager().getPlayerControlManager()
+							.walk((Player) game.getPlayerManager().getPlayerList().get(i));
+				} // move vertical 
+				else if (game.getInputOutputManager().getInputKeyboard().ifWPressed() == true
+						|| game.getInputOutputManager().getInputKeyboard().ifSPressed() == true) {
+					game.getPlayerManager().getPlayerControlManager()
+							.jump((Player) game.getPlayerManager().getPlayerList().get(i));
 				}
 			}
+//			if (game.getEntityManager().getEntities().get(i) instanceof Player
+//					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
+//
+//			}
+
 		}
 
 		// Make monster entity follow player
