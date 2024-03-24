@@ -13,7 +13,7 @@ public class ChasingPlayer implements IChase {
         if (distance > 0) {
             float nx = dx / distance;
             float ny = dy / distance;
-            float speed = 2; 
+            float speed = 1.4f; 
             float nextPosX = ai.getPosX() + nx * speed;
             float nextPosY = ai.getPosY() + ny * speed;
 

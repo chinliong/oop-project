@@ -3,7 +3,6 @@ package com.mygdx.game.GameEngine.Managers;
 import java.util.ArrayList;
 
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
-import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
 
 public class PlayerManager {

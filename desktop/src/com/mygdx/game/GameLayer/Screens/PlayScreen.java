@@ -3,7 +3,6 @@ package com.mygdx.game.GameLayer.Screens;
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.GameEngine.Entities.AI;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
@@ -27,7 +25,6 @@ import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameLayer.Entities.*;
 
 public class PlayScreen extends BaseScreen {
-	private AI draggedEntity = null;
 	private PlayerGame pEntity;
 	private Monster monsterEntity;
 	// Player Stats
@@ -58,14 +55,6 @@ public class PlayScreen extends BaseScreen {
 		backgroundSprite = new Sprite(backgroundTexture);
 		backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-//		// Initialize button positions
-//		menuGameButtonX = (Gdx.graphics.getWidth() - (Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20))
-//				/ 2 + resumeGameButtonWidth + 20;
-//		menuGameButtonY = Gdx.graphics.getHeight() / 2 - menuGameButtonHeight / 2;
-//		resumeGameButtonX = (Gdx.graphics.getWidth() - Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20)
-//				/ 2;
-//		resumeGameButtonY = Gdx.graphics.getHeight() / 2 - resumeGameButtonHeight / 2;
-
 	}
 
 	@Override
@@ -92,9 +81,6 @@ public class PlayScreen extends BaseScreen {
 		if (game.getEntityManager().checkClass(Player.class) == null) {
 			game.getEntityManager().addEntity(pEntity);
 		}
-//		if (game.getEntityManager().checkClass(AI.class) == null) {
-//			game.getEntityManager().addEntity(aEntity);
-//		}
 
 		// Add bin entities
 		game.getEntityManager().addEntity(monsterEntity);
@@ -252,7 +238,7 @@ public class PlayScreen extends BaseScreen {
 
 		pStage.addActor(resumeGameButton);
 		pStage.addActor(menuButton);
-//		// Initialize button positions
+		// Initialize button positions
 		menuGameButtonX = (Gdx.graphics.getWidth() - (Math.max(resumeGameButtonWidth, menuGameButtonWidth) * 2 + 20))
 				/ 2 + resumeGameButtonWidth + 20;
 		menuGameButtonY = Gdx.graphics.getHeight() / 2 - menuGameButtonHeight / 2;
@@ -301,34 +287,6 @@ public class PlayScreen extends BaseScreen {
 	}
 
 	private void moveEntities() {
-		// loop through all entities
-//		for (int i = 0; i < game.getEntityManager().getEntities().size(); i++) {
-//			if (pEntity != null) {
-//				// Assuming pEntity.posX and pEntity.posY are your entity's current positions
-//				// And assuming pEntity.width and pEntity.height are the entity's dimensions
-//				// Screen width and height can be retrieved via Gdx.graphics.getWidth() and
-//				// Gdx.graphics.getHeight()
-//				pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
-//				pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
-//			}
-//			if (game.getPlayerManager().getPlayerList().get(i) instanceof Player
-//					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
-//				if (game.getInputOutputManager().getInputKeyboard().ifDPressed() == true
-//						|| game.getInputOutputManager().getInputKeyboard().ifAPressed() == true) {
-//					game.getPlayerManager().getPlayerControlManager()
-//							.walk((Player) game.getPlayerManager().getPlayerList().get(i));
-//				} else if (game.getInputOutputManager().getInputKeyboard().ifWPressed() == true
-//						|| game.getInputOutputManager().getInputKeyboard().ifSPressed() == true) {
-//					game.getPlayerManager().getPlayerControlManager()
-//							.jump((Player) game.getPlayerManager().getPlayerList().get(i));
-//				}
-//			}
-////			if (game.getEntityManager().getEntities().get(i) instanceof Player
-////					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
-////
-////			}
-//
-//		}
 		for (int i = 0; i < game.getPlayerManager().getPlayerList().size(); i++) {
 			if (pEntity != null) {
 				// Assuming pEntity.posX and pEntity.posY are your entity's current positions
@@ -352,10 +310,6 @@ public class PlayScreen extends BaseScreen {
 							.jump((Player) game.getPlayerManager().getPlayerList().get(i));
 				}
 			}
-//			if (game.getEntityManager().getEntities().get(i) instanceof Player
-//					&& game.getInputOutputManager().getInputKeyboard().keyPressed() == true) {
-//
-//			}
 
 		}
 

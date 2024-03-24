@@ -1,7 +1,6 @@
 package com.mygdx.game.GameEngine.Managers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Entities.Player;
 
