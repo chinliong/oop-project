@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.GameEngine.Managers.AIControlManager;
+import com.mygdx.game.GameEngine.Managers.LevelManager;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameLayer.AIControl.*;
 // Game Layer imports
@@ -31,6 +32,7 @@ public class PlayScreen extends BaseScreen {
 	// Player Stats
 	private Label scoreLabel;
 	private Label healthLabel;
+	private Label levelLabel;
 
 	private int nextTrashIndex = 0; // Index of the next trash entity to generate
 	private final float generationInterval = 3; // Interval between generations, in seconds
@@ -350,13 +352,17 @@ public class PlayScreen extends BaseScreen {
 	}
 
 	private void checkWinCondition() {
-		if (pEntity.getScoreCounter() == 4) {
-			game.getSceneManager().transitionToScreen(WinLoseScreen.class, true);
-		}
-		if (pEntity.getPlayerHealth() == 0) {
-			game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
-
-		}
+		LevelManager levelManager = ((SimulationLifeCycleManager)game).getLevelManager();
+		if (pEntity.getScoreCounter() >= levelManager.getPointsToWin()) {
+			game.getEntityManager().disposeEntities();
+	        // Transition to the next level
+	        levelManager.nextLevel();
+	    } else if (pEntity.getPlayerHealth() == 0) {
+	        // Player loses the current level
+	        game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+	    }
+	    // Additional conditions as needed
+	
 
 		boolean foundRecyclables = false;
 

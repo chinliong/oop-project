@@ -18,6 +18,7 @@ public class SimulationLifeCycleManager extends Game {
     private AudioManager audioManager;
     private SimulationLifeCycleManager simulationLifeCycleManager;
     private PlayerManager playerManager;
+    private LevelManager levelManager;
 
     @Override
     public void create() {
@@ -27,6 +28,7 @@ public class SimulationLifeCycleManager extends Game {
 
         // Initialize all managers
         entityManager = new EntityManager(this); 
+        levelManager = new LevelManager(this);
         sceneManager = new SceneManager(this); 
         ioManager = new IOManager();
 //        playerControlManager = new PlayerControlManager(this); 
@@ -94,6 +96,10 @@ public class SimulationLifeCycleManager extends Game {
     
     public PlayerManager getPlayerManager(){
         return playerManager;
+    }
+    
+    public LevelManager getLevelManager() {
+        return levelManager;
     }
 
 }
