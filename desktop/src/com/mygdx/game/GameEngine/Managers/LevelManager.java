@@ -32,6 +32,10 @@ public class LevelManager {
     public int getCurrentLevel() {
         return currentLevel;
     }
+    
+    public void setCurrentLevel(int currentLevel) {
+    	this.currentLevel = currentLevel;
+    }
 
     // You might want to add more methods here depending on your game's needs
 }

@@ -32,8 +32,9 @@ public class PlayScreen extends BaseScreen {
 	// Player Stats
 	private Label scoreLabel;
 	private Label healthLabel;
-	private Label levelLabel;
-
+	private Label nextLevelLabel;
+	private Label currentLevelLabel;
+	private Label targetLabel;
 	private int nextTrashIndex = 0; // Index of the next trash entity to generate
 	private final float generationInterval = 3; // Interval between generations, in seconds
 	private float timeSinceLastGeneration = generationInterval; // Timer to track time since last generation
@@ -68,8 +69,10 @@ public class PlayScreen extends BaseScreen {
 	@Override
 	public void initialiseUI() {
 		scoreLabel = createText("Player Score Counter: ", 50, 580);
-		healthLabel = createText("Player Health: ", 500, 580);
-
+		healthLabel = createText("Player Health: ", 50, 550);
+		currentLevelLabel = createText("This is Level: ", 500, 580);
+		nextLevelLabel = createText("Points to next level: ",500,550);
+		targetLabel = createText("Dispose to go to the next level!", 50,500);
 	}
 
 	@Override
@@ -174,9 +177,9 @@ public class PlayScreen extends BaseScreen {
 
 				nextTrashIndex++; // Prepare for the next entity
 			}
+			checkGameConditions();
 
 			updatePlayerScore();
-			checkGameConditions();
 
 		}
 
@@ -261,6 +264,23 @@ public class PlayScreen extends BaseScreen {
 		int healthCounter = pEntity.getPlayerHealth();
 		scoreLabel.setText("Player Score: " + scoreCounter);
 		healthLabel.setText("Player Health: " + healthCounter);
+		nextLevelLabel.setText("Points to next level: " + (game.getLevelManager().getPointsToWin() - scoreCounter));
+		currentLevelLabel.setText("Current Level: " + (game.getLevelManager().getCurrentLevel()+1));
+		
+		if (game.getLevelManager().getCurrentLevel() == 0)
+		{
+			targetLabel.setText("Dispose 4 entities to go Level 2!");
+		}
+		else if (game.getLevelManager().getCurrentLevel() == 1)
+		{
+			targetLabel.setText("Dispose 6 entities to go Level 3!");
+
+		}
+		else {
+			nextLevelLabel.setText(null);
+			targetLabel.setText("Dispose 8 entities to WIN!");
+
+		}
 	}
 
 	private void handleInput() {
@@ -353,16 +373,6 @@ public class PlayScreen extends BaseScreen {
 
 	private void checkWinCondition() {
 		LevelManager levelManager = ((SimulationLifeCycleManager)game).getLevelManager();
-		if (pEntity.getScoreCounter() >= levelManager.getPointsToWin()) {
-			game.getEntityManager().disposeEntities();
-	        // Transition to the next level
-	        levelManager.nextLevel();
-	    } else if (pEntity.getPlayerHealth() == 0) {
-	        // Player loses the current level
-	        game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
-	    }
-	    // Additional conditions as needed
-	
 
 		boolean foundRecyclables = false;
 
@@ -374,10 +384,20 @@ public class PlayScreen extends BaseScreen {
 			}
 		}
 
-		if (!foundRecyclables && pEntity.getScoreCounter() < 4) {
+		if (!foundRecyclables && pEntity.getScoreCounter() < levelManager.getPointsToWin()) {
 			game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
 
 		}
+		if (pEntity.getScoreCounter() == levelManager.getPointsToWin()) {
+			game.getEntityManager().disposeEntities();
+	        // Transition to the next level
+	        levelManager.nextLevel();
+	    } else if (pEntity.getPlayerHealth() == 0) {
+	        // Player loses the current level
+	        game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+	    }
+	    // Additional conditions as needed
+
 	}
 
 	@Override

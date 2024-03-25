@@ -72,6 +72,8 @@ public class MainScreen extends BaseScreen {
 					firstTime = false;
 				}
 				else {
+					game.getSceneManager().removeScreen(PlayScreen.class);
+					game.getLevelManager().setCurrentLevel(0);
 					game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
 					game.getAudioManager().getMusic("MainMenu").stop();
 				}
