@@ -4,7 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
+import com.mygdx.game.GameEngine.Managers.AIControlManager;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
+import com.mygdx.game.GameLayer.AIControl.ChasingPlayer;
 import com.mygdx.game.GameLayer.Entities.Bin;
 import com.mygdx.game.GameLayer.Entities.Monster;
 import com.mygdx.game.GameLayer.Entities.PlayerGame;
@@ -25,12 +27,15 @@ public class IntroScreen extends BaseScreen {
 		super(game);
 		initialiseUI();
 		done = false;
+		
+		AIControlManager aiControlManager = new AIControlManager();
+	    ChasingPlayer chaseBehaviour = new ChasingPlayer(aiControlManager);
+	    this.monsterEntity = new Monster(chaseBehaviour);
 	}
 
 	@Override
 	public void show() {
 		playerEntity = new PlayerGame();
-		monsterEntity = new Monster(500, 200);
 
 		game.getEntityManager().addEntity(playerEntity);
 		game.getEntityManager().addEntity(monsterEntity);
@@ -123,7 +128,8 @@ public class IntroScreen extends BaseScreen {
 		setupClickListener();
 		playerMovement();
 		resetCollide();
-		// monsterEntity.chasePlayer(playerEntity, game);
+		
+		monsterEntity.chase(playerEntity, game);
 	}
 
 	@Override

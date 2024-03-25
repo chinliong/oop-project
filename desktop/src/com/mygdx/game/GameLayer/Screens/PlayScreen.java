@@ -47,8 +47,6 @@ public class PlayScreen extends BaseScreen {
 	private Texture backgroundTexture;
 	private Sprite backgroundSprite;
 	
-	AIControlManager aiControlManager = new AIControlManager();
-
 	public PlayScreen(SimulationLifeCycleManager game) {
 		super(game);
 		setBgColour(Color.SKY);
@@ -323,7 +321,6 @@ public class PlayScreen extends BaseScreen {
 		}
 
 		// Make monster entity follow player
-		// monsterEntity.chasingPlayer(pEntity, game);
 		monsterEntity.chase(pEntity, game);
 
 		if (pEntity != null) {
