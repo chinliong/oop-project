@@ -3,7 +3,6 @@ package com.mygdx.game.GameLayer.Screens;
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,20 +14,21 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameEngine.Entities.Entity;
 import com.mygdx.game.GameEngine.Entities.Player;
 import com.mygdx.game.GameEngine.Screens.BaseScreen;
+import com.mygdx.game.GameEngine.Managers.AIControlManager;
+import com.mygdx.game.GameEngine.Managers.LevelManager;
+import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.GameEngine.Managers.AIControlManager;
-import com.mygdx.game.GameEngine.Managers.LevelManager;
-import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameLayer.AIControl.*;
-// Game Layer imports
 import com.mygdx.game.GameLayer.Entities.*;
 
 public class PlayScreen extends BaseScreen {
 	private PlayerGame pEntity;
 	private Monster monsterEntity;
+	
 	// Player Stats
 	private Label scoreLabel;
 	private Label healthLabel;
