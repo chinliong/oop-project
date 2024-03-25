@@ -17,7 +17,8 @@ public class MainScreen extends BaseScreen {
 
 	private float newGameButtonX, newGameButtonY, newGameButtonWidth = 160, newGameButtonHeight = 60;
 	private float exitGameButtonX, exitGameButtonY, exitGameButtonWidth = 160, exitGameButtonHeight = 60;
-
+	
+	private boolean firstTime = true;
 	public MainScreen(SimulationLifeCycleManager game) {
 		super(game);
 		initialiseUI();
@@ -65,8 +66,16 @@ public class MainScreen extends BaseScreen {
 		if (game.getInputOutputManager().getInputMouse().ifLMBPressed()) {
 			if (mouseX >= newGameButtonX && mouseX <= newGameButtonX + newGameButtonWidth && mouseY >= newGameButtonY
 					&& mouseY <= newGameButtonY + newGameButtonHeight) {
-				game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
-				game.getAudioManager().getMusic("MainMenu").stop();
+				if(firstTime)
+				{
+					game.getSceneManager().setScreen(game.getSceneManager().getScreen(IntroScreen.class));
+					firstTime = false;
+				}
+				else {
+					game.getSceneManager().setScreen(game.getSceneManager().getScreen(PlayScreen.class));
+					game.getAudioManager().getMusic("MainMenu").stop();
+				}
+
 			} else if (mouseX >= exitGameButtonX && mouseX <= exitGameButtonX + exitGameButtonWidth
 					&& mouseY >= exitGameButtonY && mouseY <= exitGameButtonY + exitGameButtonHeight) {
 				Gdx.app.exit();

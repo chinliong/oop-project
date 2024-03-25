@@ -12,7 +12,13 @@ public class Monster extends AI {
         super("1.png", -100, 200);
         this.chasePlayer = new ChasingPlayer(); 
     }
-
+    // for IntroScreen
+    public Monster(int posX, int posY)
+    {
+    	super("1.png", posX, posY);
+    	this.chasePlayer = new ChasingPlayer();
+    }
+    
     public void setchasePlayer(IChase chasePlayer) {
         this.chasePlayer = chasePlayer;
     }

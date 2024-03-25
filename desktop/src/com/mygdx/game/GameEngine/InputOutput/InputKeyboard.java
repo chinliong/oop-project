@@ -71,4 +71,8 @@ public class InputKeyboard extends Input { // extends abstract Input class
         return Gdx.input.isKeyPressed(Keys.W);
     }
     
+    public boolean ifEnterPressed() {
+    	return Gdx.input.isKeyJustPressed(Keys.ENTER);
+    }
+    
 }

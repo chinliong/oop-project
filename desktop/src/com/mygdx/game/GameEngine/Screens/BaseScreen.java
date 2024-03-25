@@ -101,7 +101,9 @@ public abstract class BaseScreen implements Screen {
         Label label = new Label(text, labelStyle);
         label.setColor(Color.WHITE);
         label.setPosition((float)posX, (float)posY);
-
+        // Scale the font size
+        float scaleFactor = 1.5f; // Example scaling factor; adjust as needed
+        labelStyle.font.getData().setScale(scaleFactor);
         stage.addActor(label);
         
         return label;
