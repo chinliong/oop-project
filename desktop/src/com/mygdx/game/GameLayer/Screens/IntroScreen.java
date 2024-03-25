@@ -22,6 +22,7 @@ public class IntroScreen extends BaseScreen {
 	private Label gameText2;
 	private Label gameText3;
 	private Label gameText4;
+	private Label gameText5;
 	private PlayerGame playerEntity;
 	private Monster monsterEntity;
 	private boolean done;
@@ -106,7 +107,8 @@ public class IntroScreen extends BaseScreen {
 		game.getEntityManager().addEntity(paperEntity);
 		game.getEntityManager().addEntity(canEntity);
 		game.getEntityManager().addEntity(plasticEntity);
-		gameText.setText("Collect and Dispose any 4 recyclables to the correct bin to WIN the game!");
+		gameText.setText("Collect and Dispose recyclables to the correct bin to WIN the 3 level games!");
+		gameText5.setText("1st level: 4pts    2nd level: 6pts    3rd level: 8pts");
 		gameText2.setText("Press 'ENTER' to BEGIN PLAYING");
 		gameText3.setText("Press 'SPACE' when collecting recyclables and disposing into bins.");
 		gameText4.setText(" Aim with your mouse, 'LEFT CLICK' to throw recyclables at monster!");
@@ -154,6 +156,10 @@ public class IntroScreen extends BaseScreen {
 	    gameText = new Label("Press W,A,S,D to move your player ", labelStyle);
 	    gameText.setPosition(50, 550); // Set position as before
 	    stage.addActor(gameText); // Assuming you have a stage to add this label to
+	    
+	    gameText5 = new Label("", labelStyle);
+	    gameText5.setPosition(50, 525); // Set position as before
+	    stage.addActor(gameText5);
 	    
 	    // Initialize other labels with the same or different styles as needed
 	    gameText2 = new Label("Press 'ENTER' to continue", labelStyle);
