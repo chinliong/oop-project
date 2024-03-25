@@ -123,7 +123,7 @@ public class IntroScreen extends BaseScreen {
 		setupClickListener();
 		playerMovement();
 		resetCollide();
-		monsterEntity.chasePlayer(playerEntity, game);
+		// monsterEntity.chasePlayer(playerEntity, game);
 	}
 
 	@Override

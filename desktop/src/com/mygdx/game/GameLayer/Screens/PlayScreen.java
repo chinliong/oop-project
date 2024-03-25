@@ -19,8 +19,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
+import com.mygdx.game.GameEngine.Managers.AIControlManager;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
+import com.mygdx.game.GameLayer.AIControl.*;
 // Game Layer imports
 import com.mygdx.game.GameLayer.Entities.*;
 
@@ -45,6 +46,8 @@ public class PlayScreen extends BaseScreen {
 	// background UI
 	private Texture backgroundTexture;
 	private Sprite backgroundSprite;
+	
+	AIControlManager aiControlManager = new AIControlManager();
 
 	public PlayScreen(SimulationLifeCycleManager game) {
 		super(game);
@@ -54,6 +57,11 @@ public class PlayScreen extends BaseScreen {
 		backgroundTexture = new Texture(Gdx.files.internal("forest.jpg"));
 		backgroundSprite = new Sprite(backgroundTexture);
 		backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		AIControlManager aiControlManager = new AIControlManager();
+	    ChasingPlayer chaseBehaviour = new ChasingPlayer(aiControlManager);
+	    this.monsterEntity = new Monster(chaseBehaviour);
+	    
 
 	}
 
@@ -70,7 +78,7 @@ public class PlayScreen extends BaseScreen {
 		startAudio("Gameplay", 1.0f);
 
 		pEntity = new PlayerGame();
-		monsterEntity = new Monster(); // Monster entity that follows player
+		
 
 		Bin glassbinEntity = new Bin("glassbin.png", 150, 10, RecyclableType.GLASS); // trashbin2
 		Bin paperbinEntity = new Bin("paperbin.png", 300, 10, RecyclableType.PAPER); // trashbin2
@@ -80,7 +88,8 @@ public class PlayScreen extends BaseScreen {
 		// Check for existing entity before adding
 		if (game.getEntityManager().checkClass(Player.class) == null) {
 			game.getEntityManager().addEntity(pEntity);
-		}
+		}		
+		
 
 		// Add bin entities
 		game.getEntityManager().addEntity(monsterEntity);
@@ -314,7 +323,8 @@ public class PlayScreen extends BaseScreen {
 		}
 
 		// Make monster entity follow player
-		monsterEntity.chasePlayer(pEntity, game);
+		// monsterEntity.chasingPlayer(pEntity, game);
+		monsterEntity.chase(pEntity, game);
 
 		if (pEntity != null) {
 			pEntity.updateAttachedEntities();
