@@ -14,7 +14,6 @@ public class SimulationLifeCycleManager extends Game {
     private SceneManager sceneManager; 
     private EntityManager entityManager; 
     private IOManager ioManager;
-//    private PlayerControlManager playerControlManager;
     private AudioManager audioManager;
     private SimulationLifeCycleManager simulationLifeCycleManager;
     private PlayerManager playerManager;
@@ -31,7 +30,6 @@ public class SimulationLifeCycleManager extends Game {
         levelManager = new LevelManager(this);
         sceneManager = new SceneManager(this); 
         ioManager = new IOManager();
-//        playerControlManager = new PlayerControlManager(this); 
         audioManager = new AudioManager();
         sceneManager.setScreen();
         System.out.println("Managers intialized");
@@ -81,10 +79,6 @@ public class SimulationLifeCycleManager extends Game {
     public IOManager getInputOutputManager(){
         return ioManager;
     }
-
-//    public PlayerControlManager getPlayerControlManager(){
-//        return playerControlManager;
-//    }
 
     public AudioManager getAudioManager(){
         return audioManager;
