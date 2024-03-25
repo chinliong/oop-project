@@ -1,5 +1,6 @@
 package com.mygdx.game.GameLayer.Screens;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Entities.Entity;
@@ -103,10 +104,10 @@ public class IntroScreen extends BaseScreen {
 		game.getEntityManager().addEntity(paperEntity);
 		game.getEntityManager().addEntity(canEntity);
 		game.getEntityManager().addEntity(plasticEntity);
-		gameText.setText("These are the recyclables to collect");
+		gameText.setText("Collect and Dispose any 4 recyclables to the correct bin to WIN the game!");
 		gameText2.setText("Press 'ENTER' to BEGIN PLAYING");
 		gameText3.setText("Press 'SPACE' when picking up trash and disposing into bins.");
-		gameText4 = createText(" Aim with your mouse, 'LEFT CLICK' to throw trash at monster!",50,250);
+		gameText4.setText(" Aim with your mouse, 'LEFT CLICK' to throw trash at monster!");
 	}
 
 	private void resetCollide() {
@@ -135,8 +136,29 @@ public class IntroScreen extends BaseScreen {
 	@Override
 	protected void initialiseUI() {
 		// TODO Auto-generated method stub
-		gameText = createText("Press W,A,S,D to move your player ", 50, 580);
-		gameText2 = createText("Press 'ENTER' to continue",50,400);
-		gameText3 = createText("DO NOT GET CAUGHT BY THE MONSTER",50,300);
+		BitmapFont font = new BitmapFont();
+	    font.getData().setScale(1.5f); // Scales the font size up by 2 times, adjust the value as needed
+	    
+	    // Create a new LabelStyle with the scaled font
+	    Label.LabelStyle labelStyle = new Label.LabelStyle();
+	    labelStyle.font = font;
+	    
+	    // Apply the new LabelStyle to your gameText labels
+	    gameText = new Label("Press W,A,S,D to move your player ", labelStyle);
+	    gameText.setPosition(50, 550); // Set position as before
+	    stage.addActor(gameText); // Assuming you have a stage to add this label to
+	    
+	    // Initialize other labels with the same or different styles as needed
+	    gameText2 = new Label("Press 'ENTER' to continue", labelStyle);
+	    gameText2.setPosition(50,400);
+	    stage.addActor(gameText2);
+	    
+	    gameText3 = new Label("DO NOT GET CAUGHT BY THE MONSTER", labelStyle);
+	    gameText3.setPosition(50,310);
+	    stage.addActor(gameText3);
+	    
+	    gameText4 = new Label("", labelStyle);
+	    gameText4.setPosition(50,280);
+	    stage.addActor(gameText4);
 	}
 }
