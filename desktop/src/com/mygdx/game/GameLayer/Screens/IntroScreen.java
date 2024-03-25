@@ -1,5 +1,7 @@
 package com.mygdx.game.GameLayer.Screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
@@ -106,8 +108,8 @@ public class IntroScreen extends BaseScreen {
 		game.getEntityManager().addEntity(plasticEntity);
 		gameText.setText("Collect and Dispose any 4 recyclables to the correct bin to WIN the game!");
 		gameText2.setText("Press 'ENTER' to BEGIN PLAYING");
-		gameText3.setText("Press 'SPACE' when picking up trash and disposing into bins.");
-		gameText4.setText(" Aim with your mouse, 'LEFT CLICK' to throw trash at monster!");
+		gameText3.setText("Press 'SPACE' when collecting recyclables and disposing into bins.");
+		gameText4.setText(" Aim with your mouse, 'LEFT CLICK' to throw recyclables at monster!");
 	}
 
 	private void resetCollide() {
@@ -119,6 +121,11 @@ public class IntroScreen extends BaseScreen {
 	
 	@Override
 	public void render(float delta) {
+		 // Set the clear color to dark green
+	    Gdx.gl.glClearColor(0, 0.2f, 0, 1);
+	    // Clear the screen with the current clear color
+	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	    
 		super.stage.act(delta);
 		super.stage.draw();
 		game.getBatch().begin();
@@ -153,7 +160,7 @@ public class IntroScreen extends BaseScreen {
 	    gameText2.setPosition(50,400);
 	    stage.addActor(gameText2);
 	    
-	    gameText3 = new Label("DO NOT GET CAUGHT BY THE MONSTER", labelStyle);
+	    gameText3 = new Label("DO NOT GET CAUGHT BY THE MONSTER, YOU HAVE 3 LIFE!", labelStyle);
 	    gameText3.setPosition(50,310);
 	    stage.addActor(gameText3);
 	    
