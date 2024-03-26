@@ -7,7 +7,7 @@ import com.mygdx.game.GameLayer.Screens.WinLoseScreen;
 public class LevelManager {
     private SimulationLifeCycleManager game;
     private int currentLevel = 0;
-    private static final int[] POINTS_TO_WIN_PER_LEVEL = {4, 6, 8}; // Example
+    private static final int[] POINTS_TO_WIN_PER_LEVEL = {4, 6, 8}; 
 
     public LevelManager(SimulationLifeCycleManager game) {
         this.game = game;
@@ -18,7 +18,7 @@ public class LevelManager {
         if (currentLevel < POINTS_TO_WIN_PER_LEVEL.length) {
             game.getSceneManager().setScreen(new PlayScreen(game));
         } else {
-            game.getSceneManager().setScreen(new WinLoseScreen(game, true)); // Assuming WinLoseScreen has a constructor that accepts a game instance and a win condition.
+            game.getSceneManager().setScreen(new WinLoseScreen(game, true)); // Constructor that accepts a game instance and a win condition.
         }
     }
 
@@ -37,5 +37,4 @@ public class LevelManager {
     	this.currentLevel = currentLevel;
     }
 
-    // You might want to add more methods here depending on your game's needs
 }

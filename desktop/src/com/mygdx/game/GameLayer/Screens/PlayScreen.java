@@ -396,7 +396,6 @@ public class PlayScreen extends BaseScreen {
 	        // Player loses the current level
 	        game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
 	    }
-	    // Additional conditions as needed
 
 	}
 

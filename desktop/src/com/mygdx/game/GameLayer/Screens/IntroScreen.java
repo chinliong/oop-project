@@ -107,11 +107,11 @@ public class IntroScreen extends BaseScreen {
 		game.getEntityManager().addEntity(paperEntity);
 		game.getEntityManager().addEntity(canEntity);
 		game.getEntityManager().addEntity(plasticEntity);
-		gameText.setText("Collect and Dispose recyclables to the correct bin to WIN the 3 level games!");
+		gameText.setText("Collect and Dispose recyclables to the correct bin to WIN the 3-level game!");
 		gameText5.setText("1st level: 4pts    2nd level: 6pts    3rd level: 8pts");
+		gameText3.setText("Press 'SPACE' when collecting recyclables and disposing them into bins.");
+		gameText4.setText("Aim with your mouse, 'LEFT CLICK' to throw recyclables at the monster!");
 		gameText2.setText("Press 'ENTER' to BEGIN PLAYING");
-		gameText3.setText("Press 'SPACE' when collecting recyclables and disposing into bins.");
-		gameText4.setText(" Aim with your mouse, 'LEFT CLICK' to throw recyclables at monster!");
 	}
 
 	private void resetCollide() {
@@ -152,22 +152,20 @@ public class IntroScreen extends BaseScreen {
 	    Label.LabelStyle labelStyle = new Label.LabelStyle();
 	    labelStyle.font = font;
 	    
-	    // Apply the new LabelStyle to your gameText labels
 	    gameText = new Label("Press W,A,S,D to move your player ", labelStyle);
-	    gameText.setPosition(50, 550); // Set position as before
+	    gameText.setPosition(50, 400); 
 	    stage.addActor(gameText); // Assuming you have a stage to add this label to
 	    
 	    gameText5 = new Label("", labelStyle);
-	    gameText5.setPosition(50, 525); // Set position as before
+	    gameText5.setPosition(50, 525); 
 	    stage.addActor(gameText5);
 	    
-	    // Initialize other labels with the same or different styles as needed
 	    gameText2 = new Label("Press 'ENTER' to continue", labelStyle);
-	    gameText2.setPosition(50,400);
+	    gameText2.setPosition(50,300);
 	    stage.addActor(gameText2);
 	    
-	    gameText3 = new Label("DO NOT GET CAUGHT BY THE MONSTER, YOU HAVE 3 LIFE!", labelStyle);
-	    gameText3.setPosition(50,310);
+	    gameText3 = new Label("DO NOT GET CAUGHT BY THE MONSTER, YOU HAVE 3 LIVES!", labelStyle);
+	    gameText3.setPosition(50,350);
 	    stage.addActor(gameText3);
 	    
 	    gameText4 = new Label("", labelStyle);
