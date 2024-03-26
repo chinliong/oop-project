@@ -1,7 +1,8 @@
-package com.mygdx.game.GameEngine.InputOutput;
+package com.mygdx.game.GameLayer.InputOutput;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
+import com.mygdx.game.GameEngine.InputOutput.*;
 
 public class InputMouse extends Input { // extends abstract Input class
 	// handle mouse inputs
@@ -63,3 +64,4 @@ public class InputMouse extends Input { // extends abstract Input class
 		return Gdx.input.getY();
 		}
 }
+

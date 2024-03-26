@@ -1,7 +1,7 @@
 package com.mygdx.game.GameEngine.Managers;
 
-import com.mygdx.game.GameEngine.InputOutput.InputKeyboard;
-import com.mygdx.game.GameEngine.InputOutput.InputMouse;
+import com.mygdx.game.GameLayer.InputOutput.InputKeyboard;
+import com.mygdx.game.GameLayer.InputOutput.InputMouse;
 import com.mygdx.game.GameEngine.InputOutput.Output;
 
 public class IOManager {

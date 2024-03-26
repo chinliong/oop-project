@@ -1,6 +1,8 @@
-package com.mygdx.game.GameEngine.InputOutput;
+package com.mygdx.game.GameLayer.InputOutput;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.mygdx.game.GameEngine.InputOutput.*;
 
 public class InputKeyboard extends Input { // extends abstract Input class
 	// handle keyboard inputs
