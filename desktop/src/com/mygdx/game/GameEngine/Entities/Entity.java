@@ -14,24 +14,18 @@ public abstract class Entity{
     protected float width = 90; // Width of entity
     protected float height = 100; // Height of entity
 
-    private static int idCounter = 0 ;
-    protected int id;
-
     // Constructor 1: set position X and Y based on argument
     public Entity(String entityImagePath, float posX, float posY) {
         this.entityImage = new Texture(Gdx.files.internal(entityImagePath));
         this.posX = posX;
         this.posY = posY;
 
-        this.id = idCounter++; // Assign an id to this entity, idCounter++ = track IDs count
     }    
     // Constructor 2: pre-set position X and Y
     public Entity(String entityImagePath) {
         this.entityImage = new Texture(Gdx.files.internal(entityImagePath));
         this.posX = 50;
         this.posY = 5;
-
-        this.id = idCounter++; // Assign an id to this entity, idCounter++ = track IDs count
     }    
     
     public void draw(SpriteBatch batch) {
@@ -86,10 +80,6 @@ public abstract class Entity{
 
     public void dispose() {
         entityImage.dispose();
-    }
-
-    public int getID(){
-        return this.id;
     }
 
 }

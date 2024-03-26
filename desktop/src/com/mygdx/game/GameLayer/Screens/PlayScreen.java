@@ -269,16 +269,16 @@ public class PlayScreen extends BaseScreen {
 		
 		if (game.getLevelManager().getCurrentLevel() == 0)
 		{
-			targetLabel.setText("Dispose 4 entities to go Level 2!");
+			targetLabel.setText("Dispose 4 recyclables to go Level 2!");
 		}
 		else if (game.getLevelManager().getCurrentLevel() == 1)
 		{
-			targetLabel.setText("Dispose 6 entities to go Level 3!");
+			targetLabel.setText("Dispose 6 recyclables to go Level 3!");
 
 		}
 		else {
 			nextLevelLabel.setText(null);
-			targetLabel.setText("Dispose 8 entities to WIN!");
+			targetLabel.setText("Dispose 8 recyclables to WIN!");
 
 		}
 	}
