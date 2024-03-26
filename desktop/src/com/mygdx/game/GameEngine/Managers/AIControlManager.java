@@ -28,6 +28,7 @@ public class AIControlManager {
         AIList.remove(ai);
     }
     
+ // Method to add behaviour 
     public void addBehavior(iBehaviour behaviour) {
         behaviours.add(behaviour);
     }

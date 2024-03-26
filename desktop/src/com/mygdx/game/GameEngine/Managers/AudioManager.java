@@ -17,8 +17,9 @@ public class AudioManager {
 	        soundEffect = Gdx.audio.newSound(Gdx.files.internal("boing.wav"));
 	    }
 	    
+	 // Get the music based on the key ("Gameplay" / "MainMenu")
 	    public Music getMusic(String mapKey){
-	        return mapMusic.get(mapKey); // Get the music based on the key ("Gameplay" / "MainMenu")
+	        return mapMusic.get(mapKey); 
 	    }
 	    
 	    public void playSound()

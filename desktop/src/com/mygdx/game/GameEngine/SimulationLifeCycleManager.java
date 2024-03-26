@@ -8,7 +8,7 @@ import com.mygdx.game.GameEngine.Managers.*;
 
 public class SimulationLifeCycleManager extends Game {
 
-	// Attributes 
+	// Attribute
     protected SpriteBatch batch;
     private BitmapFont font;
     private SceneManager sceneManager; 

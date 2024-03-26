@@ -8,8 +8,9 @@ public class IOManager {
 	private Output output;
 	private InputKeyboard inputKeyboard;
 	private InputMouse inputMouse;
-
-	public IOManager() { // Default constructor, initializes new instance
+	
+	// Default constructor, initializes new instance
+	public IOManager() { 
 		this.inputKeyboard = new InputKeyboard();
 		this.inputMouse = new InputMouse();
 		this.output = new Output();

@@ -11,13 +11,7 @@ public class Monster extends AI {
         super("1.png", -100, 200); // Assuming these parameters set the default sprite and position
         this.chasingPlayer = chasingPlayer;
     }
-
-//	// for IntroScreen
-//	public Monster(int posX, int posY) {
-//		super("1.png", posX, posY);
-//		this.chasingPlayer = chasingPlayer;
-//	}
-//	
+	
 	// Method to trigger the chasing behavior
     public void chase(PlayerGame player, SimulationLifeCycleManager game) {
         if (this.chasingPlayer != null) {

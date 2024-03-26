@@ -142,42 +142,6 @@ public class CollisionManager {
 		}
 	}
 
-//	public void checkForCollisionTest(SimulationLifeCycleManager game) {
-//		PlayerGame player = null;
-//		// First, find the Player
-//		for (Entity entity : game.getEntityManager().getEntities()) {
-//			if (entity instanceof PlayerGame) {
-//				player = (PlayerGame) entity;
-//				break; 
-//			}
-//		}
-//
-//		// If a Player was found, check for collisions with monster or AI entities
-//		if (player != null) {
-//			for (Entity entity : game.getEntityManager().getEntities()) {
-//				if (entity instanceof AI) {
-//					AI aiEntity = (AI) entity;
-//					int distance = getCollisionRange(); // Directly access the collision range from this class
-//
-//					// Check for collision between the player and the monster or AI entity
-//					if (player.hasCollidedRect(aiEntity)) {
-//						game.getAudioManager().playSound();
-//						player.setPlayerHealth(player.getPlayerHealth() - 1);
-//						player.setPosX(50);
-//						player.setPosY(20);
-//						System.out.println("player health is now " + player.getPlayerHealth());
-//						// Correct method call
-//						if (player.getPlayerHealth() == 0) {
-//							handlePlayerAICollision(game);
-//						}
-//						return; // Exit if a collision is detected and handled
-//					}
-//				}
-//			}
-//		}
-//
-//	}
-
 	private void handlePlayerAICollision(SimulationLifeCycleManager game) {
 		System.out.println("Player and AI are within the range of " + collisionRange);
 		game.getSceneManager().transitionToScreen(WinLoseScreen.class, false); // Transition to the lose screen

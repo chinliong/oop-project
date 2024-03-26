@@ -63,17 +63,6 @@ public class EntityManager {
     	}
     	return null;
     }
-    
-
-    //return entity if matching ID
-    public Entity getEntityID(int id){
-        for (Entity entity : entityList) {
-            if (entity.getID() == id){
-                return entity;
-            }
-        }
-        return null;
-    }
 
 
 // show all entities
