@@ -7,19 +7,21 @@ import com.mygdx.game.GameEngine.Entities.Player;
 public class PlayerControlManager {
 
 	private SimulationLifeCycleManager game;
+	private IOManager ioManager;
 
 	// Empty constructor
 	public PlayerControlManager(SimulationLifeCycleManager game) {
 		this.game = game;
+		this.ioManager = game.getInputOutputManager();
 	}
-
+	
 	public void walk(Player player) {
 
-		if (game.getInputOutputManager().getInputKeyboard().ifDPressed()) { // Checks if the right arrow key is pressed
+		if (ioManager.getInputKeyboard().ifDPressed()) { // Checks if the right arrow key is pressed
 																			// for moving right
 			// Moves the player to the right by increasing the X position
 			player.setPosX(player.getPosX() + (int) (200 * Gdx.graphics.getDeltaTime()));
-		} else if (game.getInputOutputManager().getInputKeyboard().ifAPressed()) {
+		} else if (ioManager.getInputKeyboard().ifAPressed()) {
 			// Moves the player to the left by decreasing the X position if any key other
 			// than right is pressed
 			player.setPosX(player.getPosX() - (int) (200 * Gdx.graphics.getDeltaTime()));
@@ -30,9 +32,9 @@ public class PlayerControlManager {
 	// Processes jumping movement based on a boolean flag
 	public void jump(Player player) {
 		// If the jump flag is true, moves the player upwards
-		if (game.getInputOutputManager().getInputKeyboard().ifWPressed()) {
+		if (ioManager.getInputKeyboard().ifWPressed()) {
 			player.setPosY(player.getPosY() + (int) (200 * Gdx.graphics.getDeltaTime()));
-		} else if (game.getInputOutputManager().getInputKeyboard().ifSPressed()) {
+		} else if (ioManager.getInputKeyboard().ifSPressed()) {
 
 			// If the jump flag is false, moves the player downwards
 			player.setPosY(player.getPosY() - (int) (200 * Gdx.graphics.getDeltaTime()));

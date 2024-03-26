@@ -23,13 +23,12 @@ public class SimulationLifeCycleManager extends Game {
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont(); 
-        playerManager = new PlayerManager(this);
-
         // Initialize all managers
+        ioManager = new IOManager();
+        playerManager = new PlayerManager(this);
         entityManager = new EntityManager(this); 
         levelManager = new LevelManager(this);
         sceneManager = new SceneManager(this); 
-        ioManager = new IOManager();
         audioManager = new AudioManager();
         sceneManager.setScreen();
         System.out.println("Managers intialized");
