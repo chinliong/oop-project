@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Player extends CollidableEntity {
+	private int playerHealth = 3;
 
     public Player() {
     	// Entity constructor 1
@@ -25,5 +26,13 @@ public abstract class Player extends CollidableEntity {
     {
   		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
     }
+    
+ // getter setters
+ 	public int getPlayerHealth() {
+ 		return playerHealth;
+ 	}
+ 	public void setPlayerHealth(int playerHealth) {
+ 		this.playerHealth = playerHealth;
+ 	}
 
 }

@@ -27,7 +27,7 @@ public class ChasingPlayer implements iBehaviour {
         if (distance > 0) {
             float nx = dx / distance;
             float ny = dy / distance;
-            float speed = 1.4f; 
+            float speed = 1.6f; 
             float nextPosX = ai.getPosX() + nx * speed;
             float nextPosY = ai.getPosY() + ny * speed;
 
