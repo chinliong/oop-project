@@ -1,11 +1,38 @@
 package com.mygdx.game.GameLayer.InputOutput;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.mygdx.game.GameEngine.InputOutput.*;
 
 public class InputMouse extends Input { // extends abstract Input class
 	// handle mouse inputs
+	
+	// observer 
+    private List<InputObserver> observers = new ArrayList<>();
+
+    public void addObserver(InputObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(InputObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyMouseEvent(MouseEvent event) {
+        for (InputObserver observer : observers) {
+            observer.onMouseEvent(event);
+        }
+    }
+
+    // Method that gets called when a key event occurs
+    public void onKeyPress(MouseEvent event) {
+    	notifyMouseEvent(event);
+    }
 
 	public boolean isLMBPressed(int input) {
 		if (mousePressed() && input == Buttons.LEFT)

@@ -24,6 +24,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.GameLayer.AIControl.*;
 import com.mygdx.game.GameLayer.Entities.*;
+import com.mygdx.game.GameLayer.InputOutput.InputKeyboard;
+import com.mygdx.game.GameLayer.InputOutput.InputMouse;
 
 public class PlayScreen extends BaseScreen {
 	private PlayerGame pEntity;
@@ -79,8 +81,14 @@ public class PlayScreen extends BaseScreen {
 	public void show() {
 		super.show();
 		startAudio("Gameplay", 1.0f);
+		
+		InputKeyboard keyboard = new InputKeyboard();
+		InputMouse mouse = new InputMouse();
 
 		pEntity = new PlayerGame();
+		
+		keyboard.addObserver(pEntity);
+		mouse.addObserver(pEntity);
 		
 
 		Bin glassbinEntity = new Bin("glassbin.png", 150, 10, RecyclableType.GLASS); // trashbin2

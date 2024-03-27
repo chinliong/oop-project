@@ -1,11 +1,37 @@
 package com.mygdx.game.GameLayer.InputOutput;
 
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.mygdx.game.GameEngine.InputOutput.*;
 
 public class InputKeyboard extends Input { // extends abstract Input class
 	// handle keyboard inputs
+	
+	// observer 
+    private List<InputObserver> observers = new ArrayList<>();
+
+    public void addObserver(InputObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(InputObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyKeyEvent(KeyEvent event) {
+        for (InputObserver observer : observers) {
+            observer.onKeyEvent(event);
+        }
+    }
+
+    // Method that gets called when a key event occurs
+    public void onKeyPress(KeyEvent event) {
+        notifyKeyEvent(event);
+    }
 
     @Override
     public boolean keyPressed() {
