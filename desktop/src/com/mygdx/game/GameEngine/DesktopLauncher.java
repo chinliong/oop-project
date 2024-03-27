@@ -9,6 +9,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Lab P8- Team 5");
 		config.setWindowedMode(800, 600); // set dimensions of windowed
-		new Lwjgl3Application(new SimulationLifeCycleManager(), config);
+		SimulationLifeCycleManager gameInstance = SimulationLifeCycleManager.getInstance();
+		new Lwjgl3Application(gameInstance, config);
 	}
 }

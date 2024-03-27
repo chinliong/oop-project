@@ -9,7 +9,6 @@ import com.mygdx.game.GameEngine.Entities.CollidableEntity;
 import com.mygdx.game.GameEngine.Entities.Player;
 
 public class PlayerGame extends Player{
-//	private int playerHealth = 3;
 	private int scoreCounter = 0;
 	private List<CollidableEntity> pickedupEntities = new ArrayList<>();
 	
@@ -18,13 +17,6 @@ public class PlayerGame extends Player{
 		super();
 	}
 	
-//	// getter setters
-//	public int getPlayerHealth() {
-//		return playerHealth;
-//	}
-//	public void setPlayerHealth(int playerHealth) {
-//		this.playerHealth = playerHealth;
-//	}
 	public int getScoreCounter() {
 		return scoreCounter;
 	}

@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameEngine.Managers.*;
 
 public class SimulationLifeCycleManager extends Game {
+	private static SimulationLifeCycleManager instance;
 
 	// Attribute
     protected SpriteBatch batch;
@@ -17,6 +18,18 @@ public class SimulationLifeCycleManager extends Game {
     private AudioManager audioManager;
     private PlayerManager playerManager;
     private LevelManager levelManager;
+    
+    private SimulationLifeCycleManager() {
+        // private constructor to prevent external instantiation.
+    }
+
+    public static synchronized SimulationLifeCycleManager getInstance() {
+        if (instance == null) {
+            instance = new SimulationLifeCycleManager();
+        }
+        return instance;
+    }
+
 
     @Override
     public void create() {
