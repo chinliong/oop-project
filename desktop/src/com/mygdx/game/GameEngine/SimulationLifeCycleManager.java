@@ -15,7 +15,6 @@ public class SimulationLifeCycleManager extends Game {
     private EntityManager entityManager; 
     private IOManager ioManager;
     private AudioManager audioManager;
-    private SimulationLifeCycleManager simulationLifeCycleManager;
     private PlayerManager playerManager;
     private LevelManager levelManager;
 
@@ -82,10 +81,6 @@ public class SimulationLifeCycleManager extends Game {
     public AudioManager getAudioManager(){
         return audioManager;
     }
-
-    public SimulationLifeCycleManager getSimulationLifeCycleManager(){
-        return simulationLifeCycleManager;
-    }    
     
     public PlayerManager getPlayerManager(){
         return playerManager;
