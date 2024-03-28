@@ -69,11 +69,11 @@ public class PlayScreen extends BaseScreen {
 
 	@Override
 	public void initialiseUI() {
-		scoreLabel = createText("Player Score Counter: ", 50, 580);
-		healthLabel = createText("Player Health: ", 50, 550);
-		currentLevelLabel = createText("This is Level: ", 500, 580);
-		nextLevelLabel = createText("Points to next level: ", 500, 550);
-		targetLabel = createText("Dispose to go to the next level!", 50, 500);
+		scoreLabel = createText("Player Score Counter: ", 50, 550);
+		healthLabel = createText("Player Health: ", 50, 520);
+		currentLevelLabel = createText("This is Level: ", 500, 550);
+		nextLevelLabel = createText("Points to next level: ", 500, 520);
+		targetLabel = createText("Dispose to go to the next level!", 50, 470);
 	}
 
 	@Override
