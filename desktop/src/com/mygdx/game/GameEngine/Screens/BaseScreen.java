@@ -45,42 +45,6 @@ public abstract class BaseScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
-
-    protected void createButton(String text, float x, float y, ClickListener listener){
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = game.getFont(); 
-        TextButton button = new TextButton(text, textButtonStyle);
-        button.setPosition(x, y);
-        button.addListener(listener);
-        stage.addActor(button);
-
-    }
-    
-    //set imgbutton position
-    protected void createImageButton(String imagePath, ClickListener listener, float posX, float posY) {
-
-        Texture buttonTexture = new Texture(Gdx.files.internal(imagePath));
-        Drawable drawable = new TextureRegionDrawable(buttonTexture);
-        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
-        imageButtonStyle.up = drawable;
-        ImageButton imageButton = new ImageButton(imageButtonStyle);
-        imageButton.setPosition(posX, posY);
-        imageButton.addListener(listener);
-        stage.addActor(imageButton);
-    }
-    
-    //set imgbutton size
-    protected void createImageButton(String imagePath, ClickListener listener, float width, float height, float posX, float posY) {
-        Texture buttonTexture = new Texture(Gdx.files.internal(imagePath));
-        Drawable drawable = new TextureRegionDrawable(buttonTexture);
-        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
-        imageButtonStyle.up = drawable;
-        ImageButton imageButton = new ImageButton(imageButtonStyle);
-        imageButton.setSize(width, height);
-        imageButton.setPosition(posX, posY);
-        imageButton.addListener(listener);
-        stage.addActor(imageButton);
-    }
     
     //Function to add text at the top middle of the screen
 //    protected void createText(String text){
