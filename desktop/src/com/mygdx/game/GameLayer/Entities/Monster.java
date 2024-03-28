@@ -8,11 +8,11 @@ public class Monster extends AI {
 	private ChasingPlayer chasingPlayer;
 
 	public Monster(ChasingPlayer chasingPlayer) {
-        super("1.png", -100, 200); // Assuming these parameters set the default sprite and position
+        super("1.png", -100, 200);
         this.chasingPlayer = chasingPlayer;
     }
 	
-	// Method to trigger the chasing behavior
+	// Method to for chasing behavior
     public void chase(PlayerGame player, SimulationLifeCycleManager game) {
         if (this.chasingPlayer != null) {
             this.chasingPlayer.chase(player, game, this);

@@ -32,6 +32,4 @@ public class CollidableEntity extends Entity implements iCollision {
 		Rectangle otherBound = cEntity.getBounds();
 		return thisBound.overlaps(otherBound);
 	}
-
-
 }
