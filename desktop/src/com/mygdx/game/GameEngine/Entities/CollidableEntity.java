@@ -5,7 +5,14 @@ import com.badlogic.gdx.math.Rectangle;
 public class CollidableEntity extends Entity implements iCollision {
 
 	public CollidableEntity(String entityImagePath, int posX, int posY) {
+		// Entity constructor 1
 		super(entityImagePath,posX,posY);
+	}
+	
+	public CollidableEntity(String entityImagePath)
+	{
+		// Entity constructor 2
+		super(entityImagePath);
 	}
   
   @Override

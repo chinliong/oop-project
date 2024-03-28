@@ -24,8 +24,8 @@ public abstract class Entity{
     // Constructor 2: pre-set position X and Y
     public Entity(String entityImagePath) {
         this.entityImage = new Texture(Gdx.files.internal(entityImagePath));
-        this.posX = 50;
-        this.posY = 5;
+        this.posX = 300;
+        this.posY = 200;
     }    
     
     public void draw(SpriteBatch batch) {

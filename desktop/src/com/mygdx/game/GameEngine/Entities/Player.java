@@ -11,8 +11,8 @@ public abstract class Player extends CollidableEntity implements InputObserver {
 	private int playerHealth = 3;
 
     public Player() {
-    	// Entity constructor 1
-        super("fish.png", 300, 200);
+    	// Entity constructor 2
+    		super("fish.png");
     }
     
     @Override
