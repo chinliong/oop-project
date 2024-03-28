@@ -30,7 +30,7 @@ import com.mygdx.game.GameLayer.InputOutput.InputMouse;
 public class PlayScreen extends BaseScreen {
 	private PlayerGame pEntity;
 	private Monster monsterEntity;
-	
+
 	// Player Stats
 	private Label scoreLabel;
 	private Label healthLabel;
@@ -51,7 +51,7 @@ public class PlayScreen extends BaseScreen {
 	// background UI
 	private Texture backgroundTexture;
 	private Sprite backgroundSprite;
-	
+
 	public PlayScreen(SimulationLifeCycleManager game) {
 		super(game);
 		setBgColour(Color.SKY);
@@ -60,11 +60,10 @@ public class PlayScreen extends BaseScreen {
 		backgroundTexture = new Texture(Gdx.files.internal("forest.jpg"));
 		backgroundSprite = new Sprite(backgroundTexture);
 		backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
+
 		AIControlManager aiControlManager = new AIControlManager();
-	    ChasingPlayer chaseBehaviour = new ChasingPlayer(aiControlManager);
-	    this.monsterEntity = new Monster(chaseBehaviour);
-	    
+		ChasingPlayer chaseBehaviour = new ChasingPlayer(aiControlManager);
+		this.monsterEntity = new Monster(chaseBehaviour);
 
 	}
 
@@ -73,23 +72,22 @@ public class PlayScreen extends BaseScreen {
 		scoreLabel = createText("Player Score Counter: ", 50, 580);
 		healthLabel = createText("Player Health: ", 50, 550);
 		currentLevelLabel = createText("This is Level: ", 500, 580);
-		nextLevelLabel = createText("Points to next level: ",500,550);
-		targetLabel = createText("Dispose to go to the next level!", 50,500);
+		nextLevelLabel = createText("Points to next level: ", 500, 550);
+		targetLabel = createText("Dispose to go to the next level!", 50, 500);
 	}
 
 	@Override
 	public void show() {
 		super.show();
 		startAudio("Gameplay", 1.0f);
-		
+
 		InputKeyboard keyboard = new InputKeyboard();
 		InputMouse mouse = new InputMouse();
 
 		pEntity = new PlayerGame();
-		
+
 		keyboard.addObserver(pEntity);
 		mouse.addObserver(pEntity);
-		
 
 		Bin glassbinEntity = new Bin("glassbin.png", 150, 10, RecyclableType.GLASS); // trashbin2
 		Bin paperbinEntity = new Bin("paperbin.png", 300, 10, RecyclableType.PAPER); // trashbin2
@@ -99,8 +97,7 @@ public class PlayScreen extends BaseScreen {
 		// Check for existing entity before adding
 		if (game.getEntityManager().checkClass(Player.class) == null) {
 			game.getEntityManager().addEntity(pEntity);
-		}		
-		
+		}
 
 		// Add bin entities
 		game.getEntityManager().addEntity(monsterEntity);
@@ -273,18 +270,14 @@ public class PlayScreen extends BaseScreen {
 		scoreLabel.setText("Player Score: " + scoreCounter);
 		healthLabel.setText("Player Health: " + healthCounter);
 		nextLevelLabel.setText("Points to next level: " + (game.getLevelManager().getPointsToWin() - scoreCounter));
-		currentLevelLabel.setText("Current Level: " + (game.getLevelManager().getCurrentLevel()+1));
-		
-		if (game.getLevelManager().getCurrentLevel() == 0)
-		{
+		currentLevelLabel.setText("Current Level: " + (game.getLevelManager().getCurrentLevel() + 1));
+
+		if (game.getLevelManager().getCurrentLevel() == 0) {
 			targetLabel.setText("Dispose 4 recyclables to go Level 2!");
-		}
-		else if (game.getLevelManager().getCurrentLevel() == 1)
-		{
+		} else if (game.getLevelManager().getCurrentLevel() == 1) {
 			targetLabel.setText("Dispose 6 recyclables to go Level 3!");
 
-		}
-		else {
+		} else {
 			nextLevelLabel.setText(null);
 			targetLabel.setText("Dispose 8 recyclables to WIN!");
 
@@ -340,7 +333,7 @@ public class PlayScreen extends BaseScreen {
 						|| game.getInputOutputManager().getInputKeyboard().ifAPressed() == true) {
 					game.getPlayerManager().getPlayerControlManager()
 							.walk((Player) game.getPlayerManager().getPlayerList().get(i));
-				} // move vertical 
+				} // move vertical
 				else if (game.getInputOutputManager().getInputKeyboard().ifWPressed() == true
 						|| game.getInputOutputManager().getInputKeyboard().ifSPressed() == true) {
 					game.getPlayerManager().getPlayerControlManager()
@@ -380,7 +373,7 @@ public class PlayScreen extends BaseScreen {
 	}
 
 	private void checkWinCondition() {
-		LevelManager levelManager = ((SimulationLifeCycleManager)game).getLevelManager();
+		LevelManager levelManager = ((SimulationLifeCycleManager) game).getLevelManager();
 
 		boolean foundRecyclables = false;
 
@@ -393,17 +386,28 @@ public class PlayScreen extends BaseScreen {
 		}
 
 		if (!foundRecyclables && pEntity.getScoreCounter() < levelManager.getPointsToWin()) {
+			game.getAudioManager().getSound("lose").play();
 			game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
 
 		}
 		if (pEntity.getScoreCounter() == levelManager.getPointsToWin()) {
 			game.getEntityManager().disposeEntities();
-	        // Transition to the next level
-	        levelManager.nextLevel();
-	    } else if (pEntity.getPlayerHealth() == 0) {
-	        // Player loses the current level
-	        game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
-	    }
+			if (levelManager.getCurrentLevel() == 2) {
+				game.getAudioManager().getSound("win").play();
+				game.getAudioManager().getMusic("Gameplay").stop();
+				game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+			} else {
+				// Transition to the next level
+				levelManager.nextLevel();
+				game.getAudioManager().getSound("nextLevel").play();
+			}
+		}
+
+		else if (pEntity.getPlayerHealth() == 0) {
+			// Player loses the current level
+			game.getAudioManager().getSound("lose").play();
+			game.getSceneManager().transitionToScreen(WinLoseScreen.class, false);
+		}
 
 	}
 

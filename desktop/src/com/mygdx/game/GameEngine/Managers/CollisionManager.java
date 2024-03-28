@@ -72,7 +72,7 @@ public class CollisionManager {
 					if (aiEntity instanceof Recyclables) {
 						Recyclables rEntity = (Recyclables) aiEntity;
 						if (collidableList.contains(rEntity) && rEntity.isThrown()) {
-							game.getAudioManager().playSound();
+							game.getAudioManager().getSound("Hit").play();
 							monsterEntity.resetMonster();
 							break;
 						}
@@ -101,6 +101,7 @@ public class CollisionManager {
 								if (bEntity.getType() == rEntity.getType()) {
 									entitiesToRemove.add(rEntity);
 									playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
+									game.getAudioManager().getSound("correct").play();
 									System.out.println("my score is " + playerEntity.getScoreCounter());
 									System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
 									break;
@@ -109,6 +110,7 @@ public class CollisionManager {
 								// different type = score same
 								if (bEntity.getType() != rEntity.getType()) {
 									entitiesToRemove.add(rEntity);
+									game.getAudioManager().getSound("wrong").play();
 									System.out.println("my score is unchanged " + playerEntity.getScoreCounter());
 									System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
 									break;
@@ -120,7 +122,8 @@ public class CollisionManager {
 				// if player collide with monster
 				if (playerEntity.hasCollided(monsterEntity, distance)) {
 					if (aiEntity instanceof Monster) {
-						game.getAudioManager().playSound();
+//						game.getAudioManager().playSound();
+						game.getAudioManager().getSound("Hit").play();
 						playerEntity.setPlayerHealth(playerEntity.getPlayerHealth() - 1);
 						playerEntity.setPosX(50);
 						playerEntity.setPosY(20);
