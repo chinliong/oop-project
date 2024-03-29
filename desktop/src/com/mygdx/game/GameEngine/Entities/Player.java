@@ -3,9 +3,7 @@ package com.mygdx.game.GameEngine.Entities;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.GameLayer.InputOutput.InputObserver;
+import com.mygdx.game.GameEngine.InputOutput.InputObserver;
 
 public abstract class Player extends CollidableEntity implements InputObserver {
 	private int playerHealth = 3;

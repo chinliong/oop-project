@@ -1,4 +1,4 @@
-package com.mygdx.game.GameLayer.InputOutput;
+package com.mygdx.game.GameEngine.InputOutput;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
