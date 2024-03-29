@@ -24,22 +24,6 @@ public abstract class Player extends CollidableEntity implements InputObserver {
     public void onMouseEvent(MouseEvent event) {
         // Optional if Player needs to respond to mouse events
     }
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(super.getPosX(), super.getPosY(), super.getWidth(), super.getHeight());
-    }
-
-    @Override
-    public void draw(SpriteBatch batch) {
-        super.draw(batch);
-    }
-    
-    @Override
-    public boolean hasCollided(CollidableEntity cEntity, int range)
-    {
-  		return Math.abs(this.getPosX() - cEntity.getPosX()) < range && Math.abs(this.getPosY()- cEntity.getPosY()) < range;
-    }
     
  // getter setters
  	public int getPlayerHealth() {
