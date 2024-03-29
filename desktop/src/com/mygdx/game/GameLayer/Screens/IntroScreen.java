@@ -2,7 +2,6 @@ package com.mygdx.game.GameLayer.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.GameEngine.SimulationLifeCycleManager;
 import com.mygdx.game.GameEngine.Entities.Entity;

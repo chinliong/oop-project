@@ -217,9 +217,7 @@ public class PlayScreen extends BaseScreen {
 		}
 	}
 
-	// Pause stuff, maybe need to link to the methods that is already inside
-	// BaseScreen,
-	// see how to implement BaseScreen methods to do all these
+	
 	private void setupPauseMenu() {
 		pStage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(pStage);
@@ -319,10 +317,6 @@ public class PlayScreen extends BaseScreen {
 	private void moveEntities() {
 		for (int i = 0; i < game.getPlayerManager().getPlayerList().size(); i++) {
 			if (pEntity != null) {
-				// Assuming pEntity.posX and pEntity.posY are your entity's current positions
-				// And assuming pEntity.width and pEntity.height are the entity's dimensions
-				// Screen width and height can be retrieved via Gdx.graphics.getWidth() and
-				// Gdx.graphics.getHeight()
 				pEntity.setPosX(clampValue(pEntity.getPosX(), 0, Gdx.graphics.getWidth() - pEntity.getWidth()));
 				pEntity.setPosY(clampValue(pEntity.getPosY(), 0, Gdx.graphics.getHeight() - pEntity.getHeight()));
 			}
