@@ -102,17 +102,13 @@ public class CollisionManager {
 									entitiesToRemove.add(rEntity);
 									playerEntity.setScoreCounter(playerEntity.getScoreCounter() + 1);
 									game.getAudioManager().getSound("correct").play();
-									System.out.println("my score is " + playerEntity.getScoreCounter());
-									System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
 									break;
 								}
 
 								// different type = score same
 								if (bEntity.getType() != rEntity.getType()) {
 									entitiesToRemove.add(rEntity);
-									game.getAudioManager().getSound("wrong").play();
-									System.out.println("my score is unchanged " + playerEntity.getScoreCounter());
-									System.out.println("ur entitiescarry " + playerEntity.getPickedUpEntities().size());
+									game.getAudioManager().getSound("wrong").play();;
 									break;
 								}
 							}
@@ -141,7 +137,6 @@ public class CollisionManager {
 			System.out.println("out");
 			game.getEntityManager().getEntities().remove(entitiesToRemove.remove(0));
 			playerEntity.getPickedUpEntities().remove(0);
-			System.out.println("the list now is" + playerEntity.getPickedUpEntities().size());
 		}
 	}
 

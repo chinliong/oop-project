@@ -14,11 +14,11 @@ public class PlayerControlManager {
 		this.game = game;
 		this.ioManager = game.getInputOutputManager();
 	}
-	
+
 	public void walk(Player player) {
 
 		if (ioManager.getInputKeyboard().ifDPressed()) { // Checks if the right arrow key is pressed
-																			// for moving right
+															// for moving right
 			// Moves the player to the right by increasing the X position
 			player.setPosX(player.getPosX() + (int) (200 * Gdx.graphics.getDeltaTime()));
 		} else if (ioManager.getInputKeyboard().ifAPressed()) {
