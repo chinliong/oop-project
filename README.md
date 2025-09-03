@@ -1,62 +1,79 @@
-# oop-project P8 - Team 5 Part 2
+# Recycling Game – OOP Project
 
-# File Directories 
-- [Game Engine](./desktop/src/com/mygdx/game/GameEngine/)
-    - DesktopLauncher.java
-    - SimulationLifeCycleManager.java
-    
-    # Sub Folders
-    - [AIControl](./desktop/src/com/mygdx/game/GameEngine/AIControl)
-        - iBehaviour.java
-    
-    - [Entities](./desktop/src/com/mygdx/game/GameEngine/Entities/)
-        - AI.java
-        - CollidableEntity.java
-        - Entity.java
-        - iCollision.java
-        - Player.java
+A Java-based educational game built with **LibGDX** that teaches players about proper waste sorting. Players drag and drop recyclable items into the correct bins while avoiding monsters and aiming for a high score.
 
-    - [Input/Output](./desktop/src/com/mygdx/game/GameEngine/InputOutput)
-        - Input.java
-        - InputObserver.java
-        - Output.java
-    
-    - [Managers](./desktop/src/com/mygdx/game/GameEngine/Managers)
-        - AIControlManager.java
-        - AudioManager.java
-        - CollisionManager.java
-        - EntityManager.java
-        - IOManager.java
-        - LevelManager.java
-        - PlayerControlManager.java
-        - PlayerManager.java
-        - SceneManager.java
-    
-    - [Screens](./desktop/src/com/mygdx/game/Screens)
-        - BaseScreen.java 
-    
+---
 
-    # Game Layer
+## 🎮 Game Overview
+- Sort recyclable materials (Plastic, Glass, Paper, Metal) into the correct bins  
+- Avoid monsters that reduce player health  
+- Multiple levels with increasing difficulty  
+- Score points for correct sorting, lose points for mistakes  
+- Win by reaching the target score before losing all health  
 
-    - [AIControl](./desktop/src/com/mygdx/game/GameLayer/AIControl)
-        - ChasingPlayer.java
-    
-    - [Entities](./desktop/src/com/mygdx/game/GameLayer/Entities/)
-        - Bin.java
-        - iType.java
-        - Monster.java
-        - PlayerGame.java
-        - Recyclables.java
-        - RecyclablesType.java
+---
 
-    - [Input/Output](./desktop/src/com/mygdx/game/GameLayer/InputOutput)
-        - InputMouse.java
-        - InputKeyboard.java
-    
-    - [Screens](./desktop/src/com/mygdx/game/GameLayer/Screens/)
-        - IntroScreen.java
-        - MainScreen.java
-        - PlayScreen.java
-        - WinLoseScreen.java
-    
+## 🏗 Architecture
+- **Game Engine Layer:** Handles rendering, game loop, input/output, AI, scene transitions  
+- **Game Logic Layer:** Implements gameplay rules, level progression, scoring, and UI  
 
+Design patterns used: **Singleton**, **Observer**, **Strategy**, **Factory**  
+
+---
+
+## 🎯 Key Features
+- Educational gameplay teaching recycling habits  
+- AI-controlled enemies for added challenge  
+- Multiple levels with difficulty progression  
+- Sound effects and visual feedback  
+- Health and score tracking system  
+
+---
+
+## 🚀 Getting Started
+### Prerequisites
+- Java 8 or higher  
+- Gradle build system  
+
+### Run the Game
+1. Clone the repository  
+2. Navigate to the project folder  
+3. Run the desktop launcher via Gradle or your IDE  
+
+---
+
+## 🎮 Controls
+- **Mouse:** Drag recyclables into bins  
+- **Keyboard:** Navigate menus / control player movement  
+- **ESC:** Pause or resume game  
+
+---
+
+## 🏆 Scoring & Game Rules
+- **Correct sorting:** +10 points  
+- **Incorrect sorting:** -5 points  
+- **Monster hit:** -1 health  
+- **Win:** Reach the target score per level  
+- **Lose:** Health reaches zero  
+
+---
+
+## 📂 Deliverables
+- UML Diagram: *P8_Team5_Part1Final_UML.jpg*  
+- Project Report: *P8_Team5_ProjectPart1Final_Report.pdf*  
+- Slides: *P8_Team5_ProjectPart1Final_PresentationSlides.pptx*  
+- Demo Video: [Watch Here](https://youtu.be/FjW6atky5iQ)  
+
+---
+
+## 👥 Team Info
+**Team 5 - Lab P8**  
+Singapore Institute of Technology  
+
+---
+
+## 🎓 Learning Outcomes
+- Object-Oriented Programming in Java  
+- Game development with **LibGDX**  
+- Applying design patterns  
+- Environmental awareness through gamification  
